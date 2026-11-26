@@ -16,7 +16,59 @@ TYPES = [
     ("helmets",     "Helmets"),
     ("armor",       "Body Armor"),
     ("plates",      "Armor Plates"),
+    ("comms",       "Communications"),
 ]
+# custody policy per category (configurable here; read by gen_site.py and the page):
+#   tracked = personal-issue, may hold individually tracked assets + custody records
+#   bulk    = unit-issue / restricted stock, aggregate counts only, no soldier custody
+#   sealed  = sealed restricted stock, authorised store custody only, never soldier-level
+CATEGORY_POLICY = {
+    "weapons": "tracked", "melee": "tracked", "helmets": "tracked", "armor": "tracked",
+    "plates": "tracked", "nightvision": "tracked", "comms": "tracked",
+    "ammunition": "bulk", "attachments": "bulk", "drones": "bulk", "armoured": "bulk", "artillery": "bulk",
+    "explosives": "sealed",
+}
+# custody selection hierarchy: broad group -> sub-group -> catalogue lines, matched by (type, sub);
+# sub None = every line of that type. gen_site.py asserts every catalogue line lands in exactly one
+# sub-group. Restricted groups are browsable but never selectable (custody follows CATEGORY_POLICY).
+GROUPS = [
+    ("firearms", "Firearms", [
+        ("Pistols / Sidearms",           [("weapons", "Sidearm")]),
+        ("Assault Rifles",               [("weapons", "Assault Rifle")]),
+        ("Sniper / Precision Rifles",    [("weapons", "Sniper / Anti-Material")]),
+        ("Submachine Guns & Carbines",   [("weapons", "Carbine / SMG")]),
+        ("Machine Guns",                 [("weapons", "Machine Gun")]),
+        ("Launchers / ATGM",             [("weapons", "Launcher / ATGM")]),
+    ]),
+    ("protective", "Protective Equipment", [
+        ("Helmets",                          [("helmets", None)]),
+        ("Body Armour / Bulletproof Jackets", [("armor", None)]),
+        ("Protective Plates",                [("plates", None)]),
+    ]),
+    ("optics", "Night Vision & Optical", [
+        ("Night Vision Goggles",         [("nightvision", "Goggles / Monocular")]),
+        ("Weapon Night Sights",          [("nightvision", "Weapon NV Sight")]),
+        ("Thermal Imagers",              [("nightvision", "Thermal Sight")]),
+        ("Weapon Optics & Attachments",  [("attachments", None)]),
+    ]),
+    ("comms", "Communication Equipment", [
+        ("Radios",                       [("comms", None)]),
+    ]),
+    ("vehicles", "Vehicles, Artillery & UAV", [
+        ("Armoured Vehicles",            [("armoured", None)]),
+        ("Artillery",                    [("artillery", None)]),
+        ("Drones / UAV",                 [("drones", None)]),
+    ]),
+    ("other", "Other Equipment", [
+        ("Edged Weapons",                [("melee", None)]),
+    ]),
+    ("restricted", "Restricted Stock", [
+        ("Ammunition",                   [("ammunition", None)]),
+        ("Grenades",                     [("explosives", "Grenade")]),
+        ("Mines & Charges",              [("explosives", "Mine / Charge")]),
+    ]),
+]
+
 # subcategory display order within the inventory
 SUBS = [
     "Assault Rifle", "Carbine / SMG", "Sniper / Anti-Material", "Machine Gun",
@@ -32,6 +84,7 @@ SUBS = [
     "Combat Helmet", "Light Helmet",
     "Soft Armor", "Plate Carrier",
     "Hard Plate",
+    "Field Radio",
 ]
 
 def item(key, name, type, sub, origin, year, madeIn, ordered, arrived, assigned, prefix, specs, titles=None, photo=None, **extra):
@@ -319,6 +372,16 @@ AT = [
 ]
 for (k,n,sub,origin,yr,mii,o,a,iss,specs,titles) in AT:
     ITEMS.append(item(k,n,"artillery",sub,origin,yr,mii,o,a,iss,None,specs,titles=titles))
+
+# ---------------- COMMUNICATIONS ----------------
+CM = [
+ ("sdr_manpack","Software Defined Radio (Manpack)","Field Radio","India (BEL)","2022",True,400,160,120,"COM",
+   [("Band","VHF / UHF"),("Range","25 km"),("Waveform","Secure SDR"),("Weight","4.8 kg"),("Power","Li-ion"),("Role","Company net")]),
+ ("vhf_handheld","VHF Handheld Radio","Field Radio","India","2018",True,900,700,610,"COM",
+   [("Band","VHF 30-88 MHz"),("Range","8 km"),("Encryption","Yes"),("Weight","0.9 kg"),("Power","Li-ion"),("Role","Section net")]),
+]
+for (k,n,sub,origin,yr,mii,o,a,asg,pre,specs) in CM:
+    ITEMS.append(item(k,n,"comms",sub,origin,yr,mii,o,a,asg,pre,specs))
 
 if __name__ == "__main__":
     from collections import Counter

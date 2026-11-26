@@ -17,7 +17,7 @@
   --saffron:#e2922f; --india-green:#3f9e52; --flagwhite:#e8ece2;
   --photo-bg:#eef0e8;
   --head:"Oswald",system-ui,sans-serif; --body:"Inter",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
-  --radius:7px; --rail-w:262px;
+  --radius:7px; --rail-w:272px;
   color-scheme:dark;
 }
 @media (prefers-color-scheme:light){ :root:not([data-theme="dark"]){
@@ -49,7 +49,8 @@ h1,h2,h3{font-family:var(--head);font-weight:600;margin:0;letter-spacing:.02em;t
   height:calc(100vh - env(safe-area-inset-top,0px));overflow-y:auto;background:var(--rail);
   border-right:1px solid var(--line);display:flex;flex-direction:column;
   padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:14px;padding-block:18px 10px;z-index:30}
-.sb-brand{display:flex;align-items:center;gap:11px;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.sb-brand{display:flex;align-items:center;justify-content:center;gap:12px;padding:8px 4px 18px;border-bottom:1px solid var(--line);margin-bottom:16px}
+.sb-bt{min-width:0}
 .crest{width:42px;height:42px;flex:none;border:1.4px solid var(--chakra);border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--chakra) 12%,transparent);color:var(--chakra)}
 .crest svg{width:32px;height:32px}
 :root{--emblem-src:url("__EMBLEM__")}
@@ -337,77 +338,312 @@ footer .meta{font-family:var(--mono);font-size:11px;color:var(--faint);text-alig
 .brow>i{width:8px;height:8px;border-radius:50%;flex:none}
 .brow .bn{font-size:12.5px;color:var(--fg);font-weight:500;line-height:1.2}
 .brow .bcmd{font-family:var(--mono);font-size:10px;color:var(--muted)}
+/* ---------- custody module ---------- */
+.vchips{display:flex;flex-wrap:wrap;gap:5px}
+.vchips button{font-family:var(--mono);font-size:11px;padding:5px 10px;border-radius:20px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer}
+.vchips button.on{color:var(--fg);border-color:var(--accent);background:var(--accent-soft)}
+.cbtn{font-family:var(--mono);font-size:11.5px;padding:6px 11px;border-radius:6px;border:1px solid var(--line);background:var(--surface-2);color:var(--fg);cursor:pointer;white-space:nowrap}
+.cbtn:hover{border-color:var(--accent);color:var(--accent)} .cbtn.pri{border-color:var(--accent);color:var(--accent)}
+.cbtn.pri:hover{background:var(--accent);color:#17120a}
+.ro-place.danger{background:var(--crit);border-color:var(--crit);color:#fff}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.cstrip{margin-bottom:12px}
+.qt{background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:10px 12px}
+.qt .ql{font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);font-weight:600}
+.qt .qv{font-family:var(--head);font-size:24px;line-height:1.15;color:var(--fg)} .qt .qn{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.cbadge{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 8px;border-radius:20px;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.cbadge i{width:6px;height:6px;border-radius:50%;background:currentColor}
+.cbadge.av{color:var(--ok);background:var(--ok-bg)} .cbadge.cu{color:var(--chakra);background:color-mix(in srgb,var(--chakra) 16%,transparent)}
+.cbadge.ip,.cbadge.um{color:var(--warn);background:var(--warn-bg)} .cbadge.rt,.cbadge.cl{color:var(--muted);background:var(--surface-2);border:1px solid var(--line)}
+.rl{font-family:var(--mono);font-size:12px;color:var(--accent);background:none;border:none;padding:0;cursor:pointer;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--accent) 40%,transparent);text-underline-offset:3px;text-align:left}
+.rl:hover{text-decoration-color:var(--accent)} .rl:focus-visible,.cbtn:focus-visible,.vchips button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+tr.rowlink{cursor:pointer} tr.rowlink:hover td{background:var(--surface-2)}
+.ctbl{min-width:600px} td.sm,.sm{font-size:11.5px} td.mono{font-family:var(--mono)} .faintx{color:var(--faint);font-family:var(--mono);font-size:11.5px}
+td.cempty,.cempty{color:var(--muted);font-family:var(--mono);font-size:12px;padding:18px 16px}
+.sheet-back{font-family:var(--mono);font-size:11.5px;color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:6px;padding:5px 10px;cursor:pointer;margin:0 44px 12px 0}
+.sheet-back:hover{color:var(--accent);border-color:var(--accent)}
+.sheet-photo.sm{flex:0 0 150px;max-width:150px}
+.sheet-photo.codeav{display:flex;flex-direction:column;align-items:center;justify-content:center;aspect-ratio:1;background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:10px;color:var(--accent)}
+.codeav span{font-family:var(--head);font-size:38px;letter-spacing:.04em} .codeav em{font-style:normal;font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:var(--muted)}
+.cacts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px} .cnote{font-family:var(--mono);font-size:11.5px;color:var(--warn);margin-top:8px}
+.d-h .dh-sp{flex:1}
+.restrict{font-family:var(--mono);font-size:12px;color:var(--crit);background:var(--crit-bg);border:1px solid color-mix(in srgb,var(--crit) 40%,transparent);border-radius:7px;padding:10px 12px}
+.restrict.soft{color:var(--muted);background:var(--surface-2);border-color:var(--line)}
+.stock.sealed{color:var(--crit)} .scode.trk{background:color-mix(in srgb,var(--chakra) 16%,transparent);color:var(--chakra);border-color:color-mix(in srgb,var(--chakra) 40%,transparent)}
+.tline{list-style:none;margin:0;padding:0;border-left:2px solid var(--line);max-height:360px;overflow-y:auto}
+.tline li{position:relative;padding:7px 12px 9px 16px;display:grid;grid-template-columns:150px 1fr;gap:2px 12px;font-size:12.5px}
+.tline li::before{content:"";position:absolute;left:-6px;top:12px;width:10px;height:10px;border-radius:50%;background:var(--surface);border:2px solid var(--accent)}
+.tl-ts{font-family:var(--mono);font-size:11px;color:var(--muted)} .tl-ch{font-family:var(--mono);font-size:11px;color:var(--accent-2)}
+.tl-r{grid-column:2;color:var(--muted);font-size:12px} .tl-by{grid-column:2;font-family:var(--mono);font-size:10px;color:var(--faint)}
+.fhead{padding:4px 40px 14px 0;border-bottom:1px solid var(--line);margin-bottom:14px} .fhead h2{font-family:var(--head);font-size:24px;margin:8px 0 2px}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px}
+.fl{display:flex;flex-direction:column;gap:5px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;position:relative}
+.fl em{font-style:normal;text-transform:none;letter-spacing:0;color:var(--faint);font-weight:400} .fl.wide,.fmeta.wide{grid-column:1/-1}
+.fin{height:36px;border:1px solid var(--line);background:var(--surface-2);color:var(--fg);border-radius:7px;padding:0 10px;font-family:var(--mono);font-size:13px;text-transform:none;letter-spacing:0;font-weight:400;width:100%}
+textarea.fin{height:auto;padding:8px 10px;resize:vertical} .fin:focus{outline:none;border-color:var(--accent)} .fin.bad{border-color:var(--crit)}
+.ferr{font-family:var(--mono);font-size:11px;color:var(--crit);text-transform:none;letter-spacing:0;font-weight:400} .ferr:empty{display:none}
+.ferr.form{margin-top:12px}
+.fmeta{font-family:var(--mono);font-size:11.5px;color:var(--muted);background:var(--surface-2);border:1px solid var(--line-soft);border-radius:7px;padding:9px 11px}
+.fmeta b{color:var(--fg)} .factions{display:flex;gap:10px;align-items:center;margin-top:16px}
+.lk{position:relative} .lk-list{position:absolute;left:0;right:0;top:40px;z-index:5;max-height:240px;overflow-y:auto;background:var(--raise);border:1px solid var(--accent);border-radius:7px;box-shadow:0 14px 30px rgba(0,0,0,.35)}
+.lk-opt{padding:7px 10px;cursor:pointer;display:flex;flex-direction:column;gap:1px;text-transform:none;letter-spacing:0}
+.lk-opt b{font-family:var(--mono);font-size:12.5px;color:var(--fg)} .lk-opt span{font-size:11.5px;color:var(--muted);font-weight:400}
+.lk-opt.hi,.lk-opt:hover{background:var(--accent-soft)} .lk-none{padding:10px;font-family:var(--mono);font-size:11.5px;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400}
+@media (max-width:640px){ .fgrid{grid-template-columns:1fr} .tline li{grid-template-columns:1fr} .tl-r,.tl-by{grid-column:1} .sheet-photo.sm{flex-basis:96px;max-width:96px} }
 @media (max-width:900px){ .mapgrid{grid-template-columns:1fr} .maplist{max-height:420px} .map-info{max-width:72%} }
 @media (max-width:640px){ .sheet-cols{grid-template-columns:1fr} .d-grid{grid-template-columns:1fr} .sheet-photo{flex-basis:100%;max-width:none} }
 @media (max-width:560px){ .ccrow{grid-template-columns:104px 1fr 52px} }
 @media (max-width:1040px){ .kpis{grid-template-columns:repeat(2,1fr)} }
-@media (max-width:820px){
-  .app{flex-direction:column}
-  .sidebar{width:auto;position:static;height:auto;border-right:none;border-bottom:1px solid var(--line);flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px 14px;padding-block:12px}
-  .sb-brand{border-bottom:none;padding-bottom:0;margin-bottom:0;margin-right:auto}
-  .sb-live,.sb-label{display:none}
-  #nav{display:flex;flex-wrap:wrap;gap:6px;width:100%}
-  #nav .navitem{width:auto;margin-bottom:0;border:1px solid var(--line);font-size:12.5px;padding:6px 10px}
-  #nav .navitem .n{display:none}
-  .sb-sec-status,.sb-sec-origin{display:flex;align-items:center;gap:6px}
-  .sbtns{flex-direction:row;flex-wrap:wrap}
-  .sb-foot{margin-top:0;padding-top:0;width:100%;display:flex;align-items:center;gap:12px}
-  .tricolor{flex:1;margin-bottom:0}.tbtn{width:auto}
-  body::before{background:var(--bg)} .topbar{top:0}
 }
 @media (max-width:440px){ .kpi .val{font-size:25px} .grid{grid-template-columns:1fr} .cathead .cmini{width:100%;margin-left:0} }
+/* ---------- app shell: sidebar navigation, workspaces ---------- */
+.sb-new{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;font-family:var(--body);font-weight:600;font-size:13px;padding:9px 12px;border-radius:7px;border:1px solid var(--accent);background:var(--accent);color:#17120a;cursor:pointer;margin:2px 0 14px;white-space:nowrap}
+.sb-new svg{width:15px;height:15px;flex:none} .sb-new:hover{filter:brightness(1.08)}
+.appnav{display:flex;flex-direction:column;gap:2px}
+.rtable .rl{white-space:nowrap} .rowacts{flex-wrap:nowrap} .rowacts .cbtn{white-space:nowrap}
+@media (min-width:701px) and (max-width:1180px){
+  [data-view="soldiers"] .rtable tr>:nth-child(4),
+  [data-view="assets"] .rtable tr>:nth-child(3),[data-view="assets"] .rtable tr>:nth-child(4),[data-view="assets"] .rtable tr>:nth-child(7),
+  [data-view="custody"] .rtable tr>:nth-child(5),[data-view="custody"] .rtable tr>:nth-child(3),
+  [data-view="audit"] .rtable tr>:nth-child(7){display:none}
+  .rtable thead th,.rtable tbody td{padding-left:11px;padding-right:11px}
+}
+.appnav a{display:flex;align-items:center;gap:10px;padding:8px 9px;border-radius:6px;color:var(--muted);font-size:13.5px;text-decoration:none;position:relative;white-space:nowrap}
+.appnav a svg{width:17px;height:17px;flex:none}
+.appnav a .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.appnav a .n{font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+.appnav a:hover{background:var(--surface);color:var(--fg);text-decoration:none}
+.appnav a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.appnav a.on::before{content:"";position:absolute;left:-14px;top:6px;bottom:6px;width:3px;border-radius:0 3px 3px 0;background:var(--accent)}
+.appnav a.on .n{color:var(--accent)}
+.appnav a:focus-visible,.sb-new:focus-visible,.tb-menu:focus-visible,.qa:focus-visible,.tbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sb-filters{margin-top:8px;border-top:1px solid var(--line);padding-top:4px}
+body:not([data-view="catalogue"]) .sb-filters{display:none}
+.sb-footrow{display:flex;gap:6px} .sb-footrow .tbtn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
+.sb-footrow .tbtn svg{width:14px;height:14px;flex:none;transition:transform .2s}
+.scrim{position:fixed;inset:0;background:rgba(6,8,6,.6);z-index:80}
+.tb-menu{display:none;place-items:center;width:38px;height:38px;border-radius:7px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;flex:none}
+.tb-menu svg{width:20px;height:20px}
+.tb-title{display:flex;align-items:baseline;gap:8px;font-family:var(--head);font-size:16px;letter-spacing:.03em;white-space:nowrap;min-width:0}
+.tb-crumb{color:var(--muted);font-size:13px} .tb-sep{color:var(--faint)} .tb-title b{font-weight:600;color:var(--fg);overflow:hidden;text-overflow:ellipsis}
+.tb-cat{display:flex;align-items:center;gap:12px;flex:1 1 420px;min-width:0;flex-wrap:wrap}
+body:not([data-view="catalogue"]) .tb-cat{display:none}
+.topbar .asof{margin-left:auto}
+.view[hidden]{display:none!important}
+.phead{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:2px 0 16px}
+.ptitle{font-family:var(--head);font-size:22px;font-weight:600;letter-spacing:.03em;line-height:1.15}
+.psub{margin:3px 0 0;color:var(--muted);font-size:13px;max-width:70ch}
+.pacts{display:flex;gap:8px;flex-wrap:wrap}
+.qactions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.qa{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:var(--radius);border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;text-align:left;font:inherit;text-decoration:none;min-width:0}
+.qa:hover{border-color:var(--accent);text-decoration:none} .qa svg{width:20px;height:20px;flex:none;color:var(--accent)}
+.qa span{display:flex;flex-direction:column;min-width:0} .qa b{font-size:13.5px;font-weight:600} .qa em{font-style:normal;font-size:11.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.qa:first-child{border-color:color-mix(in srgb,var(--accent) 55%,var(--line));background:color-mix(in srgb,var(--accent-soft) 55%,var(--surface))}
+.ovrow{margin-top:14px} .ovhead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.ovhead .t{font-family:var(--head);font-size:15px;letter-spacing:.04em;font-weight:600} .ovlink{font-family:var(--mono);font-size:11.5px}
+.wpanel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.wtools{display:flex;flex-wrap:wrap;gap:10px 12px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line)}
+.wtools .search{flex:1 1 220px;max-width:340px} .wtools .roster-note{margin-left:auto}
+.wsel{width:auto;max-width:230px;height:34px}
+.legacy{margin-top:14px} .legacy summary{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;padding:12px 14px;cursor:pointer;font-family:var(--head);font-size:14.5px;letter-spacing:.03em;list-style:none}
+.legacy summary::-webkit-details-marker{display:none} .legacy summary>span:first-child::before{content:"▸ ";color:var(--accent)} .legacy[open] summary>span:first-child::before{content:"▾ "}
+.legacy[open] summary{border-bottom:1px solid var(--line)}
+th.ta-r,td.ta-r{text-align:right} .rowacts{display:inline-flex;gap:6px;justify-content:flex-end}
+.cact{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;font-family:var(--mono);font-size:11.5px;padding:8px 11px;border-radius:6px;border:1px solid color-mix(in srgb,var(--chakra) 45%,transparent);background:color-mix(in srgb,var(--chakra) 10%,transparent);color:var(--chakra);cursor:pointer}
+.cact:hover{background:var(--chakra);color:#fff} .cact b{font-weight:700}
+.cbadge.none{color:var(--faint);background:transparent;border:1px dashed var(--line)}
+.toast.ok{border-color:var(--ok);border-left-color:var(--ok)} .toast.err{border-color:var(--crit);border-left-color:var(--crit)}
+/* forms: grouped steps, lookup context, review */
+.fstep{grid-column:1/-1;display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-top:4px}
+.fstep i{font-style:normal;width:19px;height:19px;border-radius:50%;border:1px solid var(--accent);display:grid;place-items:center;font-size:10px;letter-spacing:0}
+.fstep::after{content:"";flex:1;height:1px;background:var(--line)}
+.lk-ctx:empty{display:none}
+.lk-ctx{font-family:var(--mono);font-size:11.5px;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400;display:flex;flex-wrap:wrap;gap:4px 12px;padding:7px 10px;border-radius:6px;background:var(--surface-2);border:1px dashed var(--line)}
+.lk-ctx b{color:var(--fg);font-weight:600}
+.lk-opt.dis{cursor:not-allowed;opacity:.62} .lk-opt.dis b{text-decoration:line-through;text-decoration-color:var(--faint)}
+.lk-opt .why{color:var(--warn)!important;font-family:var(--mono);font-size:10.5px!important}
+.lk-group{padding:6px 10px 4px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);border-top:1px solid var(--line-soft)}
+.fhelp{font-size:11.5px;color:var(--faint);text-transform:none;letter-spacing:0;font-weight:400}
+.fconfirm{margin-top:16px;border:1px solid var(--accent);background:color-mix(in srgb,var(--accent-soft) 60%,var(--surface));border-radius:8px;padding:13px 15px}
+.fconfirm h4{margin:0 0 8px;font-family:var(--head);font-size:15px;letter-spacing:.03em}
+.fconfirm dl{display:grid;grid-template-columns:max-content 1fr;gap:4px 14px;margin:0 0 12px;font-size:13px}
+.fconfirm dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:2px} .fconfirm dd{margin:0;font-family:var(--mono)}
+.cform.confirming .fgrid{opacity:.55;pointer-events:none} .cform.confirming>.factions{display:none}
+/* desktop collapse (icon rail) */
+@media (min-width:901px){
+  .app.collapsed{--rail-w:68px}
+  .app.collapsed .sidebar{padding-left:10px;padding-right:10px}
+  .app.collapsed .sb-bt,.app.collapsed .sb-filters,.app.collapsed .sb-new span,.app.collapsed .appnav .nm,.app.collapsed .appnav .n,.app.collapsed .sb-footrow span,.app.collapsed .tricolor{display:none}
+  .app.collapsed .sb-brand{justify-content:center;padding-bottom:12px}
+  .app.collapsed .sb-new{padding:9px 0}
+  .app.collapsed .appnav a{justify-content:center;padding:10px 0}
+  .app.collapsed .appnav a.on::before{left:-10px}
+  .app.collapsed .sb-footrow{flex-direction:column}
+  .app.collapsed .sb-collapse svg{transform:rotate(180deg)}
+}
+/* tablet + mobile: slide-out drawer */
+@media (max-width:900px){
+  .sidebar{position:fixed;left:0;top:0;bottom:0;height:100dvh;width:min(300px,86vw);transform:translateX(-105%);transition:transform .2s ease;z-index:90;box-shadow:0 0 40px rgba(0,0,0,.45);visibility:hidden}
+  .app.drawer .sidebar{transform:none;visibility:visible}
+  .tb-menu{display:inline-grid}
+  .sb-collapse{display:none!important}
+  .appnav a.on::before{left:-14px}
+}
+@media (max-width:1100px){ .qactions{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:700px){
+  .topbar{gap:10px;padding-block:9px}
+  .topbar .asof{display:none}
+  .tb-cat{flex-basis:100%} .tb-cat .search{flex:1 1 100%} .sortwrap{flex:1}
+  .content{padding-left:12px;padding-right:12px}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px} .kpi{padding:11px 12px} .kpi .val{font-size:22px} .kpi .note{font-size:10px;overflow-wrap:anywhere}
+  .qactions{grid-template-columns:1fr 1fr;gap:8px} .qa{padding:10px} .qa em{display:none}
+  .ptitle{font-size:19px} .wtools .search{max-width:none} .wtools .roster-note{margin-left:0} .wsel{max-width:none;flex:1 1 100%}
+  .pipe-top .pct{font-size:11px}
+  /* tables become labelled stacked rows */
+  .rtable,.ctbl{min-width:0!important}
+  .rtable thead,.ctbl thead{display:none}
+  .rtable tr,.ctbl tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:7px 14px;padding:11px 12px;border-bottom:1px solid var(--line-soft)}
+  .rtable td,.ctbl td{display:block;padding:0!important;border:0!important;min-width:0;overflow-wrap:anywhere;text-align:left}
+  .rtable td::before,.ctbl td::before{content:attr(data-label);display:block;font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);font-weight:600;margin-bottom:1px}
+  .rtable td:first-child,.ctbl td:first-child{grid-column:1/-1} .rtable td:first-child::before,.ctbl td:first-child::before{content:none}
+  .rtable td:first-child .rl,.ctbl td:first-child .rl{font-size:13.5px;font-weight:600}
+  .rtable td.ta-r,.ctbl td.ta-r{grid-column:1/-1} .rtable td.ta-r::before,.ctbl td.ta-r::before{content:none}
+  .rtable td.cempty,.ctbl td.cempty{grid-column:1/-1} .rtable td.cempty::before,.ctbl td.cempty::before{content:none}
+  td.ta-r .rowacts{width:100%;justify-content:flex-start} td.ta-r .rowacts .cbtn{flex:1;text-align:center;padding:8px}
+  .wtools .search{flex-basis:100%} .wtools .roster-note{flex-basis:100%}
+  .modal{padding:0} .sheet{border-radius:0;min-height:100%;padding:16px 14px}
+  .factions{position:sticky;bottom:0;background:var(--surface);padding:10px 0;margin-top:10px;border-top:1px solid var(--line)}
+}
+.qbreak>summary{cursor:pointer;list-style:none} .qbreak>summary::-webkit-details-marker{display:none}
+.qbreak>summary::before{content:"▸";color:var(--accent)} .qbreak[open]>summary::before{content:"▾"}
+
+/* multi-item custody */
+.sheet.wide{width:min(1140px,100%)}
+.mx{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:14px;align-items:start}
+.mx-browse{border:1px solid var(--line);border-radius:8px;background:var(--surface-2);min-width:0}
+.mx-bar{display:flex;flex-direction:column;gap:8px;padding:10px;border-bottom:1px solid var(--line)}
+.mx-crumbs{display:flex;flex-wrap:wrap;align-items:center;font-family:var(--mono);font-size:11.5px;min-height:22px}
+.mx-cr{background:none;border:0;color:var(--accent);cursor:pointer;padding:2px 4px;font:inherit;border-radius:4px}
+.mx-cr:hover{text-decoration:underline} .mx-cr.cur{color:var(--fg);cursor:default}
+.mx-crumbs>*+*::before{content:"›";color:var(--faint);margin-right:7px;display:inline-block;text-decoration:none}
+.mx-body{padding:10px;max-height:min(54vh,480px);overflow:auto}
+.mx-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:8px}
+.mx-tile{text-align:left;display:flex;flex-direction:column;gap:3px;padding:11px 12px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--fg);cursor:pointer;font:inherit}
+.mx-tile b{font-family:var(--head);font-size:15px;letter-spacing:.02em;font-weight:500}
+.mx-tile>span{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.mx-tile:hover,.mx-line:not(.dis):hover{border-color:var(--accent)}
+.mx-tile.lock{border-style:dashed} .mx-tile.lock .mx-cnt{color:var(--crit)}
+.mx-cnt b{color:var(--ok)}
+.mx-selc{font-family:var(--mono);font-size:10px!important;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent)!important;white-space:nowrap}
+.mx-list{display:flex;flex-direction:column;gap:6px}
+.mx-line{display:flex;align-items:center;gap:10px;text-align:left;width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--fg);cursor:pointer;font:inherit}
+.mx-line.dis{cursor:default;flex-wrap:wrap;background:transparent;border-style:dashed}
+.mx-ln{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0} .mx-ln b{font-size:13.5px;font-weight:600} .mx-ln span{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.mx-line .mx-cnt{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:nowrap}
+.mx-lock{font-family:var(--mono);font-size:11px;color:var(--crit)} .mx-go{color:var(--faint);font-size:18px;line-height:1}
+.mx-ast{display:flex;align-items:center;gap:10px;padding:8px 11px;border:1px solid var(--line);border-radius:7px;background:var(--surface);cursor:pointer;text-transform:none;letter-spacing:0;font-weight:400;color:var(--fg)}
+.mx-ast:hover:not(.dis){border-color:var(--accent)}
+.mx-ast.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent-soft) 55%,var(--surface))}
+.mx-ast.dis{cursor:not-allowed;opacity:.6}
+.mx-ast input{width:17px;height:17px;accent-color:var(--accent);flex:none;margin:0}
+.mx-at{display:flex;flex-direction:column;gap:1px;flex:1;min-width:0}
+.mx-at b{font-size:12.5px} .mx-at span{font-size:11.5px;color:var(--muted)} .mx-at .why{color:var(--warn);font-family:var(--mono);font-size:10.5px}
+.mx-head{display:flex;flex-direction:column;gap:2px;margin-bottom:9px} .mx-head b{font-family:var(--head);font-size:16px;font-weight:500} .mx-head span{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.mx-sh{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:2px 0 8px}
+.mx-sh>span{color:var(--fg);font-weight:700;letter-spacing:0} .mx-list+.mx-sh{margin-top:14px}
+.mx-clr{margin-left:auto;background:none;border:0;color:var(--accent);font:inherit;letter-spacing:.04em;cursor:pointer;padding:2px}
+.mx-sel{position:sticky;top:8px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);padding:10px;min-width:0}
+.mx-picked{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;max-height:min(48vh,440px);overflow:auto}
+.mx-picked li{display:flex;align-items:center;gap:8px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.mx-picked li.bad{border-color:var(--crit);background:var(--crit-bg)}
+.mx-picked.rev{max-height:none;font-family:var(--body)}
+.mx-rm{background:none;border:1px solid var(--line);border-radius:5px;color:var(--muted);width:28px;height:28px;cursor:pointer;flex:none}
+.mx-rm:hover,.mx-rm:focus-visible{color:var(--crit);border-color:var(--crit)}
+.mx-hop{margin-left:8px}
+@media (max-width:820px){ .mx{grid-template-columns:1fr} .mx-sel{position:static} .mx-body{max-height:none} }
+@media (max-width:640px){ .fconfirm dl{grid-template-columns:1fr} .fconfirm dd{margin-bottom:6px} .mx-tiles{grid-template-columns:1fr 1fr} .mx-line{flex-wrap:wrap} .mx-hop{margin:8px 0 0} }
 @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
 </style>
 
-<div class="app">
-  <aside class="sidebar">
+<div class="app" id="app">
+  <aside class="sidebar" id="sidebar" aria-label="Primary navigation">
     <div class="sb-brand">
       <div class="crest emblem-crest" aria-hidden="true"><span class="emblem" role="img" aria-label="State Emblem of India"></span></div>
-      <div><h1>EkBharat <b>Armoury</b></h1><div class="sub">Equipment Control</div></div>
+      <div class="sb-bt"><h1>EkBharat <b>Armoury</b></h1><div class="sub">Equipment Control</div></div>
     </div>
-    <div class="sb-live"><span class="dot"></span>SUPPLY STATUS · LIVE · __ASOF__</div>
-    <div class="sb-label">Equipment</div>
-    <nav id="nav"></nav>
-    <div class="sb-sec-status">
-      <div class="sb-label">Delivery Status</div>
-      <div class="sbtns" id="statusf">
-        <button class="sbtn on" data-s="all"><i></i>All statuses</button>
-        <button class="sbtn" data-s="deployed"><i></i>Deployed</button>
-        <button class="sbtn" data-s="partial"><i></i>Partial delivery</button>
-        <button class="sbtn" data-s="production"><i></i>In production</button>
+    <button type="button" class="sb-new" data-act="issue" title="New Custody Record"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>New Custody Record</span></button>
+    <nav class="appnav" id="appnav" aria-label="Sections">
+      <a href="#overview" data-view="overview" title="Overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="3.5" width="7" height="7" rx="1.2"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.2"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.2"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.2"/></svg><span class="nm">Overview</span></a>
+      <a href="#catalogue" data-view="catalogue" title="Equipment Catalogue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3 7.5l9-4 9 4-9 4z"/><path d="M3 7.5v9l9 4 9-4v-9"/><path d="M12 11.5v9"/></svg><span class="nm">Equipment Catalogue</span><span class="n" id="nc-catalogue"></span></a>
+      <a href="#assets" data-view="assets" title="Asset Register"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3.5 12V4h8l9 9-8 8z"/><circle cx="8" cy="8.5" r="1.5"/></svg><span class="nm">Asset Register</span><span class="n" id="nc-assets"></span></a>
+      <a href="#soldiers" data-view="soldiers" title="Soldiers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.8 20.5c0-4 3.2-6.6 7.2-6.6s7.2 2.6 7.2 6.6"/></svg><span class="nm">Soldiers</span><span class="n" id="nc-soldiers"></span></a>
+      <a href="#custody" data-view="custody" title="Custody Records"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h14l-3.5-3.5M20 16H6l3.5 3.5"/></svg><span class="nm">Custody Records</span><span class="n" id="nc-custody"></span></a>
+      <a href="#audit" data-view="audit" title="Audit History"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span class="nm">Audit History</span></a>
+    </nav>
+    <div class="sb-filters" id="sbfilters" aria-label="Catalogue filters">
+      <div class="sb-label">Category</div>
+      <nav id="nav"></nav>
+      <div class="sb-sec-status">
+        <div class="sb-label">Delivery Status</div>
+        <div class="sbtns" id="statusf">
+          <button class="sbtn on" data-s="all"><i></i>All statuses</button>
+          <button class="sbtn" data-s="deployed"><i></i>Deployed</button>
+          <button class="sbtn" data-s="partial"><i></i>Partial delivery</button>
+          <button class="sbtn" data-s="production"><i></i>In production</button>
+        </div>
       </div>
-    </div>
-    <div class="sb-sec-origin">
-      <div class="sb-label">Origin</div>
-      <button class="india-toggle" id="mii"><i></i>Made in India only</button>
-    </div>
-    <div class="sb-sec-alerts">
-      <div class="sb-label">Alerts</div>
-      <button class="alert-toggle" id="lowtoggle"><i></i>Low stock / reorder<span class="cnt" id="lowcnt"></span></button>
+      <div class="sb-sec-origin">
+        <div class="sb-label">Origin</div>
+        <button class="india-toggle" id="mii"><i></i>Made in India only</button>
+      </div>
+      <div class="sb-sec-alerts">
+        <div class="sb-label">Alerts</div>
+        <button class="alert-toggle" id="lowtoggle"><i></i>Low stock / reorder<span class="cnt" id="lowcnt"></span></button>
+      </div>
     </div>
     <div class="sb-foot">
       <div class="tricolor"><span class="s"></span><span class="w"></span><span class="g"></span></div>
-      <button class="tbtn mono" id="theme">◐ TOGGLE THEME</button>
+      <div class="sb-footrow">
+        <button class="tbtn mono" id="theme" title="Toggle theme">◐ <span>THEME</span></button>
+        <button class="tbtn mono sb-collapse" id="sbcollapse" title="Collapse sidebar" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg><span>COLLAPSE</span></button>
+      </div>
     </div>
   </aside>
+  <div class="scrim" id="scrim" hidden></div>
 
   <div class="main">
     <header class="topbar">
-      <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input id="q" type="search" placeholder="Search equipment, spec, origin, soldier code…" autocomplete="off"></label>
-      <div class="sortwrap">Sort<select id="sort" class="sortsel">
-        <option value="default">Category</option>
-        <option value="pending">Pending ↓</option>
-        <option value="delivery">Delivery % ↑</option>
-        <option value="qty">Quantity ↓</option>
-        <option value="name">Name A–Z</option>
-      </select></div>
+      <button type="button" class="tb-menu" id="menubtn" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <div class="tb-title"><span class="tb-crumb">Armoury</span><span class="tb-sep">/</span><b id="tbtitle">Overview</b></div>
+      <div class="tb-cat">
+        <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input id="q" type="search" placeholder="Search equipment, spec, origin, asset tag, soldier code…" autocomplete="off" aria-label="Search catalogue"></label>
+        <div class="sortwrap">Sort<select id="sort" class="sortsel" aria-label="Sort catalogue">
+          <option value="default">Category</option>
+          <option value="pending">Pending ↓</option>
+          <option value="delivery">Delivery % ↑</option>
+          <option value="qty">Quantity ↓</option>
+          <option value="name">Name A–Z</option>
+        </select></div>
+      </div>
       <div class="asof">As of <b>__ASOF__</b> · 0600 IST</div>
     </header>
     <div class="content">
-      <section>
-        <div class="eyebrow">Overview · Supply Readiness</div>
+
+      <!-- OVERVIEW -->
+      <section class="view" data-view="overview">
+        <div class="phead"><div><h2 class="ptitle">Overview</h2><p class="psub">Supply readiness and equipment custody at a glance.</p></div></div>
+        <div class="qactions">
+          <button type="button" class="qa" data-act="issue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span><b>New Custody Record</b><em>Issue a tracked item to a soldier</em></span></button>
+          <button type="button" class="qa" data-act="newasset"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3.5 12V4h8l9 9-8 8z"/><circle cx="8" cy="8.5" r="1.5"/></svg><span><b>Register Equipment Asset</b><em>Add an individually tracked unit</em></span></button>
+          <a class="qa" href="#soldiers" data-focus="sq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M20.5 20.5l-4.6-4.6"/></svg><span><b>Find Soldier</b><em>Search by service code or unit</em></span></a>
+          <a class="qa" href="#custody" data-cview="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h14l-3.5-3.5M20 16H6l3.5 3.5"/></svg><span><b>View Active Custody</b><em>Items currently with soldiers</em></span></a>
+        </div>
         <div class="kpis" id="kpis"></div>
+        <div class="ovrow">
+          <div class="ovhead"><span class="t">Equipment Custody</span><a href="#assets" class="ovlink">Asset Register →</a></div>
+          <div class="qgrid cstrip" id="cstats"></div>
+        </div>
         <div class="pipe">
           <div class="pipe-top"><span class="t">Manufacture &amp; Delivery Pipeline</span><span class="pct mono" id="pipepct"></span></div>
           <div class="bar" id="pipebar"></div>
@@ -420,41 +656,95 @@ footer .meta{font-family:var(--mono);font-size:11px;color:var(--faint);text-alig
           </button>
           <div id="catchart" class="catchart" hidden style="margin-top:12px"></div>
         </div>
-      </section>
-      <section id="mapsection">
-        <div class="eyebrow">Theatre Command Map · Indian Armed Forces</div>
-        <div class="mapgrid">
-          <div class="mapwrap">
-            <svg id="indiamap" viewBox="0 0 820 900" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Map of India showing military commands and bases"></svg>
-            <div class="map-hud tl"></div><div class="map-hud tr"></div><div class="map-hud bl"></div><div class="map-hud br"></div>
-            <div class="map-chrome"><span class="cls">RESTRICTED // EYES ONLY</span></div>
-            <div class="compass">N<span class="nd"></span></div>
-            <div class="rec"><i></i>LIVE FEED · SATCOM LINK</div>
-            <div class="map-info" id="mapinfo"><b>Indian Armed Forces — Command Grid</b><br><span class="co">Hover or tap a station for details</span></div>
-            <div class="map-tag">Grid ref · illustrative · training use</div>
+        <div id="mapsection" style="margin-top:22px">
+          <div class="eyebrow">Theatre Command Map · Indian Armed Forces</div>
+          <div class="mapgrid">
+            <div class="mapwrap">
+              <svg id="indiamap" viewBox="0 0 820 900" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Map of India showing military commands and bases"></svg>
+              <div class="map-hud tl"></div><div class="map-hud tr"></div><div class="map-hud bl"></div><div class="map-hud br"></div>
+              <div class="map-chrome"><span class="cls">RESTRICTED // EYES ONLY</span></div>
+              <div class="compass">N<span class="nd"></span></div>
+              <div class="rec"><i></i>LIVE FEED · SATCOM LINK</div>
+              <div class="map-info" id="mapinfo"><b>Indian Armed Forces — Command Grid</b><br><span class="co">Hover or tap a station for details</span></div>
+              <div class="map-tag">Grid ref · illustrative · training use</div>
+            </div>
+            <div class="maplist"><div class="leg" id="maplegend"></div><div id="maplist"></div></div>
           </div>
-          <div class="maplist"><div class="leg" id="maplegend"></div><div id="maplist"></div></div>
         </div>
       </section>
-      <section>
-        <div class="eyebrow">Inventory · <span id="showing"></span></div>
+
+      <!-- CATALOGUE -->
+      <section class="view" data-view="catalogue" hidden>
+        <div class="phead"><div><h2 class="ptitle">Equipment Catalogue</h2><p class="psub"><span id="showing"></span> · filter from the sidebar · open a card for details, assets and reorders</p></div></div>
         <div id="cats"></div>
         <div class="noresults" id="noresults" hidden>No equipment matches the current filters.</div>
       </section>
-      <section>
-        <div class="eyebrow">Deployment Roster · Equipment → Soldier Code</div>
-        <div class="roster-wrap">
-          <div class="roster-top">
-            <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-              <input id="rq" type="search" placeholder="Filter by soldier code or equipment…" autocomplete="off"></label>
-            <div style="display:flex;align-items:center;gap:12px"><span class="roster-note" id="rnote"></span><button class="rclear" id="rclear" hidden>✕ Clear</button></div>
+
+      <!-- ASSET REGISTER -->
+      <section class="view" data-view="assets" hidden>
+        <div class="phead"><div><h2 class="ptitle">Asset Register</h2><p class="psub">Every individually tracked unit. Assign available items or record returns from here.</p></div>
+          <div class="pacts"><button type="button" class="cbtn pri" data-act="newasset">＋ Register asset</button></div></div>
+        <div class="wpanel">
+          <div class="wtools">
+            <div class="vchips" id="asviews" role="group" aria-label="Asset status"><button class="on" data-v="all">All</button><button data-v="Available">Available</button><button data-v="In Custody">In custody</button><button data-v="held">Inspection / maint.</button><button data-v="Retired">Retired</button></div>
+            <select class="fin wsel" id="ascat" aria-label="Equipment line"><option value="">All equipment lines</option></select>
+            <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="asq" type="search" placeholder="Tag, serial, model, holder…" autocomplete="off" aria-label="Search assets"></label>
+            <span class="roster-note" id="asnote"></span>
           </div>
-          <div class="rscroll"><table>
-            <thead><tr><th>Soldier Code</th><th>Issued Equipment</th><th>Type</th><th>Sub-category</th><th>Status</th></tr></thead>
-            <tbody id="rbody"></tbody>
-          </table></div>
+          <div class="rscroll"><table class="rtable"><thead><tr><th>Asset Tag</th><th>Equipment</th><th>Serial</th><th>Condition</th><th>Status</th><th>Held By</th><th>Since</th><th class="ta-r">Action</th></tr></thead><tbody id="asbody"></tbody></table></div>
         </div>
       </section>
+
+      <!-- SOLDIERS -->
+      <section class="view" data-view="soldiers" hidden>
+        <div class="phead"><div><h2 class="ptitle">Soldiers</h2><p class="psub">Personnel directory by service code — codes only, no names or photographs.</p></div>
+          <div class="pacts"><button type="button" class="cbtn" data-act="newsoldier">＋ New soldier</button></div></div>
+        <div class="wpanel">
+          <div class="wtools">
+            <div class="vchips" id="sviews" role="group" aria-label="Personnel status"><button class="on" data-v="all">All</button><button data-v="Active">Active</button><button data-v="holding">Holding equipment</button><button data-v="On Leave">On leave</button><button data-v="Inactive">Inactive</button></div>
+            <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="sq" type="search" placeholder="Service code, rank, unit, designation…" autocomplete="off" aria-label="Search soldiers"></label>
+            <span class="roster-note" id="snote"></span>
+          </div>
+          <div class="rscroll"><table class="rtable"><thead><tr><th>Service Code</th><th>Rank</th><th>Unit</th><th>Designation</th><th>Status</th><th>Equipment</th><th class="ta-r">Action</th></tr></thead><tbody id="sbody"></tbody></table></div>
+        </div>
+      </section>
+
+      <!-- CUSTODY -->
+      <section class="view" data-view="custody" hidden>
+        <div class="phead"><div><h2 class="ptitle">Custody Records</h2><p class="psub">Who holds which tracked item, and every return. Records are closed on return, never deleted.</p></div>
+          <div class="pacts"><button type="button" class="cbtn pri" data-act="issue">＋ New custody record</button></div></div>
+        <div class="wpanel">
+          <div class="wtools">
+            <div class="vchips" id="cviews" role="group" aria-label="Custody view"><button class="on" data-v="active">Active</button><button data-v="closed">Returned</button><button data-v="damaged">Returned unserviceable</button><button data-v="all">All</button></div>
+            <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="cq" type="search" placeholder="Record, asset tag, serial, soldier code…" autocomplete="off" aria-label="Search custody records"></label>
+            <span class="roster-note" id="cnote"></span>
+          </div>
+          <div class="rscroll"><table class="rtable"><thead><tr><th>Record</th><th>Asset Tag</th><th>Equipment</th><th>Soldier</th><th>Type</th><th>Issued</th><th>Returned</th><th>Status</th><th class="ta-r">Action</th></tr></thead><tbody id="cbody"></tbody></table></div>
+        </div>
+        <details class="wpanel legacy">
+          <summary><span>Legacy bulk-issue roster</span><span class="roster-note" id="rnote"></span></summary>
+          <div class="wtools">
+            <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="rq" type="search" placeholder="Filter by issue code or equipment…" autocomplete="off" aria-label="Filter legacy roster"></label>
+            <button class="rclear" id="rclear" hidden>✕ Clear</button>
+          </div>
+          <div class="rscroll"><table class="rtable"><thead><tr><th>Issue Code</th><th>Issued Equipment</th><th>Type</th><th>Sub-category</th><th>Status</th></tr></thead><tbody id="rbody"></tbody></table></div>
+        </details>
+      </section>
+
+      <!-- AUDIT -->
+      <section class="view" data-view="audit" hidden>
+        <div class="phead"><div><h2 class="ptitle">Audit History</h2><p class="psub">Every custody, asset and personnel change, newest first.</p></div>
+          <div class="pacts"><button type="button" class="rclear" data-act="reset">↺ Reset custody demo data</button></div></div>
+        <div class="wpanel">
+          <div class="wtools">
+            <div class="vchips" id="aviews" role="group" aria-label="Entity"><button class="on" data-v="all">All</button><button data-v="Custody">Custody</button><button data-v="Asset">Asset</button><button data-v="Soldier">Soldier</button></div>
+            <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="aq" type="search" placeholder="Action, record, reason…" autocomplete="off" aria-label="Search audit"></label>
+            <span class="roster-note" id="anote"></span>
+          </div>
+          <div class="rscroll"><table class="rtable"><thead><tr><th>Time</th><th>Entity</th><th>Record</th><th>Action</th><th>Change</th><th>Reason</th><th>By</th></tr></thead><tbody id="abody"></tbody></table></div>
+        </div>
+      </section>
+
       <footer>
         <div class="src">Equipment reference &amp; specifications sourced from <b><a href="https://www.globalmilitary.net/" target="_blank" rel="noopener">globalmilitary.net</a></b>; photographs from Wikimedia Commons. Unit counts, deployment status and soldier codes are illustrative data for an in-game armoury — not real Indian Army procurement records.</div>
         <div class="meta">EKBHARAT ARMOURY CONTROL v4.0<br>Generated __ASOF__ · <span id="wcount"></span> equipment lines</div>
@@ -477,6 +767,7 @@ const STATUS_LABEL={deployed:"Deployed",partial:"Partial",production:"In Product
 let RE={}; try{RE=JSON.parse(localStorage.getItem("armoury-reorders")||"{}")||{};}catch(e){RE={};}
 function persistRE(){try{localStorage.setItem("armoury-reorders",JSON.stringify(RE));}catch(e){}}
 function recompute(w){
+  w.assigned=Store.qty(w).total; // legacy bulk + active tracked custody (single rule in Store.qty)
   w.ordered=w.baseOrdered+(w.onOrder||0);
   w.remaining=w.ordered-w.arrived;
   w.status=w.arrived===0?"production":(w.arrived>=w.ordered?"deployed":"partial");
@@ -491,9 +782,9 @@ function stepFor(w){return w.ammo?1000:(w.baseOrdered>=1000?100:(w.baseOrdered>=
 function refreshAll(){renderTotals();renderChart();renderCats();$("#lowcnt").textContent="("+DATA.items.filter(w=>w.needsReorder).length+")";}
 function addReorder(key,qty){const w=BYKEY[key];if(!w||!(qty>0))return;w.onOrder=(w.onOrder||0)+Math.round(qty);RE[key]=w.onOrder;persistRE();recompute(w);refreshAll();}
 function clearReorder(key){const w=BYKEY[key];if(!w)return;w.onOrder=0;delete RE[key];persistRE();recompute(w);refreshAll();}
-function toast(msg){const h=document.getElementById("toasts");if(!h)return;const t=document.createElement("div");t.className="toast";t.textContent=msg;h.appendChild(t);setTimeout(()=>{t.classList.add("out");setTimeout(()=>t.remove(),320);},2800);}
+function toast(msg,kind){const h=document.getElementById("toasts");if(!h)return;const t=document.createElement("div");t.className="toast"+(kind?" "+kind:"");t.setAttribute("role","status");t.textContent=msg;h.appendChild(t);setTimeout(()=>{t.classList.add("out");setTimeout(()=>t.remove(),320);},2800);}
 let CUR=null;
-const ICONS={weapons:'<path d="M3 7h13l2 3h3v3h-2l-1 2h-5l-1-2H3z"/><path d="M8 10v3"/>',ammunition:'<rect x="9" y="3" width="6" height="9" rx="3"/><path d="M9 12h6v6a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>',nightvision:'<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="2.6"/>',drones:'<circle cx="12" cy="12" r="2"/><path d="M12 10V7M12 14v3M10 12H7M14 12h3"/><circle cx="5" cy="5" r="1.6"/><circle cx="19" cy="5" r="1.6"/><circle cx="5" cy="19" r="1.6"/><circle cx="19" cy="19" r="1.6"/>',armoured:'<path d="M3 13h14v4H3z"/><path d="M6 13v-2h6v2"/><path d="M12 11l7-2v2"/><circle cx="6.5" cy="18.5" r="1.2"/><circle cx="10.5" cy="18.5" r="1.2"/><circle cx="14" cy="18.5" r="1.2"/>',artillery:'<path d="M4 16l13-7"/><path d="M3 16h6l-2 3H3z"/><circle cx="5" cy="17.5" r="1.4"/><path d="M15 8l3 2"/>',attachments:'<circle cx="12" cy="12" r="7"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>',melee:'<path d="M14 3l7 7-9 9-3-3z"/><path d="M5 19l3-3"/>',explosives:'<circle cx="12" cy="14" r="6"/><path d="M12 8V5l3-2"/>',helmets:'<path d="M4 15a8 8 0 0116 0z"/><path d="M3 15h18"/>',armor:'<path d="M12 3l7 3v5c0 5-3 7-7 9-4-2-7-4-7-9V6z"/>',plates:'<rect x="6" y="4" width="12" height="16" rx="2"/>'};
+const ICONS={weapons:'<path d="M3 7h13l2 3h3v3h-2l-1 2h-5l-1-2H3z"/><path d="M8 10v3"/>',ammunition:'<rect x="9" y="3" width="6" height="9" rx="3"/><path d="M9 12h6v6a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>',nightvision:'<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="2.6"/>',drones:'<circle cx="12" cy="12" r="2"/><path d="M12 10V7M12 14v3M10 12H7M14 12h3"/><circle cx="5" cy="5" r="1.6"/><circle cx="19" cy="5" r="1.6"/><circle cx="5" cy="19" r="1.6"/><circle cx="19" cy="19" r="1.6"/>',armoured:'<path d="M3 13h14v4H3z"/><path d="M6 13v-2h6v2"/><path d="M12 11l7-2v2"/><circle cx="6.5" cy="18.5" r="1.2"/><circle cx="10.5" cy="18.5" r="1.2"/><circle cx="14" cy="18.5" r="1.2"/>',artillery:'<path d="M4 16l13-7"/><path d="M3 16h6l-2 3H3z"/><circle cx="5" cy="17.5" r="1.4"/><path d="M15 8l3 2"/>',attachments:'<circle cx="12" cy="12" r="7"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>',melee:'<path d="M14 3l7 7-9 9-3-3z"/><path d="M5 19l3-3"/>',explosives:'<circle cx="12" cy="14" r="6"/><path d="M12 8V5l3-2"/>',helmets:'<path d="M4 15a8 8 0 0116 0z"/><path d="M3 15h18"/>',armor:'<path d="M12 3l7 3v5c0 5-3 7-7 9-4-2-7-4-7-9V6z"/>',plates:'<rect x="6" y="4" width="12" height="16" rx="2"/>',comms:'<rect x="7" y="7" width="10" height="14" rx="2"/><path d="M10 7V3M10 11h4M10 14h4"/>'};
 const state={type:"all",status:"all",india:false,low:false,sort:"default",q:"",rq:""};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -503,7 +794,7 @@ function renderTotals(){
   const w=DATA.items;
   const ordered=w.reduce((a,x)=>a+x.ordered,0),arrived=w.reduce((a,x)=>a+x.arrived,0);
   const remaining=ordered-arrived,issued=w.reduce((a,x)=>a+x.assigned,0);
-  const soldiers=new Set(); w.forEach(x=>x.codes.forEach(c=>soldiers.add(c)));
+  const soldiers=new Set(); w.forEach(x=>x.codes.forEach(c=>soldiers.add(c))); Store.custodians().forEach(id=>soldiers.add(id));
   const rate=Math.round(arrived/ordered*100),mii=w.filter(x=>x.madeIn).length;
   const kpis=[
    {lab:"Items Ordered",val:ordered.toLocaleString(),note:w.length+" equipment lines",cls:""},
@@ -511,7 +802,7 @@ function renderTotals(){
    {lab:"In Manufacture",val:remaining.toLocaleString(),note:"awaiting delivery",cls:"k-warn"},
    {lab:"Delivery Rate",val:rate+"%",note:"all equipment",cls:""},
    {lab:"Items Issued",val:issued.toLocaleString(),note:"to troops & units",cls:""},
-   {lab:"Soldiers Equipped",val:soldiers.size.toLocaleString(),note:"unique soldier codes",cls:"k-ok"},
+   {lab:"Soldiers Equipped",val:soldiers.size.toLocaleString(),note:"issue codes + tracked custodians",cls:"k-ok"},
    {lab:"Made in India",val:mii,note:"indigenous lines",cls:"k-blue"},
    {lab:"Reorder Alerts",val:w.filter(x=>x.needsReorder).length,note:(w.filter(x=>x.onOrder>0).length)+" reordered · low / in production",cls:"k-crit"},
   ];
@@ -536,7 +827,7 @@ function matches(w){
   if(state.status!=="all"&&w.status!==state.status)return false;
   if(state.india&&!w.madeIn)return false;
   if(state.low&&!w.needsReorder)return false;
-  if(state.q){const h=(w.name+" "+w.sub+" "+w.origin+" "+w.typeLabel+" "+w.specs.map(s=>s.v).join(" ")+" "+(w.usedBy?w.usedBy.join(" "):"")+" "+w.codes.join(" ")).toLowerCase();if(!h.includes(state.q))return false;}
+  if(state.q){const h=(w.name+" "+w.sub+" "+w.origin+" "+w.typeLabel+" "+w.specs.map(s=>s.v).join(" ")+" "+(w.usedBy?w.usedBy.join(" "):"")+" "+w.codes.join(" ")+" "+Store.searchBlob(w.key)).toLowerCase();if(!h.includes(state.q))return false;}
   return true;
 }
 function noimgSVG(){return `<div class="noimg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-3 6 5"/></svg><span>PHOTO PENDING</span></div>`;}
@@ -547,13 +838,16 @@ function card(w){
   if(w.ammo){
     assignHead=`<span class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="9" y="3" width="6" height="8" rx="3"/><path d="M9 11h6v7a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>Serial Register</span><span class="ct">${w.reg.boxesIn.toLocaleString()} boxes</span>`;
     assignInner=`<div class="ammo-note">Box <b class="sn">${w.reg.boxFrom}</b> → <b class="sn">${w.reg.boxTo}</b><br>Bullet <b class="sn">${w.reg.bulletFrom}</b> → <b class="sn">${w.reg.bulletTo}</b> · ${w.reg.rpb}/box</div>`;
+  } else if(w.stock&&Store.policyOf(w.type)==="sealed"){
+    assignHead=`<span class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>Sealed Stock</span><span class="ct">store custody</span>`;
+    assignInner=`<span class="stock sealed">⛔ Sealed restricted stock · no soldier issue</span>`;
   } else if(w.stock){
     assignHead=`<span class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 7v10l9 4 9-4V7"/></svg>Unit Stock</span><span class="ct">${w.assigned.toLocaleString()} issued</span>`;
     assignInner=`<span class="stock">◆ Consumable / unit-issue stock</span>`;
   } else {
     const shown=w.codes.slice(0,6),extra=w.codes.length-shown.length;
     assignHead=`<span class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>Assigned Soldiers</span><span class="ct">${w.assigned} / ${w.arrived} issued</span>`;
-    assignInner=w.assigned>0?shown.map(c=>`<span class="scode">${c}</span>`).join("")+(extra>0?`<span class="scode more">+${extra} more</span>`:""):`<span class="empty">— none issued (awaiting stock)</span>`;
+    assignInner=(w.assigned>0?shown.map(c=>`<span class="scode">${c}</span>`).join("")+(extra>0?`<span class="scode more">+${extra} more</span>`:""):`<span class="empty">— none issued (awaiting stock)</span>`);
   }
   const img=w.img?`<img src="${w.img}" alt="${esc(w.name)}" loading="lazy">`:noimgSVG();
   const mii=w.madeIn?`<span class="mii">★ MADE IN INDIA</span>`:"";
@@ -573,7 +867,7 @@ function card(w){
         <div class="ibar-cap"><span>${pct}% delivered · ${unit}</span><span>${w.remaining>0?w.remaining.toLocaleString()+" in manufacture":"order complete"}</span></div>
       </div>
       <div class="assign"><div class="ah">${assignHead}</div><div class="codes">${assignInner}</div></div>
-      <div class="viewmore"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>Click for full details${w.ammo?" &amp; serial register":""}</div>
+      ${cardAction(w)}<div class="viewmore"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>Click for full details${w.ammo?" &amp; serial register":""}</div>
     </div></article>`;
 }
 
@@ -597,7 +891,7 @@ function detailHTML(s){
       <div class="reg-note">showing ${r.sample.length} of ${r.boxesIn.toLocaleString()} in-stock boxes · ${r.boxesPending.toLocaleString()} boxes still in manufacture</div></div>`;
   } else if(!s.stock){
     const chips=s.codes.length?s.codes.map(c=>`<span class="scode" style="cursor:default">${c}</span>`).join(""):'<span class="empty">— none issued (awaiting stock)</span>';
-    extra=`<div class="d-sec"><div class="d-h">Assigned Soldier Codes <span class="dcount">${s.codes.length}</span></div><div class="codes">${chips}</div></div>`;
+    extra=`<div class="d-sec"><div class="d-h">${Store.assetsOf(s.key).length?"Legacy Bulk Issue Codes":"Assigned Soldier Codes"} <span class="dcount">${s.codes.length}</span></div><div class="codes">${chips}</div></div>`;
   } else {
     extra=`<div class="d-sec"><div class="d-h">Issue</div><div class="stock">◆ Unit-issue / consumable stock — ${s.assigned.toLocaleString()} ${unit} issued to units (no individual serial)</div></div>`;
   }
@@ -624,23 +918,15 @@ function detailHTML(s){
     const chips=s.links.map(l=>`<span class="linkchip ${isW?'':'wpn'}" data-key="${l.key}">${esc(l.name)}</span>`).join("");
     linksSec=`<div class="d-sec"><div class="d-h">${title} <span class="dcount">${s.links.length}</span></div><div class="linkrow">${chips}</div></div>`;
   }
-  return `<button class="sheet-x" id="sheetx" aria-label="Close">✕</button>
-    <div class="sheet-head"><div class="sheet-photo">${img||noimgSVG()}</div>
+  return `<div class="sheet-head"><div class="sheet-photo">${img||noimgSVG()}</div>
       <div class="sheet-hd"><div class="sheet-tags"><span class="ttag">${esc(s.typeLabel)}</span><span class="subtag">${esc(s.sub)}</span>${statusPill}${mii}</div>
         <h2>${esc(s.name)}</h2><div class="sheet-origin">${esc(s.origin)} · svc. ${esc(s.year)}</div>${used}</div></div>
+    ${custodyItemSec(s)}
     <div class="sheet-cols">
-      <div class="d-sec" style="margin-top:0"><div class="d-h">Specifications</div><div class="d-grid">${specsRows}</div></div>
-      <div class="d-sec" style="margin-top:0"><div class="d-h">Procurement &amp; Delivery</div><div class="d-grid">${procRows}</div></div>
+      <div class="d-sec"><div class="d-h">Specifications</div><div class="d-grid">${specsRows}</div></div>
+      <div class="d-sec"><div class="d-h">Procurement &amp; Delivery</div><div class="d-grid">${procRows}</div></div>
     </div>${roSec}${linksSec}${extra}`;
 }
-function openDetail(key){
-  const s=BYKEY[key]; if(!s)return;
-  CUR=s;
-  $("#sheet").innerHTML=detailHTML(s);
-  $("#modal").hidden=false; document.body.style.overflow="hidden";
-  $("#modal").scrollTop=0; $("#sheet").scrollTop=0;
-}
-function closeDetail(){ $("#modal").hidden=true; document.body.style.overflow=""; }
 function renderCats(){
   const list=DATA.items.filter(matches);
   $("#showing").textContent=`showing ${list.length} of ${DATA.items.length} equipment lines`;
@@ -675,14 +961,832 @@ function renderRoster(){
   const rows=q?ALLROWS.filter(r=>(r.code+" "+r.name+" "+r.type+" "+r.sub).toLowerCase().includes(q)):ALLROWS;
   $("#rbody").innerHTML=rows.slice(0,700).map(r=>`<tr><td class="code">${r.code}</td><td><span class="wname">${esc(r.name)}</span></td><td><span class="wcat">${esc(r.type)}</span></td><td><span class="wcat">${esc(r.sub)}</span></td><td><span class="tag-status ${r.status}"><i></i>${STATUS_LABEL[r.status]}</span></td></tr>`).join("")
     ||`<tr><td colspan="5" style="padding:26px 16px;color:var(--muted);font-family:var(--mono)">No soldier codes match “${esc(state.rq)}”.</td></tr>`;
-  $("#rnote").innerHTML=`<b>${rows.length.toLocaleString()}</b> of ${ALLROWS.length.toLocaleString()} personal-issue assignments`;
-  $("#rclear").hidden=!state.rq;
+  $("#rnote").innerHTML=`<b>${rows.length.toLocaleString()}</b> of ${ALLROWS.length.toLocaleString()} legacy bulk-issue codes`;
+  $("#rclear").hidden=!state.rq; labelTables($("#rbody").closest("table"));
 }
 function buildNav(){
   const counts={}; DATA.items.forEach(w=>counts[w.type]=(counts[w.type]||0)+1);
   const rows=[["all","All Equipment",DATA.items.length]].concat(DATA.types.map(([k,l])=>[k,l,counts[k]||0]));
   $("#nav").innerHTML=rows.map(([v,l,n])=>{const ic=v==='all'?'<path d="M4 6h16M4 12h16M4 18h16"/>':(ICONS[v]||'');return `<button class="navitem ${v==='all'?'on':''}" data-cat="${v}"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${ic}</svg></span><span class="nm">${esc(l)}</span><span class="n">${n}</span></button>`;}).join("");
 }
+/* =====================================================================
+   CUSTODY DATA / SERVICE LAYER — the single source of truth for soldier-code
+   records, individually tracked assets, custody records and audit events.
+   Views never edit these tables: they call Store mutators, which validate,
+   write audit events, persist ("armoury-custody-v1") and notify subscribers.
+   All quantity rules live in Store.qty() only.
+   ===================================================================== */
+const Store=(()=>{
+  const KEY="armoury-custody-v1", SEED=DATA.custody, POLICY=DATA.policy||{};
+  const OFFICER_RANKS=["Lieutenant","Captain","Major"];
+  const RANKS=["Sepoy","Lance Naik","Naik","Havildar","Naib Subedar","Subedar"].concat(OFFICER_RANKS);
+  const CONDITIONS=["Serviceable","Minor Wear","Unserviceable","Damaged"], OK_COND=["Serviceable","Minor Wear"];
+  const SOLDIER_STATUS=["Active","On Leave","Inactive"], CUSTODY_TYPES=["Personal Issue","Temporary Loan"];
+  // explicit asset status transitions outside the issue/return workflow ("In Custody" is reachable only via issue)
+  const TRANSITIONS={"Available":["Inspection Pending","Under Maintenance","Retired"],
+    "Inspection Pending":["Available","Under Maintenance","Retired"],
+    "Under Maintenance":["Available","Inspection Pending","Retired"],"In Custody":[],"Retired":[]};
+  const OP=SEED.operator||"ADM-DESK-01";
+  const clone=o=>JSON.parse(JSON.stringify(o));
+  const fresh=()=>({v:1,seed:SEED.hash,soldiers:clone(SEED.soldiers),assets:clone(SEED.assets),custody:clone(SEED.custody),audit:clone(SEED.audit),seq:clone(SEED.seq)});
+  let T=null, stale=false, I={}; const subs=[];
+  try{const s=JSON.parse(localStorage.getItem(KEY)||"null"); if(s&&s.v===1&&s.seed===SEED.hash)T=s; else if(s)stale=true;}catch(e){}
+  if(!T)T=fresh();
+  function reindex(){
+    I={sol:{},ast:{},cus:{},code:{},tag:{},serial:{},active:{},byAsset:{},bySol:{},byCat:{},aud:{}};
+    T.soldiers.forEach(s=>{I.sol[s.id]=s;I.code[s.serviceCode.toUpperCase()]=s;});
+    T.assets.forEach(a=>{I.ast[a.id]=a;I.tag[a.tag.toUpperCase()]=a;if(a.serial)I.serial[a.serial.toUpperCase()]=a;(I.byCat[a.catalogueKey]=I.byCat[a.catalogueKey]||[]).push(a);});
+    T.custody.forEach(c=>{I.cus[c.id]=c;(I.byAsset[c.assetId]=I.byAsset[c.assetId]||[]).push(c);(I.bySol[c.soldierId]=I.bySol[c.soldierId]||[]).push(c);if(c.status==="Active")I.active[c.assetId]=c;});
+    T.audit.forEach(e=>{const k=e.entityType+":"+e.entityId;(I.aud[k]=I.aud[k]||[]).push(e);});
+  }
+  reindex();
+  const nid=(p,w)=>{T.seq[p]=(T.seq[p]||0)+1;return p+"-"+String(T.seq[p]).padStart(w,"0");};
+  const now=()=>{const d=new Date();return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,19);};
+  const today=()=>now().slice(0,10);
+  const isDate=s=>/^\d{4}-\d{2}-\d{2}$/.test(s||"")&&!isNaN(Date.parse(s));
+  const str=v=>String(v==null?"":v).trim();
+  const fail=errors=>({ok:false,errors});
+  const has=e=>Object.keys(e).length>0;
+  function audit(entityType,entityId,action,prev,next,reason){
+    T.audit.push({id:nid("AUD",5),entityType,entityId,action,prev:prev==null?null:prev,next:next==null?null:next,by:OP,ts:now(),reason:reason||""});}
+  function emit(){subs.forEach(f=>{try{f();}catch(e){console.error(e);}});}
+  function commit(){reindex();try{localStorage.setItem(KEY,JSON.stringify(T));}catch(e){}emit();}
+  const policyOf=type=>POLICY[type]||"bulk";
+
+  /* ---- quantity rules (see docs/superpowers/specs/2026-11-26-equipment-custody-design.md) ----
+     inventory = arrived · legacy = legacyAssigned (bulk issue codes) · active = tracked assets in custody
+     total assigned = legacy + active (a tracked asset is never also in legacy)
+     untracked reserve = arrived − legacy − tracked · unassigned = arrived − total assigned            */
+  function qty(w){
+    const list=I.byCat[w.key]||[]; let active=0,available=0,other=0,retired=0;
+    list.forEach(a=>{if(I.active[a.id])active++;else if(a.status==="Available")available++;else if(a.status==="Retired")retired++;else other++;});
+    const legacy=w.legacyAssigned||0, total=legacy+active;
+    return {inventory:w.arrived,legacy,tracked:list.length,active,available,other,retired,total,
+      reserve:w.arrived-total,untracked:w.arrived-legacy-list.length};
+  }
+  function issueBlock(a){
+    if(!a)return "Unknown asset";
+    const w=BYKEY[a.catalogueKey];
+    if(!w||policyOf(w.type)!=="tracked")return "This category is not eligible for soldier-level custody";
+    if(a.status==="Retired")return "Retired assets cannot enter a new custody record";
+    const c=I.active[a.id];
+    if(c){const s=I.sol[c.soldierId];return `Already in active custody of ${s?s.serviceCode:"?"} (${c.id}) — return it first`;}
+    if(a.status!=="Available")return `Asset is ${a.status} — not available for issue`;
+    return null;
+  }
+  const isOfficer=s=>!!s&&OFFICER_RANKS.includes(s.rank)&&s.status==="Active";
+
+  /* ---- mutators: validate → mutate → audit → persist → notify ---- */
+  function issue(f){
+    const e={}, a=I.ast[f.assetId], s=I.sol[f.soldierId], o=I.sol[f.authorizedById];
+    if(!a)e.assetId="Select an asset from the lookup"; else {const r=issueBlock(a); if(r)e.assetId=r;}
+    if(!s)e.soldierId="Select a soldier code from the lookup";
+    else if(s.status!=="Active")e.soldierId=`${s.serviceCode} is ${s.status} — only Active personnel can receive custody`;
+    if(!CUSTODY_TYPES.includes(f.type))e.type="Choose a custody type";
+    if(!isDate(f.effectiveDate))e.effectiveDate="Enter a valid effective date";
+    else if(f.effectiveDate>today())e.effectiveDate="Effective date cannot be in the future";
+    else if(a&&f.effectiveDate<a.acquisitionDate)e.effectiveDate="Earlier than the asset's acquisition date ("+a.acquisitionDate+")";
+    if(!o)e.authorizedById="Select the authorising officer";
+    else if(!isOfficer(o))e.authorizedById="Authoriser must be an Active officer";
+    else if(s&&o.id===s.id)e.authorizedById="A soldier cannot authorise their own custody record";
+    if(has(e))return fail(e); if(f._dry)return {ok:true};
+    const c=writeIssue(a,s,o,f,null,now());
+    commit(); return {ok:true,rec:c};
+  }
+  // one custody record + its own audit events for one physical asset (no commit — callers commit)
+  function writeIssue(a,s,o,f,batchId,ts){
+    const id=nid("CUS",5), remarks=str(f.remarks);
+    const c={id,soldierId:s.id,assetId:a.id,type:f.type,effectiveDate:f.effectiveDate,returnDate:null,status:"Active",
+      authorizedById:o.id,issuedBy:OP,receivedBy:s.serviceCode,remarks,returnCondition:null,returnRemarks:null,
+      returnReceivedBy:null,corrections:[],createdAt:ts,updatedAt:ts};
+    if(batchId)c.batchId=batchId;
+    T.custody.push(c); const prev=a.status; a.status="In Custody"; a.updatedAt=ts;
+    const via=batchId?" · batch "+batchId:"";
+    audit("Custody",id,"Custody issued",null,"Active",`${a.tag} → ${s.serviceCode}`+via+(remarks?" · "+remarks:""));
+    audit("Asset",a.id,"Status changed",prev,"In Custody","Issued under "+id);
+    audit("Soldier",s.id,"Custody received",null,a.tag,"Record "+id);
+    I.active[a.id]=c; // so later assets in the same batch see this one as issued
+    return c;
+  }
+  /* multi-item issue: one submission → one independent custody record per asset, all or nothing.
+     Each asset is checked with exactly the single-issue rules (issue with _dry); errors per asset come back in
+     errors.items[assetId] so the UI can point at the problem item. batchId only groups the records. */
+  function issueBatch(f){
+    const ids=Array.isArray(f.assetIds)?f.assetIds.map(str).filter(Boolean):[];
+    const base=Object.assign({},f,{_dry:true}); delete base.assetIds;
+    const e={}, items={}, seen=new Set();
+    if(!ids.length)e.assetIds="Select at least one equipment asset";
+    ids.forEach(id=>{
+      if(seen.has(id)){items[id]="Selected more than once — each physical asset can be issued only once";return;}
+      seen.add(id);
+      if(!I.ast[id]){items[id]="Not a registered tracked asset — catalogue lines, ammunition and explosives cannot enter soldier custody";return;}
+      const r=issue(Object.assign({},base,{assetId:id}));
+      if(!r.ok){
+        if(r.errors.assetId)items[id]=r.errors.assetId;
+        else if(r.errors.effectiveDate&&/acquisition/.test(r.errors.effectiveDate))items[id]=r.errors.effectiveDate;
+        Object.entries(r.errors).forEach(([k,m])=>{if(k!=="assetId"&&!(k==="effectiveDate"&&/acquisition/.test(m)))e[k]=m;});
+      }
+    });
+    if(!ids.length){const r=issue(Object.assign({},base,{assetId:null}));Object.entries(r.errors||{}).forEach(([k,m])=>{if(k!=="assetId")e[k]=m;});}
+    if(has(items)){const n=Object.keys(items).length;e.assetIds=`${n} selected item${n===1?"":"s"} cannot be issued — remove or replace ${n===1?"it":"them"}`;e.items=items;}
+    if(has(e))return fail(e); if(f._dry)return {ok:true};
+    const snap=JSON.stringify(T), s=I.sol[f.soldierId], o=I.sol[f.authorizedById], ts=now();
+    try{
+      const batchId=nid("BAT",4), recs=ids.map(id=>writeIssue(I.ast[id],s,o,f,batchId,ts));
+      commit(); return {ok:true,recs,batchId};
+    }catch(err){T=JSON.parse(snap);reindex();console.error(err);return fail({_:"Nothing was saved — the batch could not be completed"});}
+  }
+  function returnAsset(f){
+    const e={}, c=I.cus[f.custodyId];
+    if(!c)return fail({_:"Custody record not found"});
+    if(c.status!=="Active")return fail({_:"This custody record is already closed"});
+    if(!CONDITIONS.includes(f.condition))e.condition="Record the condition at return";
+    if(!isDate(f.returnDate))e.returnDate="Enter a valid return date";
+    else if(f.returnDate>today())e.returnDate="Return date cannot be in the future";
+    else if(f.returnDate<c.effectiveDate)e.returnDate="Return date is before the custody effective date ("+c.effectiveDate+")";
+    const remarks=str(f.remarks);
+    if(f.condition&&!OK_COND.includes(f.condition)&&remarks.length<4)e.remarks="Describe the damage / fault (required for this condition)";
+    if(has(e))return fail(e); if(f._dry)return {ok:true};
+    const a=I.ast[c.assetId], s=I.sol[c.soldierId], ts=now(), next=OK_COND.includes(f.condition)?"Available":"Inspection Pending";
+    c.status="Closed"; c.returnDate=f.returnDate; c.returnCondition=f.condition; c.returnRemarks=remarks; c.returnReceivedBy=OP; c.updatedAt=ts;
+    const prev=a.status; a.status=next; a.condition=f.condition; a.updatedAt=ts;
+    audit("Custody",c.id,"Custody closed","Active","Closed",`Returned · ${f.condition}`+(remarks?" · "+remarks:""));
+    audit("Asset",a.id,"Status changed",prev,next,"Returned under "+c.id+" · "+f.condition);
+    audit("Soldier",s.id,"Custody returned",a.tag,null,"Record "+c.id);
+    commit(); return {ok:true,rec:c,next};
+  }
+  function setAssetStatus(f){
+    const e={}, a=I.ast[f.assetId]; if(!a)return fail({_:"Asset not found"});
+    const allowed=TRANSITIONS[a.status]||[];
+    if(!allowed.length)return fail({_:a.status==="Retired"?"Retired is a final state":"Return the asset through the custody workflow first"});
+    if(!allowed.includes(f.status))e.status="Not a valid transition from "+a.status;
+    if(!CONDITIONS.includes(f.condition))e.condition="Select the asset condition";
+    else if(f.status==="Available"&&!OK_COND.includes(f.condition))e.condition="An Unserviceable / Damaged asset cannot be made Available";
+    if(str(f.reason).length<4)e.reason="Give a reason for the audit trail";
+    if(has(e))return fail(e); if(f._dry)return {ok:true};
+    const prev=a.status, ts=now(); a.status=f.status; a.condition=f.condition; a.updatedAt=ts;
+    audit("Asset",a.id,f.status==="Retired"?"Asset retired":"Status changed",prev,f.status,str(f.reason)+" · condition "+f.condition);
+    commit(); return {ok:true,rec:a};
+  }
+  function addCorrection(f){
+    const c=I.cus[f.custodyId]; if(!c)return fail({_:"Custody record not found"});
+    const note=str(f.note); if(note.length<6)return fail({note:"Describe the correction (at least 6 characters)"});
+    const ts=now(); c.corrections.push({ts,by:OP,note}); c.updatedAt=ts;
+    audit("Custody",c.id,"Correction note added",null,null,note);
+    commit(); return {ok:true,rec:c};
+  }
+  function createSoldier(f){
+    const e={}, code=str(f.serviceCode).toUpperCase();
+    if(!/^SC-\d{5}$/.test(code))e.serviceCode="Format SC-12345";
+    else if(I.code[code])e.serviceCode="Service code "+code+" already exists";
+    if(!RANKS.includes(f.rank))e.rank="Select a rank";
+    ["department","unit","designation"].forEach(k=>{if(str(f[k]).length<2)e[k]="Required";});
+    if(!SOLDIER_STATUS.includes(f.status))e.status="Select a status";
+    if(has(e))return fail(e);
+    const ts=now(), s={id:nid("SOL",4),serviceCode:code,rank:f.rank,department:str(f.department),unit:str(f.unit),
+      designation:str(f.designation),status:f.status,createdAt:ts,updatedAt:ts};
+    T.soldiers.push(s); audit("Soldier",s.id,"Record created",null,s.status,"Quick-create · "+code);
+    commit(); return {ok:true,rec:s};
+  }
+  function setSoldierStatus(f){
+    const e={}, s=I.sol[f.soldierId]; if(!s)return fail({_:"Soldier record not found"});
+    if(!SOLDIER_STATUS.includes(f.status))e.status="Select a status";
+    else if(f.status===s.status)e.status="Already "+s.status;
+    else if(f.status==="Inactive"&&(I.bySol[s.id]||[]).some(c=>c.status==="Active"))e.status="Return all active custody items before marking Inactive";
+    if(str(f.reason).length<4)e.reason="Give a reason for the audit trail";
+    if(has(e))return fail(e);
+    const prev=s.status; s.status=f.status; s.updatedAt=now();
+    audit("Soldier",s.id,"Status changed",prev,f.status,str(f.reason)); commit(); return {ok:true,rec:s};
+  }
+  function registerAsset(f){
+    const e={}, w=BYKEY[f.catalogueKey];
+    if(!w)return fail({_:"Unknown catalogue record"});
+    if(policyOf(w.type)!=="tracked")return fail({_:"This category is not individually tracked"});
+    if(qty(w).untracked<=0)return fail({_:"No untracked units left on this line — every arrived unit is already assigned or tracked"});
+    const tag=str(f.tag).toUpperCase(), serial=str(f.serial).toUpperCase();
+    if(!/^EKB-[A-Z0-9]+-\d{4}$/.test(tag))e.tag="Format EKB-XXXX-0001";
+    else if(I.tag[tag])e.tag="Asset tag "+tag+" already exists";
+    if(serial.length<4)e.serial="Enter the manufacturer serial";
+    else if(I.serial[serial])e.serial="Serial "+serial+" is already registered";
+    if(!CONDITIONS.includes(f.condition))e.condition="Select the condition";
+    if(!isDate(f.acquisitionDate))e.acquisitionDate="Enter a valid date";
+    else if(f.acquisitionDate>today())e.acquisitionDate="Acquisition date cannot be in the future";
+    if(has(e))return fail(e);
+    const ts=now(), st=OK_COND.includes(f.condition)?"Available":"Inspection Pending";
+    const a={id:nid("AST",4),tag,catalogueKey:w.key,serial,condition:f.condition,status:st,acquisitionDate:f.acquisitionDate,
+      docRef:str(f.docRef)||"—",createdAt:ts,updatedAt:ts};
+    T.assets.push(a); audit("Asset",a.id,"Asset registered",null,st,"Catalogue "+w.name+(a.docRef!=="—"?" · "+a.docRef:""));
+    commit(); return {ok:true,rec:a};
+  }
+  function reset(){try{localStorage.removeItem(KEY);}catch(e){} T=fresh(); stale=false; reindex(); emit();}
+
+  /* ---- read API ---- */
+  const byTsDesc=(a,b)=>(b.ts||b.createdAt).localeCompare(a.ts||a.createdAt)||b.id.localeCompare(a.id);
+  return {
+    OFFICER_RANKS,RANKS,CONDITIONS,OK_COND,SOLDIER_STATUS,CUSTODY_TYPES,TRANSITIONS,operator:OP,
+    get stale(){return stale;}, today, policyOf, qty, issueBlock,
+    soldier:id=>I.sol[id], asset:id=>I.ast[id], custodyRec:id=>I.cus[id],
+    soldiers:()=>T.soldiers, assets:()=>T.assets, custody:()=>T.custody.slice().sort(byTsDesc), audit:()=>T.audit.slice().sort(byTsDesc),
+    assetsOf:key=>I.byCat[key]||[], activeFor:assetId=>I.active[assetId]||null,
+    custodyOfAsset:id=>(I.byAsset[id]||[]).slice().sort(byTsDesc), custodyOfSoldier:id=>(I.bySol[id]||[]).slice().sort(byTsDesc),
+    auditFor:(type,id)=>I.aud[type+":"+id]||[],
+    eligibleAssets:()=>T.assets.filter(a=>!issueBlock(a)),
+    activeSoldiers:()=>T.soldiers.filter(s=>s.status==="Active"),
+    officers:()=>T.soldiers.filter(isOfficer),
+    custodians:()=>new Set(Object.values(I.active).map(c=>c.soldierId)),
+    searchBlob:key=>(I.byCat[key]||[]).map(a=>{const c=I.active[a.id],s=c&&I.sol[c.soldierId];return a.tag+" "+a.serial+" "+(s?s.serviceCode:"");}).join(" "),
+    suggestTag:key=>{const l=I.byCat[key]||[];const p=l.length?l[0].tag.replace(/-\d{4}$/,""):"EKB-"+key.toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,6);
+      let n=l.length+1;while(I.tag[(p+"-"+String(n).padStart(4,"0")).toUpperCase()])n++;return p+"-"+String(n).padStart(4,"0");},
+    issue,issueBatch,returnAsset,setAssetStatus,addCorrection,createSoldier,setSoldierStatus,registerAsset,reset,
+    subscribe:fn=>subs.push(fn),
+  };
+})();
+
+/* =====================================================================
+   CUSTODY UI — record views (item · asset · soldier · custody), forms,
+   searchable lookups, and the Custody / Soldiers / Audit tabs.
+   Everything renders from Store; nothing here keeps its own copy.
+   ===================================================================== */
+const fmtD=s=>{if(!s)return "—";const d=new Date(String(s).slice(0,10)+"T00:00:00");return isNaN(d)?esc(s):d.toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"});};
+const fmtTs=s=>s?fmtD(s)+" · "+String(s).slice(11,16):"—";
+const AST_CLS={"Available":"av","In Custody":"cu","Inspection Pending":"ip","Under Maintenance":"um","Retired":"rt"};
+const badge=(t,c)=>`<span class="cbadge ${c}"><i></i>${esc(t)}</span>`;
+const astBadge=a=>badge(a.status,AST_CLS[a.status]||"");
+const cusBadge=c=>badge(c.status==="Active"?"Active":"Returned",c.status==="Active"?"cu":"cl");
+const solBadge=s=>badge(s.status,{"Active":"av","On Leave":"ip","Inactive":"rt"}[s.status]||"");
+const goBtn=(kind,id,label)=>`<button type="button" class="rl" data-go="${kind}:${esc(id)}">${esc(label)}</button>`;
+const solLink=id=>{const s=Store.soldier(id);return s?goBtn("soldier",id,s.serviceCode):'<span class="faintx">—</span>';};
+const astLink=id=>{const a=Store.asset(id);return a?goBtn("asset",id,a.tag):"—";};
+const itemLink=key=>{const w=BYKEY[key];return w?goBtn("item",key,w.name):"—";};
+const cusLink=id=>goBtn("custody",id,id);
+const fld=(l,html)=>`<div class="d-spec"><span class="dl">${esc(l)}</span><span class="dv">${html}</span></div>`;
+const emptyRow=(n,msg)=>`<tr><td colspan="${n}" class="cempty">${esc(msg)}</td></tr>`;
+const ctable=(heads,rows,n,emptyMsg)=>`<div class="rscroll"><table class="ctbl"><thead><tr>${heads.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.length?rows.join(""):emptyRow(n,emptyMsg)}</tbody></table></div>`;
+function timeline(events){
+  if(!events.length)return `<div class="cempty">No activity recorded.</div>`;
+  return `<ol class="tline">${events.map(e=>`<li><span class="tl-ts">${fmtTs(e.ts)}</span><span class="tl-a"><b>${esc(e.action)}</b>${e.prev||e.next?` <span class="tl-ch">${esc(e.prev||"∅")} → ${esc(e.next||"∅")}</span>`:""}</span><span class="tl-r">${esc(e.reason||"")}</span><span class="tl-by">${esc(e.entityType)} ${esc(e.entityId)} · ${esc(e.by)}</span></li>`).join("")}</ol>`;
+}
+const sortEv=l=>l.slice().sort((a,b)=>b.ts.localeCompare(a.ts)||b.id.localeCompare(a.id));
+
+/* ---- sheet view stack (record navigation with back) ---- */
+let VIEWS=[];
+function viewTitle(v){
+  if(v.kind==="item")return (BYKEY[v.key]||{}).name||"equipment";
+  if(v.kind==="asset")return (Store.asset(v.id)||{}).tag||"asset";
+  if(v.kind==="soldier")return (Store.soldier(v.id)||{}).serviceCode||"soldier";
+  if(v.kind==="custody")return v.id;
+  return "previous";
+}
+function sheetOpen(v,reset){
+  const closed=$("#modal").hidden;
+  if(reset||closed)VIEWS=[];
+  VIEWS.push(v); renderSheet(false);
+  if(closed){$("#modal").hidden=false;document.body.style.overflow="hidden";}
+}
+function sheetBack(){if(VIEWS.length>1){VIEWS.pop();renderSheet(false);}else closeDetail();}
+function renderSheet(keep){
+  const v=VIEWS[VIEWS.length-1]; if(!v)return;
+  const m=$("#modal"), top=keep?m.scrollTop:0;
+  let html; try{html=(VIEW_RENDER[v.kind]||(()=>null))(v);}catch(e){console.error(e);html=null;}
+  if(html==null)html=`<div class="cempty" style="padding:40px 0">This record no longer exists.</div>`;
+  CUR=v.kind==="item"?BYKEY[v.key]:null; $("#sheet").classList.toggle("wide",v.kind==="multi");
+  const prev=VIEWS[VIEWS.length-2];
+  $("#sheet").innerHTML=`<button class="sheet-x" id="sheetx" aria-label="Close">✕</button>`
+    +(prev?`<button type="button" class="sheet-back" data-act="back">◂ Back to ${esc(viewTitle(prev))}</button>`:"")+html;
+  labelTables($("#sheet")); m.scrollTop=top; if(!keep)$("#sheet").scrollTop=0;
+  if(!keep&&v.focus){const t=document.getElementById(v.focus);if(t)t.scrollIntoView({block:"start"});}
+  if(!keep&&v.form){const f=$("#sheet").querySelector(".cform .fin:not([type=hidden])");if(f)f.focus({preventScroll:true});}
+}
+function openDetail(key){if(BYKEY[key])sheetOpen({kind:"item",key},true);}
+function closeDetail(){$("#modal").hidden=true;document.body.style.overflow="";VIEWS=[];CUR=null;}
+
+/* ---- item view: custody control, quantity breakdown, tracked-assets subgrid ---- */
+function custodyItemSec(w){
+  const pol=Store.policyOf(w.type);
+  if(pol==="sealed")return `<div class="d-sec"><div class="d-h">Custody Control</div><div class="restrict">⛔ Sealed restricted stock — held under authorised store custody only. Not issuable to individual soldiers; no soldier-level custody records exist for this category.</div></div>`;
+  if(pol!=="tracked")return `<div class="d-sec"><div class="d-h">Custody Control</div><div class="restrict soft">Restricted unit-issue stock — accounted in aggregate only. No soldier-level custody workflow for this category.</div></div>`;
+  const q=Store.qty(w), ORD={"Available":0,"In Custody":1,"Inspection Pending":2,"Under Maintenance":3,"Retired":4};
+  const list=Store.assetsOf(w.key).slice().sort((a,b)=>(ORD[a.status]-ORD[b.status])||a.tag.localeCompare(b.tag));
+  const tiles=[["Total inventory",q.inventory,"arrived in armoury"],["Legacy bulk assigned",q.legacy,"issue codes"],["Tracked in custody",q.active,"of "+q.tracked+" tracked assets"],
+    ["Tracked available",q.available,(q.other?q.other+" insp./maint. · ":"")+(q.retired?q.retired+" retired":"ready to issue")],["Total assigned",q.total,"legacy + tracked custody"],["Unassigned",q.reserve,"arrived − total assigned"]];
+  const rows=list.map(a=>{const c=Store.activeFor(a.id);return `<tr><td>${astLink(a.id)}</td><td class="mono sm">${esc(a.serial)}</td><td>${esc(a.condition)}</td><td>${astBadge(a)}</td><td>${c?solLink(c.soldierId):'<span class="faintx">in armoury</span>'}</td><td class="ta-r">${assetActs(a,c)}</td></tr>`;});
+  const canReg=q.untracked>0;
+  return `<div class="d-sec" id="trk"><div class="d-h">Tracked Assets <span class="dcount">${q.available} available · ${list.length} total</span>
+      <span class="dh-sp"></span>${canReg?`<button type="button" class="cbtn" data-act="newasset" data-key="${w.key}">＋ Register asset</button>`:""}</div>
+      ${ctable(["Asset Tag","Serial","Condition","Status","Held By",'<span class="ta-r">Action</span>'],rows,6,"No individually tracked units on this line yet. Register one to start issuing it to soldiers.")}</div>
+    <details class="d-sec qbreak"><summary class="d-h">Quantity Breakdown <span class="dcount">total assigned ${q.total.toLocaleString()} of ${q.inventory.toLocaleString()}</span></summary>
+    <div class="qgrid">${tiles.map(([l,v,n])=>`<div class="qt"><div class="ql">${l}</div><div class="qv tnum">${v.toLocaleString()}</div><div class="qn">${esc(n)}</div></div>`).join("")}</div></details>`;
+}
+/* row action for any tracked asset: Assign when available, Return when held, else View */
+function assetActs(a,c){
+  if(c)return `<span class="rowacts"><button type="button" class="cbtn" data-act="return" data-id="${c.id}">↩ Return</button></span>`;
+  if(!Store.issueBlock(a))return `<span class="rowacts"><button type="button" class="cbtn pri" data-act="issue" data-asset="${a.id}">Assign</button></span>`;
+  return `<span class="rowacts"><button type="button" class="cbtn" data-go="asset:${a.id}">View</button></span>`;
+}
+/* catalogue card action for tracked-policy lines */
+function cardAction(w){
+  if(Store.policyOf(w.type)!=="tracked")return "";
+  const q=Store.qty(w);
+  if(!q.tracked&&q.untracked<=0)return "";
+  return `<button type="button" class="cact" data-act="assets" data-key="${w.key}">${q.tracked?`<span>Manage assets</span><span><b>${q.available}</b> available · ${q.active} issued</span>`:`<span>Register tracked assets</span><span>＋</span>`}</button>`;
+}
+
+/* ---- asset record ---- */
+function viewAsset(v){
+  const a=Store.asset(v.id); if(!a)return null;
+  const w=BYKEY[a.catalogueKey]||{}, c=Store.activeFor(a.id), hist=Store.custodyOfAsset(a.id);
+  const ev=sortEv(Store.auditFor("Asset",a.id).concat(...hist.map(h=>Store.auditFor("Custody",h.id))));
+  const block=Store.issueBlock(a), trans=Store.TRANSITIONS[a.status]||[];
+  const acts=[c?`<button type="button" class="cbtn pri" data-act="return" data-id="${c.id}">↩ Return to armoury</button>`:"",
+    !block?`<button type="button" class="cbtn pri" data-act="issue" data-asset="${a.id}">＋ Create custody record</button>`:"",
+    trans.length?`<button type="button" class="cbtn" data-act="status" data-id="${a.id}">Change status</button>`:""].join("");
+  const rows=hist.map(h=>`<tr><td>${cusLink(h.id)}</td><td>${solLink(h.soldierId)}</td><td>${esc(h.type)}</td><td class="mono sm">${fmtD(h.effectiveDate)}</td><td class="mono sm">${fmtD(h.returnDate)}</td><td>${esc(h.returnCondition||"—")}</td><td>${cusBadge(h)}</td></tr>`);
+  return `<div class="sheet-head"><div class="sheet-photo sm">${w.img?`<img src="${w.img}" alt="${esc(w.name||"")}">`:noimgSVG()}</div>
+    <div class="sheet-hd"><div class="sheet-tags"><span class="ttag">${esc(w.typeLabel||"")}</span><span class="subtag">Tracked asset</span>${astBadge(a)}</div>
+    <h2 class="mono">${esc(a.tag)}</h2><div class="sheet-origin">${esc(w.name||"")} · S/N ${esc(a.serial)}</div>
+    ${block&&!c?`<div class="cnote">${esc(block)}</div>`:""}<div class="cacts">${acts}</div></div></div>
+    <div class="sheet-cols">
+      <div class="d-sec" style="margin-top:0"><div class="d-h">Equipment Identity</div><div class="d-grid">
+        ${fld("Asset ID",esc(a.id))}${fld("Asset Tag",esc(a.tag))}${fld("Serial Number",esc(a.serial))}${fld("Catalogue Model",itemLink(a.catalogueKey))}
+        ${fld("Category",esc(w.typeLabel||"—"))}${fld("Manufacturer / Origin",esc(w.origin||"—"))}${fld("Acquisition Date",fmtD(a.acquisitionDate))}${fld("Documentation Ref",esc(a.docRef||"—"))}</div></div>
+      <div class="d-sec" style="margin-top:0"><div class="d-h">Status &amp; Custody</div><div class="d-grid">
+        ${fld("Asset Status",astBadge(a))}${fld("Condition",esc(a.condition))}${fld("Current Custodian",c?solLink(c.soldierId):"— in armoury")}${fld("Custody Since",c?fmtD(c.effectiveDate):"—")}
+        ${fld("Active Record",c?cusLink(c.id):"—")}${fld("Custody Records",String(hist.length))}${fld("Created",fmtTs(a.createdAt))}${fld("Updated",fmtTs(a.updatedAt))}</div></div>
+    </div>
+    <div class="d-sec"><div class="d-h">Custody History <span class="dcount">${hist.length}</span></div>${ctable(["Record","Soldier Code","Type","Effective","Returned","Return Condition","Status"],rows,7,"No custody records for this asset yet.")}</div>
+    <div class="d-sec"><div class="d-h">Audit Timeline <span class="dcount">${ev.length}</span></div>${timeline(ev)}</div>`;
+}
+
+/* ---- soldier-code record (codes only — no names, no photos) ---- */
+function viewSoldier(v){
+  const s=Store.soldier(v.id); if(!s)return null;
+  const recs=Store.custodyOfSoldier(s.id), act=recs.filter(c=>c.status==="Active"), past=recs.filter(c=>c.status!=="Active");
+  const ev=sortEv(Store.auditFor("Soldier",s.id).concat(...recs.map(c=>Store.auditFor("Custody",c.id))));
+  const cur=act.map(c=>{const a=Store.asset(c.assetId)||{},w=BYKEY[a.catalogueKey]||{};return `<tr class="rowlink" data-go="asset:${a.id}"><td>${itemLink(a.catalogueKey)}</td><td>${esc(w.sub||"")}</td><td>${astLink(a.id)}</td><td>${esc(w.typeLabel||"")}</td><td>${esc(a.condition||"")}</td><td class="mono sm">${fmtD(c.effectiveDate)}</td><td>${cusBadge(c)}</td></tr>`;});
+  const hist=past.map(c=>{const a=Store.asset(c.assetId)||{};return `<tr><td>${cusLink(c.id)}</td><td>${astLink(a.id)}</td><td>${itemLink(a.catalogueKey)}</td><td class="mono sm">${fmtD(c.effectiveDate)}</td><td class="mono sm">${fmtD(c.returnDate)}</td><td>${esc(c.returnCondition||"—")}</td></tr>`;});
+  const authored=Store.custody().filter(c=>c.authorizedById===s.id).length;
+  return `<div class="sheet-head"><div class="sheet-photo sm codeav"><span>${esc(s.serviceCode.slice(3))}</span><em>SERVICE CODE</em></div>
+    <div class="sheet-hd"><div class="sheet-tags"><span class="ttag">Soldier record</span><span class="subtag">${esc(s.rank)}</span>${solBadge(s)}</div>
+    <h2 class="mono">${esc(s.serviceCode)}</h2><div class="sheet-origin">${esc(s.designation)} · ${esc(s.unit)} · ${esc(s.department)}</div>
+    <div class="cacts">${s.status==="Active"?`<button type="button" class="cbtn pri" data-act="issue" data-soldier="${s.id}">＋ Create custody record</button>`:`<span class="cnote">${esc(s.status)} — cannot receive new custody</span>`}
+      <button type="button" class="cbtn" data-act="solstatus" data-id="${s.id}">Change status</button></div></div></div>
+    <div class="d-sec"><div class="d-h">Overview</div><div class="qgrid">
+      <div class="qt"><div class="ql">Current items</div><div class="qv tnum">${act.length}</div><div class="qn">active custody records</div></div>
+      <div class="qt"><div class="ql">Custody history</div><div class="qv tnum">${past.length}</div><div class="qn">closed records</div></div>
+      <div class="qt"><div class="ql">Authorised</div><div class="qv tnum">${authored}</div><div class="qn">records as officer</div></div></div></div>
+    <div class="d-sec"><div class="d-h">Personnel Information</div><div class="d-grid">
+      ${fld("Soldier ID",esc(s.id))}${fld("Service Code",esc(s.serviceCode))}${fld("Rank",esc(s.rank))}${fld("Arm / Department",esc(s.department))}
+      ${fld("Unit",esc(s.unit))}${fld("Designation",esc(s.designation))}${fld("Employment Status",solBadge(s))}${fld("Updated",fmtTs(s.updatedAt))}</div></div>
+    <div class="d-sec" id="soleq"><div class="d-h">Current Equipment Records <span class="dcount">${act.length}</span></div>${ctable(["Equipment","Model","Asset Tag","Category","Condition","Custody Start","Status"],cur,7,"No equipment currently in this soldier's custody.")}</div>
+    <div class="d-sec"><div class="d-h">Equipment History <span class="dcount">${past.length}</span></div>${ctable(["Record","Asset Tag","Equipment","Effective","Returned","Return Condition"],hist,6,"No closed custody records.")}</div>
+    <div class="d-sec"><div class="d-h">Activity Timeline <span class="dcount">${ev.length}</span></div>${timeline(ev)}</div>`;
+}
+
+/* ---- custody record ---- */
+function viewCustody(v){
+  const c=Store.custodyRec(v.id); if(!c)return null;
+  const a=Store.asset(c.assetId)||{}, w=BYKEY[a.catalogueKey]||{}, ev=sortEv(Store.auditFor("Custody",c.id));
+  const corr=c.corrections.length?`<ol class="tline">${c.corrections.map(x=>`<li><span class="tl-ts">${fmtTs(x.ts)}</span><span class="tl-a"><b>Correction</b></span><span class="tl-r">${esc(x.note)}</span><span class="tl-by">${esc(x.by)}</span></li>`).join("")}</ol>`:`<div class="cempty">No corrections. Closed records are immutable; amendments are appended here.</div>`;
+  return `<div class="sheet-head"><div class="sheet-hd"><div class="sheet-tags"><span class="ttag">Custody record</span><span class="subtag">${esc(c.type)}</span>${cusBadge(c)}</div>
+    <h2 class="mono">${esc(c.id)}</h2><div class="sheet-origin">${esc(a.tag||"")} · ${esc(w.name||"")}</div>
+    <div class="cacts">${c.status==="Active"?`<button type="button" class="cbtn pri" data-act="return" data-id="${c.id}">↩ Return to armoury</button>`:""}
+      <button type="button" class="cbtn" data-act="correct" data-id="${c.id}">Add correction note</button></div></div></div>
+    <div class="sheet-cols">
+      <div class="d-sec" style="margin-top:0"><div class="d-h">Relationship</div><div class="d-grid">
+        ${fld("Soldier",solLink(c.soldierId))}${fld("Asset",astLink(c.assetId))}${fld("Catalogue Model",itemLink(a.catalogueKey))}${fld("Custody Type",esc(c.type))}
+        ${fld("Authorised By",solLink(c.authorizedById))}${fld("Issued By",esc(c.issuedBy))}${fld("Received By",esc(c.receivedBy))}${fld("Remarks",esc(c.remarks||"—"))}</div></div>
+      <div class="d-sec" style="margin-top:0"><div class="d-h">Dates &amp; Return</div><div class="d-grid">
+        ${fld("Effective Date",fmtD(c.effectiveDate))}${fld("Return Date",fmtD(c.returnDate))}${fld("Return Condition",esc(c.returnCondition||"—"))}${fld("Return Received By",esc(c.returnReceivedBy||"—"))}
+        ${fld("Return Remarks",esc(c.returnRemarks||"—"))}${fld("Record Status",cusBadge(c))}${fld("Created",fmtTs(c.createdAt))}${fld("Updated",fmtTs(c.updatedAt))}</div></div>
+    </div>
+    <div class="d-sec"><div class="d-h">Corrections <span class="dcount">${c.corrections.length}</span></div>${corr}</div>
+    <div class="d-sec"><div class="d-h">Audit Timeline <span class="dcount">${ev.length}</span></div>${timeline(ev)}</div>`;
+}
+
+/* ---- forms + searchable lookup ----
+   Lookups list every record but disable ineligible ones with the reason (validation still lives in Store). */
+const LK={}, LKCTX={};
+function lookup(name,opts,sel,ph){
+  LK[name]=opts.slice().sort((a,b)=>(!!a.dis)-(!!b.dis));
+  const s=opts.find(o=>o.id===sel&&!o.dis);
+  return `<div class="lk" data-lk="${name}"><input class="fin lk-in" type="text" autocomplete="off" spellcheck="false" placeholder="${esc(ph)}" value="${s?esc(s.label):""}" role="combobox" aria-autocomplete="list" aria-expanded="false"><input type="hidden" name="${name}" value="${s?esc(s.id):""}"><div class="lk-list" role="listbox" hidden></div></div><div class="lk-ctx" data-ctx="${name}">${s&&LKCTX[name]?LKCTX[name](s.id):""}</div>`;
+}
+function lkFilter(box){
+  const q=box.querySelector(".lk-in").value.trim().toLowerCase(), opts=LK[box.dataset.lk]||[];
+  const m=opts.filter(o=>(o.label+" "+o.sub+" "+(o.dis||"")).toLowerCase().includes(q)).slice(0,60), list=box.querySelector(".lk-list");
+  const firstOk=m.findIndex(o=>!o.dis); let lastDis=false;
+  list.innerHTML=m.length?m.map((o,i)=>{const head=o.dis&&!lastDis?`<div class="lk-group">Not available</div>`:"";lastDis=!!o.dis;
+      return head+`<div class="lk-opt${o.dis?" dis":""}${i===firstOk?" hi":""}" role="option" aria-disabled="${!!o.dis}" data-id="${esc(o.id)}"><b>${esc(o.label)}</b><span>${esc(o.sub)}</span>${o.dis?`<span class="why">${esc(o.dis)}</span>`:""}</div>`;}).join("")
+    :`<div class="lk-none">No records match “${esc(q)}”.</div>`;
+  list.hidden=false; box.querySelector(".lk-in").setAttribute("aria-expanded","true");
+}
+function lkPick(box,id){
+  const name=box.dataset.lk, o=(LK[name]||[]).find(x=>x.id===id); if(!o||o.dis)return;
+  box.querySelector(".lk-in").value=o.label; box.querySelector("input[type=hidden]").value=o.id;
+  lkClose(box); box.querySelector(".lk-in").classList.remove("bad");
+  const ctx=box.parentElement.querySelector(`.lk-ctx[data-ctx="${name}"]`); if(ctx)ctx.innerHTML=LKCTX[name]?LKCTX[name](o.id):"";
+  const err=box.closest(".fl")&&box.closest(".fl").querySelector(".ferr"); if(err)err.textContent="";
+}
+function lkClose(box){box.querySelector(".lk-list").hidden=true;box.querySelector(".lk-in").setAttribute("aria-expanded","false");}
+const ferr=n=>`<div class="ferr" data-err="${n}" role="alert"></div>`;
+const fl=(label,ctrl,n,wide,help)=>`<label class="fl${wide?" wide":""}"><span>${label}</span>${ctrl}${help?`<span class="fhelp">${help}</span>`:""}${ferr(n)}</label>`;
+const fstep=(n,t)=>`<div class="fstep"><i>${n}</i>${esc(t)}</div>`;
+const sel=(n,opts,v)=>`<select class="fin" name="${n}">${opts.map(o=>`<option${o===v?" selected":""}>${esc(o)}</option>`).join("")}</select>`;
+const sel0=(n,opts,ph)=>`<select class="fin" name="${n}"><option value="">${esc(ph)}</option>${opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select>`;
+const inp=(n,v,attrs)=>`<input class="fin" name="${n}" value="${esc(v||"")}" ${attrs||""}>`;
+function formWrap(tag,title,sub,form,body,submit){
+  return `<div class="fhead"><div class="sheet-tags"><span class="ttag">${esc(tag)}</span></div><h2>${esc(title)}</h2>${sub?`<div class="sheet-origin">${sub}</div>`:""}</div>
+    <form class="cform" data-form="${form}" novalidate>${body}<div class="ferr form" data-err="_" role="alert"></div><div class="fconfirm" hidden></div>
+    <div class="factions"><button type="submit" class="ro-place">${esc(submit)}</button><button type="button" class="cbtn" data-act="back">Cancel</button></div></form>`;
+}
+const nActive=sid=>Store.custodyOfSoldier(sid).filter(c=>c.status==="Active").length;
+const assetOpt=a=>{const w=BYKEY[a.catalogueKey]||{};return {id:a.id,label:a.tag,sub:`${w.name||""} · S/N ${a.serial} · ${a.condition}`,dis:Store.issueBlock(a)};};
+const solOpt=s=>({id:s.id,label:s.serviceCode,sub:`${s.rank} · ${s.designation} · ${s.unit}`,dis:s.status!=="Active"?s.status+" — cannot receive custody":null});
+const offOpt=s=>({id:s.id,label:s.serviceCode,sub:`${s.rank} · ${s.designation} · ${s.unit}`,dis:s.status!=="Active"?s.status:null});
+LKCTX.assetId=id=>{const a=Store.asset(id),w=a&&BYKEY[a.catalogueKey];return a?`<span>Model <b>${esc(w.name)}</b></span><span>Category <b>${esc(w.typeLabel)}</b></span><span>Serial <b>${esc(a.serial)}</b></span><span>Condition <b>${esc(a.condition)}</b></span>`:"";};
+LKCTX.soldierId=id=>{const s=Store.soldier(id);if(!s)return "";const held=Store.custodyOfSoldier(id).filter(c=>c.status==="Active").map(c=>(Store.asset(c.assetId)||{}).tag).filter(Boolean),n=held.length;
+  return `<span><b>${esc(s.rank)}</b> · ${esc(s.designation)}</span><span>${esc(s.unit)}</span><span>Currently holds <b>${n}</b> item${n===1?"":"s"}${n?": "+held.slice(0,6).map(esc).join(", ")+(n>6?" …":""):""}</span>`;};
+LKCTX.authorizedById=id=>{const s=Store.soldier(id);return s?`<span><b>${esc(s.rank)}</b> · ${esc(s.designation)}</span><span>${esc(s.unit)}</span>`:"";};
+function viewIssue(v){
+  const officers=Store.soldiers().filter(s=>Store.OFFICER_RANKS.includes(s.rank));
+  const body=`<div class="fgrid">
+    ${fstep(1,"Equipment")}
+    ${fl("Equipment item",lookup("assetId",Store.assets().filter(a=>Store.policyOf((BYKEY[a.catalogueKey]||{}).type)==="tracked").map(assetOpt),v.assetId,"Asset tag, serial or model"),"assetId",true)}
+    ${fstep(2,"Recipient")}
+    ${fl("Issue to soldier",lookup("soldierId",Store.soldiers().map(solOpt),v.soldierId,"Service code, rank or unit"),"soldierId",true)}
+    ${fstep(3,"Authorisation")}
+    ${fl("Approving officer",lookup("authorizedById",officers.map(offOpt),null,"Officer code or rank"),"authorizedById",true)}
+    ${fl("Issue type",sel("type",Store.CUSTODY_TYPES,"Personal Issue"),"type",false,"Personal issue is held until returned; a temporary loan is short-term.")}
+    ${fl("Issue date",inp("effectiveDate",Store.today(),`type="date" max="${Store.today()}"`),"effectiveDate")}
+    ${fl("Remarks <em>optional</em>",inp("remarks","",`maxlength="160" placeholder="e.g. Annual issue, course loan"`),"remarks",true)}
+    <div class="fmeta wide">Recorded by <b>${esc(Store.operator)}</b>. You'll review the details before anything is saved.
+      <button type="button" class="cbtn mx-hop" data-act="multi">Issue several items together →</button></div></div>`;
+  return formWrap("New custody record","Issue equipment to a soldier","Administrative accountability record. Explosives and ammunition cannot be issued to individuals.","issue",body,"Review custody record");
+}
+function viewReturn(v){
+  const c=Store.custodyRec(v.id); if(!c)return null; const a=Store.asset(c.assetId)||{}, s=Store.soldier(c.soldierId)||{}, w=BYKEY[a.catalogueKey]||{};
+  const body=`<div class="fgrid">
+    <div class="fmeta wide"><b>${esc(a.tag||"")}</b> · ${esc(w.name||"")} — held by <b>${esc(s.serviceCode||"")}</b> since ${fmtD(c.effectiveDate)} under ${esc(c.id)}.</div>
+    ${fstep(1,"Return details")}
+    ${fl("Return date",inp("returnDate",Store.today(),`type="date" min="${c.effectiveDate}" max="${Store.today()}"`),"returnDate")}
+    ${fl("Condition at return",sel0("condition",Store.CONDITIONS,"Select condition…"),"condition",false,"Serviceable / Minor wear → Available. Unserviceable / Damaged → Inspection pending.")}
+    ${fl("Remarks <em>required if unserviceable or damaged</em>",inp("remarks","",`maxlength="160" placeholder="e.g. Returned on posting"`),"remarks",true)}
+    <input type="hidden" name="custodyId" value="${esc(c.id)}"></div>`;
+  return formWrap("Return equipment","Return "+(a.tag||"")+" to the armoury","The custody record is closed and kept in history — never deleted.","return",body,"Review return");
+}
+function viewStatus(v){
+  const a=Store.asset(v.id); if(!a)return null; const opts=Store.TRANSITIONS[a.status]||[];
+  const body=`<div class="fgrid">
+    <div class="fmeta wide">Currently <b>${esc(a.status)}</b> · condition <b>${esc(a.condition)}</b>.${opts.includes("Retired")?" Retiring an asset is permanent.":""}</div>
+    ${fl("New status",sel0("status",opts,"Select…"),"status")}
+    ${fl("Condition",sel("condition",Store.CONDITIONS,a.condition),"condition")}
+    ${fl("Reason",inp("reason","",`maxlength="160" placeholder="e.g. Inspection passed — EME report 114"`),"reason",true)}
+    <input type="hidden" name="assetId" value="${esc(a.id)}"></div>`;
+  return formWrap("Asset status","Change status of "+a.tag,"","status",body,"Update status");
+}
+function viewCorrect(v){
+  const c=Store.custodyRec(v.id); if(!c)return null;
+  const body=`<div class="fgrid">${fl("Correction note",`<textarea class="fin" name="note" rows="3" maxlength="300" placeholder="What was recorded wrongly, and the correct value"></textarea>`,"note",true)}
+    <div class="fmeta wide">The original record stays unchanged; this note is appended and audited.</div><input type="hidden" name="custodyId" value="${esc(c.id)}"></div>`;
+  return formWrap("Correction","Add a correction to "+c.id,"","correct",body,"Append correction");
+}
+function viewSolStatus(v){
+  const s=Store.soldier(v.id); if(!s)return null;
+  const body=`<div class="fgrid">${fl("Employment status",sel("status",Store.SOLDIER_STATUS,s.status),"status",false,"Inactive personnel must return all items first.")}
+    ${fl("Reason",inp("reason","",`maxlength="160" placeholder="e.g. Posted out"`),"reason",true)}<input type="hidden" name="soldierId" value="${esc(s.id)}"></div>`;
+  return formWrap("Personnel status","Change status of "+s.serviceCode,"","solstatus",body,"Update status");
+}
+function viewNewSoldier(){
+  const body=`<div class="fgrid">
+    ${fstep(1,"Identity")}
+    ${fl("Service code",inp("serviceCode","",`placeholder="SC-12345" maxlength="8" autocapitalize="characters"`),"serviceCode",false,"Format SC- followed by 5 digits. Must be unique.")}
+    ${fl("Rank",sel0("rank",Store.RANKS,"Select rank…"),"rank")}
+    ${fstep(2,"Posting")}
+    ${fl("Arm / Department",inp("department","",`placeholder="e.g. Infantry" maxlength="40"`),"department")}
+    ${fl("Unit",inp("unit","",`placeholder="e.g. 1 Inf Bn · A Coy" maxlength="40"`),"unit")}
+    ${fl("Designation",inp("designation","",`placeholder="e.g. Rifleman" maxlength="40"`),"designation")}
+    ${fl("Employment status",sel("status",Store.SOLDIER_STATUS,"Active"),"status")}
+    <div class="fmeta wide">Codes only — personal names and photographs are never recorded.</div></div>`;
+  return formWrap("New soldier","Create soldier record","","newsoldier",body,"Create soldier record");
+}
+function regLines(){return DATA.items.filter(w=>Store.policyOf(w.type)==="tracked"&&Store.qty(w).untracked>0);}
+function viewNewAsset(v){
+  const w=v.key?BYKEY[v.key]:null; if(v.key&&!w)return null;
+  const lineCtl=w?`<div class="fmeta wide">Equipment line <b>${esc(w.name)}</b> · ${Store.qty(w).untracked.toLocaleString()} untracked units can still be registered (taken from unassigned stock — totals unchanged).</div><input type="hidden" name="catalogueKey" value="${esc(w.key)}">`
+    :fl("Equipment line",`<select class="fin" name="catalogueKey"><option value="">Select equipment line…</option>${DATA.types.filter(([k])=>Store.policyOf(k)==="tracked").map(([k,l])=>{const ls=regLines().filter(x=>x.type===k);return ls.length?`<optgroup label="${esc(l)}">${ls.map(x=>`<option value="${x.key}">${esc(x.name)}</option>`).join("")}</optgroup>`:"";}).join("")}</select>`,"catalogueKey",true,"Only personal-issue categories with unassigned stock are listed.");
+  const body=`<div class="fgrid">${fstep(1,"Equipment line")}${lineCtl}
+    ${fstep(2,"Identification")}
+    ${fl("Asset tag",inp("tag",w?Store.suggestTag(w.key):"",`maxlength="24" placeholder="Choose a line first"`),"tag",false,"Suggested automatically; format EKB-XXXX-0001.")}
+    ${fl("Manufacturer serial",inp("serial","",`maxlength="24" placeholder="e.g. IN1B1-26-123456"`),"serial")}
+    ${fstep(3,"Receipt")}
+    ${fl("Condition",sel("condition",Store.CONDITIONS,"Serviceable"),"condition",false,"Unserviceable / Damaged assets start as Inspection pending.")}
+    ${fl("Acquisition date",inp("acquisitionDate",Store.today(),`type="date" max="${Store.today()}"`),"acquisitionDate")}
+    ${fl("Documentation ref <em>optional</em>",inp("docRef","",`maxlength="40" placeholder="Receipt voucher / warranty"`),"docRef",true)}</div>`;
+  return formWrap("Register asset","Register an equipment asset","Adds one individually tracked unit that can then be issued to soldiers.","newasset",body,"Register asset");
+}
+function viewConfirm(){
+  return `<div class="fhead"><div class="sheet-tags"><span class="ttag">Confirm</span></div><h2>Reset custody demo data?</h2>
+    <div class="sheet-origin">Restores the seeded soldier records, tracked assets, custody and audit history. Reorders, theme and the equipment catalogue are not touched.</div></div>
+    <div class="factions"><button type="button" class="ro-place danger" data-act="do-reset">Reset demo data</button><button type="button" class="cbtn" data-act="back">Cancel</button></div>`;
+}
+/* ---- multi-item custody: hierarchical browser + persistent selection ----
+   Category → sub-group → catalogue model → physical assets. One submission creates one independent
+   custody record per asset through Store.issueBatch (all or nothing). Browse state lives on the view. */
+const GRP={};
+(DATA.groups||[]).forEach(g=>g.subs.forEach(s=>s.items.forEach(k=>{GRP[k]={g,s};})));
+const POLICY_NOTE={bulk:"Unit-issue stock — accounted in aggregate, not issuable to individuals",sealed:"Sealed restricted stock — authorised store custody only, never issued to individuals"};
+const isTracked=k=>{const w=BYKEY[k];return !!w&&Store.policyOf(w.type)==="tracked";};
+const lineNote=w=>{const p=Store.policyOf(w.type);if(p!=="tracked")return POLICY_NOTE[p]||POLICY_NOTE.bulk;return Store.qty(w).tracked?null:"No individually tracked units registered on this line yet";};
+const availOf=keys=>keys.reduce((n,k)=>n+(isTracked(k)?Store.qty(BYKEY[k]).available:0),0);
+const mxTop=()=>{const v=VIEWS[VIEWS.length-1];return v&&v.kind==="multi"?v:null;};
+const mxForm=()=>$("#sheet").querySelector('.cform[data-form="multi"]');
+const selIn=(v,keys)=>{const set=new Set(keys);return v.sel.filter(id=>{const a=Store.asset(id);return a&&set.has(a.catalogueKey);}).length;};
+const selChip=n=>n?`<span class="mx-selc">✓ ${n} selected</span>`:"";
+const mxBtn=v=>v.sel.length?`Review ${v.sel.length} item${v.sel.length===1?"":"s"}`:"Review custody records";
+function mxCrumb(v){
+  const g=DATA.groups.find(x=>x.key===v.g), s=g&&g.subs.find(x=>x.key===v.s), w=s&&v.k&&BYKEY[v.k];
+  const p=[["All categories",""]]; if(v.q)return mxCrumbHTML(p.concat([[`Search “${v.q}” across all categories`,null]]));
+  if(g)p.push([g.label,g.key]); if(s)p.push([s.label,g.key+"|"+s.key]); if(w)p.push([w.name,null]);
+  return mxCrumbHTML(p);
+}
+function mxCrumbHTML(p){
+  return p.map(([l,path],i)=>i===p.length-1?`<span class="mx-cr cur" aria-current="location">${esc(l)}</span>`:`<button type="button" class="mx-cr" data-act="mx-nav" data-path="${esc(path)}">${esc(l)}</button>`).join("");
+}
+function mxTile(v,label,path,keys){
+  const tr=keys.some(isTracked), av=availOf(keys);
+  return `<button type="button" class="mx-tile${tr?"":" lock"}" data-act="mx-nav" data-path="${esc(path)}"><b>${esc(label)}</b><span>${keys.length} model${keys.length===1?"":"s"}</span>
+    <span class="mx-cnt">${tr?`<b>${av}</b> available to issue`:"⛔ Restricted — not issuable"}</span>${selChip(selIn(v,keys))}</button>`;
+}
+function mxModelRow(v,w){
+  const G=GRP[w.key], note=lineNote(w), meta=`<span class="mx-ln"><b>${esc(w.name)}</b><span>${esc(G?G.s.label:w.sub)} · ${esc(w.origin||"")}</span></span>`;
+  if(Store.policyOf(w.type)!=="tracked")return `<div class="mx-line dis">${meta}<span class="mx-lock">${Store.policyOf(w.type)==="sealed"?"⛔ ":""}${esc(note)}</span></div>`;
+  const q=Store.qty(w);
+  return `<button type="button" class="mx-line" data-act="mx-nav" data-path="${G.g.key}|${G.s.key}|${w.key}">${meta}${selChip(selIn(v,[w.key]))}
+    <span class="mx-cnt">${q.tracked?`<b>${q.available}</b> available · ${q.tracked} tracked`:"No tracked units yet"}</span><span class="mx-go" aria-hidden="true">›</span></button>`;
+}
+function mxAssetRow(v,a){
+  const w=BYKEY[a.catalogueKey]||{}, blk=Store.issueBlock(a), on=v.sel.includes(a.id);
+  return `<label class="mx-ast${blk&&!on?" dis":""}${on?" on":""}"><input type="checkbox" class="mx-chk" value="${esc(a.id)}"${on?" checked":""}${blk&&!on?" disabled":""}>
+    <span class="mx-at"><b class="mono">${esc(a.tag)}</b><span>${esc(w.name||"")} · S/N ${esc(a.serial)} · ${esc(a.condition)}</span>${blk?`<span class="why">${esc(blk)}</span>`:""}</span>${astBadge(a)}</label>`;
+}
+const ORD_AV=(a,b)=>(!!Store.issueBlock(a))-(!!Store.issueBlock(b))||a.tag.localeCompare(b.tag);
+function mxBrowse(v){
+  const q=(v.q||"").trim().toLowerCase();
+  if(q){
+    const words=q.split(/\s+/), m=s=>words.every(x=>s.toLowerCase().includes(x)), gl=k=>{const G=GRP[k];return G?G.g.label+" "+G.s.label:"";};
+    const lines=DATA.items.filter(w=>m([w.name,w.sub,w.typeLabel,gl(w.key)].join(" ")));
+    const assets=Store.assets().filter(a=>{const w=BYKEY[a.catalogueKey]||{};return m([a.tag,a.serial,w.name,w.sub,gl(a.catalogueKey)].join(" "));}).sort(ORD_AV);
+    const out=(lines.length?`<div class="mx-sh">Equipment models <span>${lines.length}</span></div><div class="mx-list">${lines.slice(0,12).map(w=>mxModelRow(v,w)).join("")}</div>`:"")
+      +(assets.length?`<div class="mx-sh">Physical assets <span>${assets.length}</span></div><div class="mx-list">${assets.slice(0,40).map(a=>mxAssetRow(v,a)).join("")}</div>${assets.length>40?`<div class="faintx">First 40 shown — refine the search.</div>`:""}`:"");
+    return out||`<div class="cempty">Nothing matches “${esc(v.q)}”. Try a model name, category or asset tag.</div>`;
+  }
+  const g=DATA.groups.find(x=>x.key===v.g), s=g&&g.subs.find(x=>x.key===v.s), w=s&&v.k&&BYKEY[v.k];
+  if(w){
+    const list=Store.assetsOf(w.key).slice().sort(ORD_AV), note=lineNote(w), av=Store.qty(w).available;
+    return `<div class="mx-head"><b>${esc(w.name)}</b><span>${esc(g.label)} › ${esc(s.label)} · ${av} of ${list.length} tracked units available</span></div>`
+      +(note?`<div class="restrict soft">${esc(note)}</div>`:`<div class="mx-list">${list.map(a=>mxAssetRow(v,a)).join("")}</div>`)
+      +(!av&&list.length?`<div class="cempty">No unit of this model is available to issue right now.</div>`:"");
+  }
+  if(s)return `<div class="mx-list">${s.items.map(k=>mxModelRow(v,BYKEY[k])).join("")}</div>`;
+  if(g)return `<div class="mx-tiles">${g.subs.map(x=>mxTile(v,x.label,g.key+"|"+x.key,x.items)).join("")}</div>`;
+  return `<div class="mx-tiles">${DATA.groups.map(x=>mxTile(v,x.label,x.key,x.subs.flatMap(y=>y.items))).join("")}</div>`;
+}
+function mxSelPanel(v){
+  const bad=v.bad||{};
+  const rows=v.sel.map(id=>{const a=Store.asset(id),w=(a&&BYKEY[a.catalogueKey])||{},G=a&&GRP[a.catalogueKey];
+    const why=bad[id]||(a?Store.issueBlock(a):"This asset no longer exists");
+    return `<li class="${why?"bad":""}"><span class="mx-at"><b class="mono">${esc(a?a.tag:id)}</b><span>${esc(w.name||"")}${G?" · "+esc(G.s.label):""}</span>${why?`<span class="why">${esc(why)}</span>`:""}</span>
+      <button type="button" class="mx-rm" data-act="mx-rm" data-id="${esc(id)}" aria-label="Remove ${esc(a?a.tag:id)}" title="Remove">✕</button></li>`;}).join("");
+  return `<div class="mx-sh">Selected items <span>${v.sel.length}</span>${v.sel.length?`<button type="button" class="mx-clr" data-act="mx-clear">Clear all</button>`:""}</div>
+    ${v.sel.length?`<ul class="mx-picked">${rows}</ul>`:`<div class="cempty">Nothing selected yet. Browse or search, then tick the assets to issue.</div>`}`;
+}
+function viewMulti(v){
+  v.sel=v.sel||[]; v.bad=v.bad||{}; const f=v.f||{};
+  const officers=Store.soldiers().filter(s=>Store.OFFICER_RANKS.includes(s.rank));
+  const body=`<div class="fgrid">
+    ${fstep(1,"Recipient")}
+    ${fl("Issue to soldier",lookup("soldierId",Store.soldiers().map(solOpt),f.soldierId||v.soldierId,"Service code, rank or unit"),"soldierId",true)}
+    ${fstep(2,"Equipment")}
+    <div class="mx">
+      <div class="mx-browse"><div class="mx-bar"><input class="fin mx-q" type="search" autocomplete="off" placeholder="Search models, categories or asset tags" value="${esc(v.q||"")}" aria-label="Search equipment">
+        <nav class="mx-crumbs" aria-label="Category path">${mxCrumb(v)}</nav></div><div class="mx-body">${mxBrowse(v)}</div></div>
+      <aside class="mx-sel" aria-label="Selected items"><div class="mx-selin" aria-live="polite">${mxSelPanel(v)}</div><div class="ferr" data-err="assetIds" role="alert"></div></aside>
+    </div><input type="hidden" name="assetIds" value="${esc(v.sel.join(","))}">
+    ${fstep(3,"Authorisation")}
+    ${fl("Approving officer",lookup("authorizedById",officers.map(offOpt),f.authorizedById,"Officer code or rank"),"authorizedById",true)}
+    ${fl("Issue type",sel("type",Store.CUSTODY_TYPES,f.type||"Personal Issue"),"type",false,"Applies to every selected item.")}
+    ${fl("Issue date",inp("effectiveDate",f.effectiveDate||Store.today(),`type="date" max="${Store.today()}"`),"effectiveDate")}
+    ${fl("Remarks <em>optional</em>",inp("remarks",f.remarks||"",`maxlength="160" placeholder="e.g. Annual issue, course loan"`),"remarks",true)}
+    <div class="fmeta wide">Each selected asset gets its own custody record, ID and audit trail — all are created together, or none are. Explosives and ammunition are restricted stock and can't be selected. Recorded by <b>${esc(Store.operator)}</b>.</div></div>`;
+  return formWrap("New custody record","Issue equipment to a soldier","Pick the soldier, add one or more individually tracked assets, then review.","multi",body,mxBtn(v));
+}
+/* repaint the browser + selection in place (keeps typed field values); full=false only refreshes the selection */
+function mxPaint(full){
+  const v=mxTop(), f=mxForm(); if(!v||!f)return;
+  if(full!==false){f.querySelector(".mx-crumbs").innerHTML=mxCrumb(v);f.querySelector(".mx-body").innerHTML=mxBrowse(v);}
+  f.querySelector(".mx-selin").innerHTML=mxSelPanel(v);
+  f.querySelector('input[name="assetIds"]').value=v.sel.join(",");
+  f.querySelector(":scope>.factions .ro-place").textContent=mxBtn(v);
+  if(v.sel.length&&!Object.keys(v.bad).length)f.querySelector('[data-err="assetIds"]').textContent="";
+}
+/* after a removal during review: refresh the review, or step back out of it if nothing is left */
+function mxReReview(){const f=mxForm();if(!f||!f.classList.contains("confirming"))return;unconfirm(f);if(mxTop().sel.length)submitForm(f);}
+const mxReviewList=ids=>`<ul class="mx-picked rev">${ids.map(id=>{const a=Store.asset(id);if(!a)return "";const w=BYKEY[a.catalogueKey]||{},G=GRP[a.catalogueKey];
+  return `<li><span class="mx-at"><b class="mono">${esc(a.tag)}</b><span>${esc(w.name||"")} · ${esc(G?G.g.label+" › "+G.s.label:w.sub)} · S/N ${esc(a.serial)}</span></span>${astBadge(a)}<button type="button" class="mx-rm" data-act="mx-rm" data-id="${esc(a.id)}" aria-label="Remove ${esc(a.tag)}" title="Remove">✕</button></li>`;}).join("")}</ul>`;
+const mxIds=d=>String(d.assetIds||"").split(",").filter(Boolean);
+
+const VIEW_RENDER={item:v=>{const s=BYKEY[v.key];return s?detailHTML(s):null;},asset:viewAsset,soldier:viewSoldier,custody:viewCustody,
+  issue:viewIssue,return:viewReturn,status:viewStatus,correct:viewCorrect,solstatus:viewSolStatus,newsoldier:viewNewSoldier,newasset:viewNewAsset,confirm:viewConfirm,multi:viewMulti};
+const codeOf=id=>{const s=Store.soldier(id);return s?esc(s.serviceCode)+" · "+esc(s.rank):"—";};
+const FORMS={
+  issue:{confirmTitle:"Review custody record",confirmBtn:"Confirm & create record",
+    confirm:d=>{const a=Store.asset(d.assetId),w=BYKEY[a.catalogueKey];return [["Equipment",`${esc(a.tag)} · ${esc(w.name)}`],["Issue to",codeOf(d.soldierId)],["Approved by",codeOf(d.authorizedById)],["Type",esc(d.type)],["Issue date",fmtD(d.effectiveDate)],["Asset after",`In Custody`]];},
+    run:d=>{const r=Store.issue(d);if(r.ok&&!d._dry){const a=Store.asset(r.rec.assetId),s=Store.soldier(r.rec.soldierId);r.msg=`✓ ${a.tag} issued to ${s.serviceCode} · ${r.rec.id}`;r.next={kind:"custody",id:r.rec.id};}return r;}},
+  multi:{confirmTitle:"Review custody records",confirmBtn:d=>{const n=mxIds(d).length;return `Confirm & create ${n} record${n===1?"":"s"}`;},
+    confirm:d=>{const ids=mxIds(d);return [["Issue to",codeOf(d.soldierId)],["Approved by",codeOf(d.authorizedById)],["Type",esc(d.type)],["Issue date",fmtD(d.effectiveDate)],
+      [`Items (${ids.length})`,mxReviewList(ids)],["Result",`${ids.length} separate custody record${ids.length===1?"":"s"} — one per asset · each asset → In Custody`]];},
+    run:d=>{const v=mxTop(),r=Store.issueBatch(Object.assign({},d,{assetIds:mxIds(d)}));
+      if(v){v.bad=(!r.ok&&r.errors.items)||{};mxPaint(false);}
+      if(!r.ok){const e=Object.assign({},r.errors);delete e.items;r.errors=e;return r;}
+      if(!d._dry){const s=Store.soldier(d.soldierId),n=r.recs.length;r.msg=`✓ ${n} custody record${n===1?"":"s"} created for ${s.serviceCode} · ${r.recs[0].id}${n>1?" – "+r.recs[n-1].id:""}`;r.next={kind:"soldier",id:s.id,focus:"soleq"};}
+      return r;}},
+  return:{confirmTitle:"Review return",confirmBtn:"Confirm return",
+    confirm:d=>{const c=Store.custodyRec(d.custodyId),a=Store.asset(c.assetId);return [["Equipment",esc(a.tag)],["Returned by",codeOf(c.soldierId)],["Return date",fmtD(d.returnDate)],["Condition",esc(d.condition)],["Asset after",Store.OK_COND.includes(d.condition)?"Available":"Inspection Pending"]];},
+    run:d=>{const r=Store.returnAsset(d);if(r.ok&&!d._dry){r.msg=`✓ Returned · ${r.rec.id} closed · asset now ${r.next}`;delete r.next;}return r;}},
+  status:{when:d=>d.status==="Retired",confirmTitle:"Retire this asset permanently?",confirmBtn:"Confirm retirement",
+    confirm:d=>[["Asset",esc((Store.asset(d.assetId)||{}).tag||"")],["New status","Retired (final)"],["Reason",esc(d.reason)]],
+    run:d=>{const r=Store.setAssetStatus(d);if(r.ok&&!d._dry)r.msg=`✓ ${r.rec.tag} → ${r.rec.status}`;return r;}},
+  correct:{run:d=>{const r=Store.addCorrection(d);if(r.ok)r.msg="✓ Correction appended to "+r.rec.id;return r;}},
+  solstatus:{run:d=>{const r=Store.setSoldierStatus(d);if(r.ok)r.msg=`✓ ${r.rec.serviceCode} → ${r.rec.status}`;return r;}},
+  newsoldier:{run:d=>{const r=Store.createSoldier(d);if(r.ok){r.msg="✓ Soldier record "+r.rec.serviceCode+" created";r.next={kind:"soldier",id:r.rec.id};}return r;}},
+  newasset:{run:d=>{if(!d.catalogueKey)return {ok:false,errors:{catalogueKey:"Choose the equipment line"}};const r=Store.registerAsset(d);if(r.ok){r.msg="✓ Asset "+r.rec.tag+" registered";r.next={kind:"asset",id:r.rec.id};}return r;}},
+};
+function clearErrs(f){f.querySelectorAll(".ferr").forEach(x=>x.textContent="");f.querySelectorAll(".bad").forEach(x=>x.classList.remove("bad"));}
+function showErrs(f,errors){
+  let first=null;
+  Object.entries(errors).forEach(([k,m])=>{const el=f.querySelector(`[data-err="${k}"]`)||f.querySelector('[data-err="_"]');el.textContent=m;
+    const i=f.querySelector(`[name="${k}"]`); if(i){const t=(i.closest(".lk")&&i.closest(".lk").querySelector(".lk-in"))||i;t.classList.add("bad");first=first||t;}});
+  if(first)first.focus();
+}
+function unconfirm(f){f.classList.remove("confirming");const c=f.querySelector(".fconfirm");c.hidden=true;c.innerHTML="";}
+function submitForm(f){
+  const d=Object.fromEntries(new FormData(f)), F=FORMS[f.dataset.form]; if(!F)return;
+  clearErrs(f);
+  if(F.confirm&&!f.classList.contains("confirming")&&(!F.when||F.when(d))){
+    const r=F.run(Object.assign({},d,{_dry:true}));
+    if(!r.ok){showErrs(f,r.errors);return;}
+    const box=f.querySelector(".fconfirm");
+    box.innerHTML=`<h4>${esc(F.confirmTitle)}</h4><dl>${F.confirm(d).map(([k,v])=>`<dt>${esc(k)}</dt><dd>${v}</dd>`).join("")}</dl><div class="factions"><button type="submit" class="ro-place">${esc(typeof F.confirmBtn==="function"?F.confirmBtn(d):F.confirmBtn)}</button><button type="button" class="cbtn" data-act="unconfirm">◂ Edit details</button></div>`;
+    box.hidden=false; f.classList.add("confirming"); box.querySelector(".ro-place").focus(); box.scrollIntoView({block:"nearest"}); return;
+  }
+  const r=F.run(d);
+  if(!r.ok){unconfirm(f);showErrs(f,r.errors);toast("Not saved — check the highlighted fields","err");return;}
+  toast(r.msg,"ok"); VIEWS.pop(); if(r.next)VIEWS.push(r.next);
+  if(VIEWS.length)renderSheet(false); else closeDetail();
+}
+
+/* ---- workspaces: Asset Register · Soldiers · Custody Records · Audit ---- */
+const CT={cview:"active",cq:"",sstat:"all",sq:"",aent:"all",aq:"",astat:"all",acat:"",asq:""};
+const hit=(q,s)=>!q||s.toLowerCase().includes(q.toLowerCase());
+function labelTables(root){
+  if(!root)return;
+  (root.tagName==="TABLE"?[root]:root.querySelectorAll("table")).forEach(t=>{
+    const heads=[...t.querySelectorAll("thead th")].map(th=>th.textContent.trim());
+    t.querySelectorAll("tbody tr").forEach(tr=>[...tr.children].forEach((td,i)=>{if(heads[i]&&!td.dataset.label)td.dataset.label=heads[i];}));
+  });
+}
+function renderCStats(){
+  const as=Store.assets(), cu=Store.custodians(), lines=new Set(as.map(a=>a.catalogueKey)).size;
+  const n=st=>as.filter(a=>a.status===st).length;
+  const tiles=[["Tracked assets",as.length,lines+" equipment lines"],["In custody",n("In Custody"),"with soldiers"],["Available",n("Available"),"ready to issue"],
+    ["Inspection / maint.",n("Inspection Pending")+n("Under Maintenance"),"not issuable"],["Retired",n("Retired"),"written off"],["Soldiers holding",cu.size,"of "+Store.activeSoldiers().length+" active"]];
+  $("#cstats").innerHTML=tiles.map(([l,v,s])=>`<div class="qt"><div class="ql">${l}</div><div class="qv tnum">${v}</div><div class="qn">${esc(s)}</div></div>`).join("");
+  $("#nc-catalogue").textContent=DATA.items.length; $("#nc-assets").textContent=as.length;
+  $("#nc-soldiers").textContent=Store.soldiers().length; $("#nc-custody").textContent=n("In Custody")||"";
+  const sel=$("#ascat"), keys=[...new Set(as.map(a=>a.catalogueKey))];
+  sel.innerHTML=`<option value="">All equipment lines</option>`+keys.map(k=>`<option value="${k}"${k===CT.acat?" selected":""}>${esc(BYKEY[k].name)}</option>`).join("");
+}
+function renderAssetsTab(){
+  const held=["Inspection Pending","Under Maintenance"];
+  const rows=Store.assets().filter(a=>(CT.astat==="all"||(CT.astat==="held"?held.includes(a.status):a.status===CT.astat))&&(!CT.acat||a.catalogueKey===CT.acat)).filter(a=>{
+    const c=Store.activeFor(a.id),s=c&&Store.soldier(c.soldierId),w=BYKEY[a.catalogueKey]||{};return hit(CT.asq,[a.tag,a.serial,w.name,w.typeLabel,s?s.serviceCode:"",a.status].join(" "));});
+  $("#asbody").innerHTML=rows.map(a=>{const c=Store.activeFor(a.id),w=BYKEY[a.catalogueKey]||{};
+    return `<tr><td>${astLink(a.id)}</td><td>${itemLink(a.catalogueKey)}<div class="faintx">${esc(w.typeLabel||"")}</div></td><td class="mono sm">${esc(a.serial)}</td><td>${esc(a.condition)}</td><td>${astBadge(a)}</td><td>${c?solLink(c.soldierId):'<span class="faintx">in armoury</span>'}</td><td class="mono sm">${c?fmtD(c.effectiveDate):"—"}</td><td class="ta-r">${assetActs(a,c)}</td></tr>`;}).join("")||emptyRow(8,"No assets match these filters.");
+  $("#asnote").innerHTML=`<b>${rows.length}</b> of ${Store.assets().length} assets`; labelTables($("#asbody").closest("table"));
+}
+function renderCustodyTab(){
+  const v=CT.cview, list=Store.custody().filter(c=>v==="all"||(v==="active"?c.status==="Active":v==="closed"?c.status==="Closed":c.status==="Closed"&&!Store.OK_COND.includes(c.returnCondition)));
+  const rows=list.filter(c=>{const a=Store.asset(c.assetId)||{},s=Store.soldier(c.soldierId)||{},w=BYKEY[a.catalogueKey]||{};return hit(CT.cq,[c.id,a.tag,a.serial,s.serviceCode,w.name,c.type].join(" "));});
+  $("#cbody").innerHTML=rows.map(c=>{const a=Store.asset(c.assetId)||{};return `<tr><td>${cusLink(c.id)}</td><td>${astLink(c.assetId)}</td><td>${itemLink(a.catalogueKey)}</td><td>${solLink(c.soldierId)}</td><td>${esc(c.type)}</td><td class="mono sm">${fmtD(c.effectiveDate)}</td><td class="mono sm">${fmtD(c.returnDate)}</td><td>${cusBadge(c)}</td><td class="ta-r"><span class="rowacts">${c.status==="Active"?`<button type="button" class="cbtn" data-act="return" data-id="${c.id}">↩ Return</button>`:`<button type="button" class="cbtn" data-go="custody:${c.id}">View</button>`}</span></td></tr>`;}).join("")||emptyRow(9,v==="active"?"No equipment is currently issued.":"No custody records match this view.");
+  $("#cnote").innerHTML=`<b>${rows.length}</b> of ${Store.custody().length} records`; labelTables($("#cbody").closest("table"));
+}
+function renderSoldiersTab(){
+  const rows=Store.soldiers().filter(s=>(CT.sstat==="all"||(CT.sstat==="holding"?nActive(s.id)>0:s.status===CT.sstat))&&hit(CT.sq,[s.serviceCode,s.rank,s.department,s.unit,s.designation,s.id].join(" ")));
+  $("#sbody").innerHTML=rows.map(s=>{const n=nActive(s.id);return `<tr><td>${goBtn("soldier",s.id,s.serviceCode)}</td><td>${esc(s.rank)}</td><td>${esc(s.unit)}</td><td>${esc(s.designation)}</td><td>${solBadge(s)}</td><td>${n?`<span class="cbadge cu"><i></i>${n} item${n===1?"":"s"}</span>`:`<span class="cbadge none">None held</span>`}</td><td class="ta-r"><span class="rowacts">${s.status==="Active"?`<button type="button" class="cbtn" data-act="issue" data-soldier="${s.id}">Assign</button>`:""}<button type="button" class="cbtn" data-act="soldier" data-id="${s.id}" title="View equipment and history">View</button></span></td></tr>`;}).join("")||emptyRow(7,"No soldier records match.");
+  $("#snote").innerHTML=`<b>${rows.length}</b> of ${Store.soldiers().length} soldiers`; labelTables($("#sbody").closest("table"));
+}
+function renderAuditTab(){
+  const rows=Store.audit().filter(e=>(CT.aent==="all"||e.entityType===CT.aent)&&hit(CT.aq,[e.id,e.entityId,e.action,e.prev,e.next,e.reason,e.by].join(" ")));
+  const link=e=>e.entityType==="Asset"?astLink(e.entityId):e.entityType==="Soldier"?solLink(e.entityId):cusLink(e.entityId);
+  $("#abody").innerHTML=rows.slice(0,400).map(e=>`<tr><td class="mono sm">${fmtTs(e.ts)}</td><td>${esc(e.entityType)}</td><td>${link(e)}</td><td>${esc(e.action)}</td><td class="mono sm">${e.prev||e.next?esc(e.prev||"∅")+" → "+esc(e.next||"∅"):"—"}</td><td class="sm">${esc(e.reason)}</td><td class="mono sm">${esc(e.by)}</td></tr>`).join("")||emptyRow(7,"No audit events match.");
+  $("#anote").innerHTML=`<b>${Math.min(rows.length,400)}</b> of ${rows.length} events`+(rows.length>400?" (newest 400 shown)":""); labelTables($("#abody").closest("table"));
+}
+function renderCustodyTabs(){renderCStats();renderAssetsTab();renderCustodyTab();renderSoldiersTab();renderAuditTab();}
+function setChip(groupId,val){document.querySelectorAll(groupId+" [data-v]").forEach(x=>x.classList.toggle("on",x.dataset.v===val));}
+function wireCustody(){
+  const chipGroup=(id,keyName,render)=>$(id).addEventListener("click",e=>{const b=e.target.closest("[data-v]");if(!b)return;CT[keyName]=b.dataset.v;setChip(id,b.dataset.v);render();});
+  chipGroup("#cviews","cview",renderCustodyTab); chipGroup("#sviews","sstat",renderSoldiersTab); chipGroup("#aviews","aent",renderAuditTab); chipGroup("#asviews","astat",renderAssetsTab);
+  $("#cq").addEventListener("input",e=>{CT.cq=e.target.value.trim();renderCustodyTab();});
+  $("#sq").addEventListener("input",e=>{CT.sq=e.target.value.trim();renderSoldiersTab();});
+  $("#aq").addEventListener("input",e=>{CT.aq=e.target.value.trim();renderAuditTab();});
+  $("#asq").addEventListener("input",e=>{CT.asq=e.target.value.trim();renderAssetsTab();});
+  $("#ascat").addEventListener("change",e=>{CT.acat=e.target.value;renderAssetsTab();});
+  // record navigation + actions anywhere on the page (sheet, workspaces, cards, sidebar)
+  document.addEventListener("click",e=>{
+    {const mv=mxTop(),mf=mxForm();if(mv&&mf)mv.f=Object.fromEntries(new FormData(mf));}
+    const g=e.target.closest("[data-go]");
+    if(g&&!e.target.closest(".lk")){e.preventDefault();const i=g.dataset.go.indexOf(":"),kind=g.dataset.go.slice(0,i),id=g.dataset.go.slice(i+1);
+      sheetOpen(kind==="item"?{kind,key:id}:{kind,id},!g.closest("#sheet"));return;}
+    const b=e.target.closest("[data-act]"); if(!b)return;
+    const inSheet=!!b.closest("#sheet"), a=b.dataset.act, open=v=>sheetOpen(v,!inSheet);
+    if(a==="back")sheetBack();
+    else if(a==="unconfirm"){const f=b.closest(".cform");if(f){unconfirm(f);const s=f.querySelector(".factions .ro-place");if(s)s.focus();}}
+    else if(a==="issue")open(b.dataset.asset?{kind:"issue",form:1,assetId:b.dataset.asset,soldierId:b.dataset.soldier}:{kind:"multi",form:1,soldierId:b.dataset.soldier,sel:[]});
+    else if(a==="multi"){const f=b.closest(".cform"),aid=f&&f.elements.assetId?f.elements.assetId.value:"",sid=f&&f.elements.soldierId?f.elements.soldierId.value:"";
+      VIEWS.pop();VIEWS.push({kind:"multi",form:1,soldierId:sid,sel:aid?[aid]:[]});renderSheet(false);}
+    else if(a==="mx-nav"){const v=mxTop();if(!v)return;const p=b.dataset.path.split("|");v.g=p[0]||null;v.s=p[1]||null;v.k=p[2]||null;v.q="";
+      const q=$("#sheet").querySelector(".mx-q");if(q)q.value="";mxPaint();const bd=$("#sheet").querySelector(".mx-body");if(bd){bd.scrollTop=0;const t=bd.querySelector("button,input:not([disabled])");if(t)t.focus({preventScroll:true});}}
+    else if(a==="mx-rm"){const v=mxTop();if(!v)return;v.sel=v.sel.filter(x=>x!==b.dataset.id);delete v.bad[b.dataset.id];mxPaint();mxReReview();}
+    else if(a==="mx-clear"){const v=mxTop();if(!v)return;v.sel=[];v.bad={};mxPaint();const f=mxForm();if(f&&f.classList.contains("confirming"))unconfirm(f);}
+    else if(a==="return")open({kind:"return",form:1,id:b.dataset.id});
+    else if(a==="status")open({kind:"status",form:1,id:b.dataset.id});
+    else if(a==="correct")open({kind:"correct",form:1,id:b.dataset.id});
+    else if(a==="solstatus")open({kind:"solstatus",form:1,id:b.dataset.id});
+    else if(a==="newsoldier")open({kind:"newsoldier",form:1});
+    else if(a==="newasset")open({kind:"newasset",form:1,key:b.dataset.key});
+    else if(a==="assets")sheetOpen({kind:"item",key:b.dataset.key,focus:"trk"},true);
+    else if(a==="soldier")open({kind:"soldier",id:b.dataset.id,focus:"soleq"});
+    else if(a==="reset")open({kind:"confirm"});
+    else if(a==="do-reset"){Store.reset();closeDetail();toast("✓ Custody demo data reset to seed","ok");}
+  });
+  const sh=$("#sheet");
+  sh.addEventListener("submit",e=>{const f=e.target.closest(".cform");if(!f)return;e.preventDefault();submitForm(f);});
+  sh.addEventListener("input",e=>{if(e.target.classList.contains("mx-q")){const v=mxTop();if(v){v.q=e.target.value.trim();mxPaint();}return;}
+    const i=e.target.closest(".lk-in");if(!i)return;const box=i.closest(".lk");box.querySelector("input[type=hidden]").value="";
+    const ctx=box.parentElement.querySelector(".lk-ctx");if(ctx)ctx.innerHTML="";lkFilter(box);});
+  sh.addEventListener("change",e=>{const t=e.target;
+    if(t.classList.contains("mx-chk")){const v=mxTop();if(!v)return;const id=t.value;
+      if(t.checked){if(!v.sel.includes(id))v.sel.push(id);}else{v.sel=v.sel.filter(x=>x!==id);delete v.bad[id];}
+      t.closest(".mx-ast").classList.toggle("on",t.checked);mxPaint(false);return;}if(t.name==="catalogueKey"&&t.tagName==="SELECT"){const f=t.closest(".cform");if(f&&f.tag)f.tag.value=t.value?Store.suggestTag(t.value):"";}});
+  sh.addEventListener("focusin",e=>{const i=e.target.closest(".lk-in");if(i)lkFilter(i.closest(".lk"));});
+  sh.addEventListener("focusout",e=>{const i=e.target.closest(".lk-in");if(i){const box=i.closest(".lk");setTimeout(()=>{if(!box.contains(document.activeElement))lkClose(box);},120);}});
+  sh.addEventListener("mousedown",e=>{const o=e.target.closest(".lk-opt");if(!o)return;e.preventDefault();lkPick(o.closest(".lk"),o.dataset.id);});
+  sh.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.classList.contains("mx-q")){e.preventDefault();return;}
+    const i=e.target.closest(".lk-in");if(!i)return;const box=i.closest(".lk"),list=box.querySelector(".lk-list");
+    if(e.key==="Escape"&&!list.hidden){e.stopPropagation();lkClose(box);return;}
+    const opts=[...list.querySelectorAll(".lk-opt:not(.dis)")],cur=opts.findIndex(o=>o.classList.contains("hi"));
+    if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();if(list.hidden)lkFilter(box);const n=opts.length?(cur+(e.key==="ArrowDown"?1:-1)+opts.length)%opts.length:-1;list.querySelectorAll(".lk-opt").forEach(o=>o.classList.remove("hi"));if(opts[n]){opts[n].classList.add("hi");opts[n].scrollIntoView({block:"nearest"});}}
+    else if(e.key==="Enter"&&!list.hidden){e.preventDefault();if(opts.length)lkPick(box,opts[Math.max(0,cur)].dataset.id);}});
+  // one subscriber: every Store change re-derives every view
+  Store.subscribe(()=>{DATA.items.forEach(recompute);refreshAll();renderCustodyTabs();
+    if(!$("#modal").hidden&&VIEWS.length){const t=VIEWS[VIEWS.length-1];if(!t.form)renderSheet(true);else if(t.kind==="multi")mxPaint();}});
+  if(Store.stale)toast("Saved custody state was from an older build — seed data reloaded");
+}
+
+/* ---- app shell: hash navigation, collapsible sidebar, mobile drawer ---- */
+const APPVIEWS={overview:"Overview",catalogue:"Equipment Catalogue",assets:"Asset Register",soldiers:"Soldiers",custody:"Custody Records",audit:"Audit History"};
+let PENDING_FOCUS=null;
+const currentView=()=>{const h=decodeURIComponent(location.hash.slice(1));return APPVIEWS[h]?h:"overview";};
+function setDrawer(open){
+  const app=$("#app"); if(app.classList.contains("drawer")===open)return;
+  app.classList.toggle("drawer",open); $("#scrim").hidden=!open; $("#menubtn").setAttribute("aria-expanded",String(open));
+  if(open){const a=$("#appnav a.on")||$("#appnav a");a.focus();} else $("#menubtn").focus({preventScroll:true});
+}
+function showView(first){
+  const v=currentView(); document.body.dataset.view=v;
+  document.querySelectorAll("section.view").forEach(s=>s.hidden=s.dataset.view!==v);
+  document.querySelectorAll("#appnav a").forEach(a=>{const on=a.dataset.view===v;a.classList.toggle("on",on);on?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current");});
+  $("#tbtitle").textContent=APPVIEWS[v]; document.title=APPVIEWS[v]+" · EkBharat Armoury Control";
+  if(!first){if(!$("#modal").hidden)closeDetail(); if($("#app").classList.contains("drawer"))setDrawer(false); window.scrollTo(0,0);}
+  if(PENDING_FOCUS){const el=document.getElementById(PENDING_FOCUS);PENDING_FOCUS=null;if(el)el.focus();}
+}
+function wireShell(){
+  const app=$("#app");
+  try{if(localStorage.getItem("armoury-sidebar")==="collapsed"){app.classList.add("collapsed");$("#sbcollapse").setAttribute("aria-pressed","true");}}catch(e){}
+  $("#sbcollapse").addEventListener("click",()=>{const c=app.classList.toggle("collapsed");$("#sbcollapse").setAttribute("aria-pressed",String(c));$("#sbcollapse").title=c?"Expand sidebar":"Collapse sidebar";try{localStorage.setItem("armoury-sidebar",c?"collapsed":"expanded");}catch(e){}});
+  $("#menubtn").addEventListener("click",()=>setDrawer(true));
+  $("#scrim").addEventListener("click",()=>setDrawer(false));
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&app.classList.contains("drawer")&&$("#modal").hidden)setDrawer(false);});
+  $("#appnav").addEventListener("click",e=>{const a=e.target.closest("a");if(a&&a.getAttribute("href")===location.hash)setDrawer(false);});
+  $("#sidebar").addEventListener("click",e=>{if(e.target.closest("[data-act]"))setDrawer(false);});
+  // quick links that pre-set a workspace view or focus its search
+  document.addEventListener("click",e=>{const a=e.target.closest("a[data-cview],a[data-focus]");if(!a)return;
+    if(a.dataset.cview){CT.cview=a.dataset.cview;setChip("#cviews",CT.cview);renderCustodyTab();}
+    if(a.dataset.focus){PENDING_FOCUS=a.dataset.focus; if(a.getAttribute("href")===location.hash){const el=document.getElementById(PENDING_FOCUS);PENDING_FOCUS=null;if(el)el.focus();}}});
+  window.addEventListener("hashchange",()=>showView(false));
+  showView(true);
+}
+
 /* ---------- Theatre Command Map ---------- */
 const GEO = /*__GEO__*/null;
 const BRANCHES=[["army","Army Commands"],["navy","Naval Commands"],["air","Air Force Commands"],["strategic","Strategic / Tri-Service"],["range","Test Ranges / SFC"]];
@@ -791,7 +1895,7 @@ function buildMap(){
 
 function run(){
   initItems();
-  renderTotals(); renderChart(); buildNav(); renderCats(); renderRoster(); buildMap();
+  renderTotals(); renderChart(); buildNav(); renderCats(); renderRoster(); renderCustodyTabs(); wireCustody(); wireShell(); buildMap();
   $("#lowcnt").textContent="("+DATA.items.filter(w=>w.needsReorder).length+")";
   $("#nav").addEventListener("click",e=>{const b=e.target.closest(".navitem");if(!b)return;state.type=b.dataset.cat;document.querySelectorAll(".navitem").forEach(x=>x.classList.toggle("on",x===b));renderCats();window.scrollTo({top:0,behavior:"smooth"});});
   $("#statusf").addEventListener("click",e=>{const b=e.target.closest(".sbtn");if(!b)return;state.status=b.dataset.s;document.querySelectorAll(".sbtn").forEach(x=>x.classList.toggle("on",x===b));renderCats();});
@@ -799,18 +1903,18 @@ function run(){
   $("#q").addEventListener("input",e=>{state.q=e.target.value.trim().toLowerCase();renderCats();});
   $("#rq").addEventListener("input",e=>{state.rq=e.target.value.trim();renderRoster();});
   $("#rclear").addEventListener("click",()=>{state.rq="";$("#rq").value="";renderRoster();});
-  $("#cats").addEventListener("click",e=>{const c=e.target.closest(".card");if(!c)return;openDetail(c.dataset.key);});
-  $("#cats").addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;const c=e.target.closest(".card");if(!c)return;e.preventDefault();openDetail(c.dataset.key);});
+  $("#cats").addEventListener("click",e=>{if(e.target.closest("[data-act],[data-go]"))return;const c=e.target.closest(".card");if(!c)return;openDetail(c.dataset.key);});
+  $("#cats").addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;if(e.target.closest("[data-act]"))return;const c=e.target.closest(".card");if(!c)return;e.preventDefault();openDetail(c.dataset.key);});
   $("#modal").addEventListener("click",e=>{if(e.target===$("#modal"))closeDetail();});
   document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#modal").hidden)closeDetail();});
   $("#sheet").addEventListener("click",e=>{
     if(e.target.closest("#sheetx")){closeDetail();return;}
-    const l=e.target.closest(".linkchip");if(l){openDetail(l.dataset.key);return;}
+    const l=e.target.closest(".linkchip");if(l){sheetOpen({kind:"item",key:l.dataset.key});return;}
     const st=e.target.closest(".ro-step");if(st){const q=$("#roqty");q.value=Math.max(0,(+q.value||0)+(+st.dataset.d));return;}
     const pr=e.target.closest(".ro-preset");if(pr){$("#roqty").value=pr.dataset.q;return;}
     const fl=e.target.closest(".ro-fill");if(fl&&CUR){$("#roqty").value=fillTarget(CUR);return;}
-    const pl=e.target.closest(".ro-place");if(pl&&CUR){const q=Math.round(+$("#roqty").value||0);if(q>0){addReorder(CUR.key,q);toast("Reorder placed · +"+q.toLocaleString()+" "+(CUR.unit||"units")+" · "+CUR.name);openDetail(CUR.key);}else{toast("Enter a quantity above 0");}return;}
-    const cl=e.target.closest("#roclear");if(cl&&CUR){clearReorder(CUR.key);toast("Reorder cleared · "+CUR.name);openDetail(CUR.key);return;}
+    const pl=e.target.closest(".ro-place");if(pl&&CUR){const q=Math.round(+$("#roqty").value||0);if(q>0){addReorder(CUR.key,q);toast("Reorder placed · +"+q.toLocaleString()+" "+(CUR.unit||"units")+" · "+CUR.name);renderSheet(true);}else{toast("Enter a quantity above 0");}return;}
+    const cl=e.target.closest("#roclear");if(cl&&CUR){clearReorder(CUR.key);toast("Reorder cleared · "+CUR.name);renderSheet(true);return;}
   });
   $("#lowtoggle").addEventListener("click",()=>{state.low=!state.low;$("#lowtoggle").classList.toggle("on",state.low);renderCats();});
   $("#sort").addEventListener("change",e=>{state.sort=e.target.value;renderCats();});

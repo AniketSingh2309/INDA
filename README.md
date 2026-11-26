@@ -26,24 +26,36 @@ is served from `index.html` automatically.
 
 ## What's in the dashboard
 
-- **Overview** — KPIs, arrival vs. manufacture pipeline, collapsible *Readiness by Category* chart.
+- **App shell** — persistent sidebar (Overview, Equipment Catalogue, Asset Register, Soldiers, Custody
+  Records, Audit History, ＋ New Custody Record). It collapses on desktop and becomes a drawer on mobile;
+  hash URLs keep the browser's Back button working.
+- **Overview** — quick actions, KPIs, arrival vs. manufacture pipeline, collapsible *Readiness by Category* chart.
 - **Command map** — D3 vector map of India (embedded GeoJSON), no external tiles.
-- **Inventory grid** — 100 equipment lines across 12 categories: weapons, ammunition, night-vision,
-  drones, armoured vehicles, artillery, attachments, melee, explosives, helmets, armor, plates.
+- **Inventory grid** — 102 equipment lines across 13 categories: weapons, ammunition, night-vision,
+  drones, armoured vehicles, artillery, attachments, melee, explosives, helmets, armor, plates, communications.
   Every card has a photo and is clickable for full detail (order date, delivery date, batch, depot,
   assignment). **No manufacture date is shown anywhere, by design.**
 - **Ammunition** — magazines and bullet boxes with box serial ranges *and* per-bullet serial ranges
   (from-serial → to-serial per box), bullet types matched to each weapon's caliber.
 - **Weapon ↔ ammunition cross-links** by caliber.
 - **Low-stock & reorder** — restock any low line by choosing an order quantity.
-- Theme toggle (dark / light), search, sort — state persisted in `localStorage`.
+- **Equipment custody** — relational soldier-code records (codes only), individually tracked assets
+  (a 60-asset sample on 6 lines), custody issue/return with full history, audit trail, searchable
+  lookups, and Custody Records / Soldiers / Audit tabs. *New Custody Record* lets you browse a category
+  hierarchy (Firearms › Assault Rifles › INSAS …), pick several assets for one soldier and submit them
+  together. Each asset still gets its own custody record, and the batch is all-or-nothing. Explosives are sealed store stock and ammunition
+  is unit-issue stock: neither can be issued to a soldier. Design and quantity rules:
+  [`docs/superpowers/specs/2026-11-26-equipment-custody-design.md`](docs/superpowers/specs/2026-11-26-equipment-custody-design.md).
+- Theme toggle (dark / light), search, sort — state persisted in `localStorage`
+  (`armoury-theme`, `armoury-reorders`, `armoury-custody-v1`; *Reset demo data* clears only the last).
 
 ## Repository layout
 
 ```
 index.html          Deployed, self-contained dashboard (the deliverable)
 build/              Build pipeline
-  equip_items.py      100-item equipment catalog (12 categories)
+  equip_items.py      102-item equipment catalog (13 categories + CATEGORY_POLICY)
+  custody_seed.py     deterministic custody demo seed (soldiers, tracked assets, custody, audit)
   photomap.py         weapon key -> chosen source photo
   gen_site.py         embeds photos + computes data, injects into template -> out/index.html
   template_site.html  master HTML/CSS/JS template with placeholders

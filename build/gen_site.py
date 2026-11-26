@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import os, json, io, base64
 from PIL import Image
-from equip_items import ITEMS, TYPES, SUBS
+from equip_items import ITEMS, TYPES, SUBS, CATEGORY_POLICY, GROUPS
+from custody_seed import build_seed
 from photomap import PHOTO
 
 HERE = os.path.dirname(__file__)
@@ -190,7 +191,26 @@ for r in out_items:
     else:
         r["links"] = []
 
-payload = {"items": out_items, "types": TYPES, "subOrder": SUBS}
+# custody module seed: tracked assets, soldier-code records, custody + audit (trims legacy counts)
+CUSTODY = build_seed(out_items)
+def build_groups(items):
+    """Resolve GROUPS into catalogue keys; every line must land in exactly one sub-group."""
+    seen, out = {}, []
+    for gk, gl, subs in GROUPS:
+        g = {"key": gk, "label": gl, "subs": []}
+        for i, (sl, rules) in enumerate(subs):
+            keys = [it["key"] for it in items if any(it["type"] == t and (sb is None or it["sub"] == sb) for t, sb in rules)]
+            for k in keys:
+                assert k not in seen, f"{k} is in both {seen[k]} and {gk}/{sl}"
+                seen[k] = f"{gk}/{sl}"
+            g["subs"].append({"key": f"{gk}-{i}", "label": sl, "items": keys})
+        out.append(g)
+    missing = [it["key"] for it in items if it["key"] not in seen]
+    assert not missing, f"catalogue lines missing from GROUPS: {missing}"
+    return out
+
+payload = {"items": out_items, "types": TYPES, "subOrder": SUBS, "policy": CATEGORY_POLICY, "custody": CUSTODY,
+           "groups": build_groups(out_items)}
 DATA = json.dumps(payload, ensure_ascii=False)
 GEO_PATH = os.path.abspath(os.path.join(HERE, "..", "maps", "india.min.json"))
 GEO = open(GEO_PATH, encoding="utf-8").read() if os.path.exists(GEO_PATH) else "null"
