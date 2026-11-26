@@ -402,7 +402,8 @@ textarea.fin{height:auto;padding:8px 10px;resize:vertical} .fin:focus{outline:no
 .appnav{display:flex;flex-direction:column;gap:2px}
 .rtable .rl{white-space:nowrap} .rowacts{flex-wrap:nowrap} .rowacts .cbtn{white-space:nowrap}
 @media (min-width:701px) and (max-width:1180px){
-  [data-view="soldiers"] .rtable tr>:nth-child(4),
+  [data-view="soldiers"] .rtable tr>:nth-child(4),[data-view="soldiers"] .rtable tr>:nth-child(5),
+  [data-view="regiments"] .rtable tr>:nth-child(5),[data-view="regiments"] .rtable tr>:nth-child(7),
   [data-view="assets"] .rtable tr>:nth-child(3),[data-view="assets"] .rtable tr>:nth-child(4),[data-view="assets"] .rtable tr>:nth-child(7),
   [data-view="custody"] .rtable tr>:nth-child(5),[data-view="custody"] .rtable tr>:nth-child(3),
   [data-view="audit"] .rtable tr>:nth-child(7){display:none}
@@ -562,6 +563,25 @@ th.ta-r,td.ta-r{text-align:right} .rowacts{display:inline-flex;gap:6px;justify-c
 .mx-hop{margin-left:8px}
 @media (max-width:820px){ .mx{grid-template-columns:1fr} .mx-sel{position:static} .mx-body{max-height:none} }
 @media (max-width:640px){ .fconfirm dl{grid-template-columns:1fr} .fconfirm dd{margin-bottom:6px} .mx-tiles{grid-template-columns:1fr 1fr} .mx-line{flex-wrap:wrap} .mx-hop{margin:8px 0 0} }
+/* regiments */
+.warnbox{color:var(--warn);background:var(--warn-bg);border-color:color-mix(in srgb,var(--warn) 40%,transparent);margin:0 0 14px;line-height:1.6}
+.warnbox .unlist{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.fmeta.regnew{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+/* teams + destination picker */
+.mx-dest{display:contents}
+.mx-tts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mx-tt{display:flex;flex-direction:column;gap:3px;padding:10px 12px;border:1px solid var(--line);border-radius:7px;background:var(--surface);cursor:pointer;text-transform:none;letter-spacing:0;font-weight:400;position:relative}
+.mx-tt input{position:absolute;opacity:0;pointer-events:none}
+.mx-tt b{font-size:13.5px;color:var(--fg);font-weight:600} .mx-tt span{font-size:11.5px;color:var(--muted)}
+.mx-tt.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent-soft) 55%,var(--surface))}
+.mx-tt.dis{opacity:.55;cursor:not-allowed} .mx-tt:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+.mx-line.stock{flex-wrap:wrap;cursor:default} .mx-line.stock.on{border-color:var(--accent)}
+.mx-qtyw{display:flex;gap:6px;align-items:center} .mx-qty{width:100px;height:32px}
+.wtitle{font-family:var(--head);font-size:15px;letter-spacing:.03em;font-weight:500;margin-right:auto}
+@media (max-width:640px){ .mx-tts{grid-template-columns:1fr} .mx-qtyw{width:100%} .mx-qty{flex:1} }
+.mx-na{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px}
+.mx-nai{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;padding:5px 2px;font-size:12.5px}
+.mx-nai b{font-weight:600;color:var(--muted)} .mx-nai span{font-family:var(--mono);font-size:11px;color:var(--warn)}
 @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
 </style>
 
@@ -577,6 +597,7 @@ th.ta-r,td.ta-r{text-align:right} .rowacts{display:inline-flex;gap:6px;justify-c
       <a href="#catalogue" data-view="catalogue" title="Equipment Catalogue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3 7.5l9-4 9 4-9 4z"/><path d="M3 7.5v9l9 4 9-4v-9"/><path d="M12 11.5v9"/></svg><span class="nm">Equipment Catalogue</span><span class="n" id="nc-catalogue"></span></a>
       <a href="#assets" data-view="assets" title="Asset Register"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3.5 12V4h8l9 9-8 8z"/><circle cx="8" cy="8.5" r="1.5"/></svg><span class="nm">Asset Register</span><span class="n" id="nc-assets"></span></a>
       <a href="#soldiers" data-view="soldiers" title="Soldiers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.8 20.5c0-4 3.2-6.6 7.2-6.6s7.2 2.6 7.2 6.6"/></svg><span class="nm">Soldiers</span><span class="n" id="nc-soldiers"></span></a>
+      <a href="#regiments" data-view="regiments" title="Regiments"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V3.5"/><path d="M5 4h12l-2.6 4L17 12H5"/></svg><span class="nm">Regiments</span><span class="n" id="nc-regiments"></span></a>
       <a href="#custody" data-view="custody" title="Custody Records"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h14l-3.5-3.5M20 16H6l3.5 3.5"/></svg><span class="nm">Custody Records</span><span class="n" id="nc-custody"></span></a>
       <a href="#audit" data-view="audit" title="Audit History"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span class="nm">Audit History</span></a>
     </nav>
@@ -702,10 +723,30 @@ th.ta-r,td.ta-r{text-align:right} .rowacts{display:inline-flex;gap:6px;justify-c
         <div class="wpanel">
           <div class="wtools">
             <div class="vchips" id="sviews" role="group" aria-label="Personnel status"><button class="on" data-v="all">All</button><button data-v="Active">Active</button><button data-v="holding">Holding equipment</button><button data-v="On Leave">On leave</button><button data-v="Inactive">Inactive</button></div>
-            <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="sq" type="search" placeholder="Service code, rank, unit, designation…" autocomplete="off" aria-label="Search soldiers"></label>
+            <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="sq" type="search" placeholder="Service code, regiment, rank, unit…" autocomplete="off" aria-label="Search soldiers"></label>
+            <select class="fin wsel" id="sreg" aria-label="Regiment"><option value="">All regiments</option></select>
             <span class="roster-note" id="snote"></span>
           </div>
-          <div class="rscroll"><table class="rtable"><thead><tr><th>Service Code</th><th>Rank</th><th>Unit</th><th>Designation</th><th>Status</th><th>Equipment</th><th class="ta-r">Action</th></tr></thead><tbody id="sbody"></tbody></table></div>
+          <div class="rscroll"><table class="rtable"><thead><tr><th>Service Code</th><th>Rank</th><th>Regiment</th><th>Unit</th><th>Designation</th><th>Status</th><th>Equipment</th><th class="ta-r">Action</th></tr></thead><tbody id="sbody"></tbody></table></div>
+        </div>
+      </section>
+
+      <!-- REGIMENTS -->
+      <section class="view" data-view="regiments" hidden>
+        <div class="phead"><div><h2 class="ptitle">Regiments</h2><p class="psub">Each soldier belongs to exactly one regiment. Demo regiments are illustrative, not real organisational data.</p></div>
+          <div class="pacts"><button type="button" class="cbtn pri" data-act="regnew">＋ New regiment</button></div></div>
+        <div class="restrict warnbox" id="rgun" hidden></div>
+        <div class="wpanel">
+          <div class="wtools">
+            <div class="vchips" id="rgviews" role="group" aria-label="Regiment status"><button class="on" data-v="all">All</button><button data-v="Active">Active</button><button data-v="Inactive">Inactive</button></div>
+            <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="rgq" type="search" placeholder="Regiment code or name…" autocomplete="off" aria-label="Search regiments"></label>
+            <span class="roster-note" id="rgnote"></span>
+          </div>
+          <div class="rscroll"><table class="rtable"><thead><tr><th>Code</th><th>Regiment</th><th>Soldiers</th><th>Active</th><th>Holding Equipment</th><th>Status</th><th>Updated</th><th class="ta-r">Action</th></tr></thead><tbody id="rgbody"></tbody></table></div>
+        </div>
+        <div class="wpanel" style="margin-top:16px">
+          <div class="wtools"><b class="wtitle">Teams</b><select class="fin wsel" id="tmreg" aria-label="Filter teams by regiment"><option value="">All regiments</option></select><span class="roster-note" id="tmnote"></span></div>
+          <div class="rscroll"><table class="rtable"><thead><tr><th>Team</th><th>Name</th><th>Regiment</th><th>Soldiers</th><th>Team Assets</th><th>Stock Out</th><th>Status</th><th class="ta-r">Action</th></tr></thead><tbody id="tmbody"></tbody></table></div>
         </div>
       </section>
 
@@ -719,7 +760,7 @@ th.ta-r,td.ta-r{text-align:right} .rowacts{display:inline-flex;gap:6px;justify-c
             <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="cq" type="search" placeholder="Record, asset tag, serial, soldier code…" autocomplete="off" aria-label="Search custody records"></label>
             <span class="roster-note" id="cnote"></span>
           </div>
-          <div class="rscroll"><table class="rtable"><thead><tr><th>Record</th><th>Asset Tag</th><th>Equipment</th><th>Soldier</th><th>Type</th><th>Issued</th><th>Returned</th><th>Status</th><th class="ta-r">Action</th></tr></thead><tbody id="cbody"></tbody></table></div>
+          <div class="rscroll"><table class="rtable"><thead><tr><th>Record</th><th>Asset Tag</th><th>Equipment</th><th>Holder</th><th>Type</th><th>Issued</th><th>Returned</th><th>Status</th><th class="ta-r">Action</th></tr></thead><tbody id="cbody"></tbody></table></div>
         </div>
         <details class="wpanel legacy">
           <summary><span>Legacy bulk-issue roster</span><span class="roster-note" id="rnote"></span></summary>
@@ -737,7 +778,7 @@ th.ta-r,td.ta-r{text-align:right} .rowacts{display:inline-flex;gap:6px;justify-c
           <div class="pacts"><button type="button" class="rclear" data-act="reset">↺ Reset custody demo data</button></div></div>
         <div class="wpanel">
           <div class="wtools">
-            <div class="vchips" id="aviews" role="group" aria-label="Entity"><button class="on" data-v="all">All</button><button data-v="Custody">Custody</button><button data-v="Asset">Asset</button><button data-v="Soldier">Soldier</button></div>
+            <div class="vchips" id="aviews" role="group" aria-label="Entity"><button class="on" data-v="all">All</button><button data-v="Custody">Custody</button><button data-v="Asset">Asset</button><button data-v="Soldier">Soldier</button><button data-v="Regiment">Regiment</button><button data-v="Team">Team</button><button data-v="Allocation">Stock allocation</button></div>
             <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="aq" type="search" placeholder="Action, record, reason…" autocomplete="off" aria-label="Search audit"></label>
             <span class="roster-note" id="anote"></span>
           </div>
@@ -996,8 +1037,20 @@ const Store=(()=>{
     I={sol:{},ast:{},cus:{},code:{},tag:{},serial:{},active:{},byAsset:{},bySol:{},byCat:{},aud:{}};
     T.soldiers.forEach(s=>{I.sol[s.id]=s;I.code[s.serviceCode.toUpperCase()]=s;});
     T.assets.forEach(a=>{I.ast[a.id]=a;I.tag[a.tag.toUpperCase()]=a;if(a.serial)I.serial[a.serial.toUpperCase()]=a;(I.byCat[a.catalogueKey]=I.byCat[a.catalogueKey]||[]).push(a);});
-    T.custody.forEach(c=>{I.cus[c.id]=c;(I.byAsset[c.assetId]=I.byAsset[c.assetId]||[]).push(c);(I.bySol[c.soldierId]=I.bySol[c.soldierId]||[]).push(c);if(c.status==="Active")I.active[c.assetId]=c;});
+    I.byTeam={};
+    T.custody.forEach(c=>{I.cus[c.id]=c;(I.byAsset[c.assetId]=I.byAsset[c.assetId]||[]).push(c);
+      if(c.teamId)(I.byTeam[c.teamId]=I.byTeam[c.teamId]||[]).push(c); else (I.bySol[c.soldierId]=I.bySol[c.soldierId]||[]).push(c);
+      if(c.status==="Active")I.active[c.assetId]=c;});
     T.audit.forEach(e=>{const k=e.entityType+":"+e.entityId;(I.aud[k]=I.aud[k]||[]).push(e);});
+    I.reg={};I.regCode={};I.members={};I.memBySol={};I.memByReg={};
+    (T.regiments||[]).forEach(r=>{I.reg[r.id]=r;I.regCode[r.code.toUpperCase()]=r;I.members[r.id]=[];});
+    T.soldiers.forEach(s=>{if(s.regimentId&&I.members[s.regimentId])I.members[s.regimentId].push(s);});
+    (T.memberships||[]).forEach(m=>{(I.memBySol[m.soldierId]=I.memBySol[m.soldierId]||[]).push(m);(I.memByReg[m.regimentId]=I.memByReg[m.regimentId]||[]).push(m);});
+    I.team={};I.teamsByReg={};I.teamMembers={};I.tmBySol={};I.tmByTeam={};I.alloc={};I.allocByKey={};I.allocByTeam={};
+    (T.teams||[]).forEach(t=>{I.team[t.id]=t;(I.teamsByReg[t.regimentId]=I.teamsByReg[t.regimentId]||[]).push(t);I.teamMembers[t.id]=[];});
+    T.soldiers.forEach(s=>{if(s.teamId&&I.teamMembers[s.teamId])I.teamMembers[s.teamId].push(s);});
+    (T.teamMemberships||[]).forEach(m=>{(I.tmBySol[m.soldierId]=I.tmBySol[m.soldierId]||[]).push(m);(I.tmByTeam[m.teamId]=I.tmByTeam[m.teamId]||[]).push(m);});
+    (T.allocations||[]).forEach(x=>{I.alloc[x.id]=x;(I.allocByKey[x.catalogueKey]=I.allocByKey[x.catalogueKey]||[]).push(x);(I.allocByTeam[x.teamId]=I.allocByTeam[x.teamId]||[]).push(x);});
   }
   reindex();
   const nid=(p,w)=>{T.seq[p]=(T.seq[p]||0)+1;return p+"-"+String(T.seq[p]).padStart(w,"0");};
@@ -1020,66 +1073,135 @@ const Store=(()=>{
   function qty(w){
     const list=I.byCat[w.key]||[]; let active=0,available=0,other=0,retired=0;
     list.forEach(a=>{if(I.active[a.id])active++;else if(a.status==="Available")available++;else if(a.status==="Retired")retired++;else other++;});
-    const legacy=w.legacyAssigned||0, total=legacy+active;
-    return {inventory:w.arrived,legacy,tracked:list.length,active,available,other,retired,total,
-      reserve:w.arrived-total,untracked:w.arrived-legacy-list.length};
+    const allocated=(I.allocByKey&&I.allocByKey[w.key]||[]).reduce((n,x)=>n+(x.status==="Active"?x.qty-x.returnedQty:0),0);
+    const legacy=w.legacyAssigned||0, total=legacy+active+allocated;
+    return {inventory:w.arrived,legacy,tracked:list.length,active,available,other,retired,allocated,total,
+      reserve:w.arrived-total,untracked:w.arrived-legacy-allocated-list.length};
   }
-  function issueBlock(a){
+  /* ---- assignment eligibility: the ONLY place that decides who may hold what, and how ----
+     rules come from ASSIGNMENT_RULES in build/equip_items.py: policy → holder type → "asset" | "stock" | null */
+  const RULES=DATA.assignRules||{tracked:{Soldier:"asset",Team:"asset"},bulk:{Soldier:null,Team:"stock"},sealed:{Soldier:null,Team:null}};
+  const RULE_WHY={Soldier:{bulk:"Restricted unit-issue stock — never issued to individual soldiers",sealed:"Sealed restricted stock — never issued to individual soldiers"},
+    Team:{sealed:"Sealed restricted stock — authorised store custody only; not allocatable to teams"}};
+  const TARGETS=["Soldier","Team"];
+  /* destination class (ASSIGNMENT_CLASS) wins for the categories it lists: individual → Soldier only,
+     team → Team only. How the line is held still follows its custody policy (tracked → asset, else stock). */
+  const CLASS=DATA.assignClass||{};
+  const CLASS_WHY={individual:"Individual Soldier only — Team assignment unavailable.",team:"Team only — Individual assignment unavailable."};
+  function eligibility(w,target){
+    if(!w)return {mode:null,why:"Unknown catalogue line"};
+    const p=policyOf(w.type), cls=CLASS[w.type];
+    if(cls){
+      if(!((cls==="individual"&&target==="Soldier")||(cls==="team"&&target==="Team")))return {mode:null,policy:p,cls,why:CLASS_WHY[cls]};
+      const m=p==="tracked"?"asset":(target==="Team"?(RULES[p]||{}).Team||"stock":null); // stock is never issued to a soldier
+      return {mode:m,policy:p,cls,why:m?null:"Not individually tracked — cannot be issued to a soldier"};
+    }
+    const m=(RULES[p]||{})[target]||null;
+    return {mode:m,policy:p,why:m?null:((RULE_WHY[target]||{})[p]||"Not assignable to this destination")};
+  }
+  const tcode=tm=>tm?((I.reg[tm.regimentId]||{}).code||"?")+"/"+tm.code:"?";
+  const holderCode=c=>c.teamId?tcode(I.team[c.teamId]):((I.sol[c.soldierId]||{}).serviceCode||"?");
+  function issueBlock(a,target){
     if(!a)return "Unknown asset";
-    const w=BYKEY[a.catalogueKey];
-    if(!w||policyOf(w.type)!=="tracked")return "This category is not eligible for soldier-level custody";
+    const w=BYKEY[a.catalogueKey], el=eligibility(w,target||"Soldier");
+    if(el.mode!=="asset")return el.why||"This category is not held as individual assets";
     if(a.status==="Retired")return "Retired assets cannot enter a new custody record";
     const c=I.active[a.id];
-    if(c){const s=I.sol[c.soldierId];return `Already in active custody of ${s?s.serviceCode:"?"} (${c.id}) — return it first`;}
+    if(c)return `Already in active custody of ${holderCode(c)} (${c.id}) — return it first`;
     if(a.status!=="Available")return `Asset is ${a.status} — not available for issue`;
     return null;
   }
   const isOfficer=s=>!!s&&OFFICER_RANKS.includes(s.rank)&&s.status==="Active";
+  /* custody target: an individual Soldier or a Team (records reference teamId — never a stand-in soldier).
+     Optional regimentId / teamId context (the hierarchical flow) must be consistent with the target. */
+  function resolveTarget(f,e){
+    const tt=f.targetType==="Team"?"Team":"Soldier"; let s=null, tm=null;
+    const rg=f.regimentId?I.reg[f.regimentId]:null;
+    if(f.regimentId&&!rg)e.regimentId="Select a valid regiment";
+    else if(rg&&rg.status!=="Active")e.regimentId=rg.code+" is Inactive";
+    if(f.teamId||tt==="Team"){
+      tm=I.team[f.teamId];
+      if(!tm)e.teamId="Select a valid team";
+      else if(tm.status!=="Active")e.teamId=tcode(tm)+" is Inactive — it cannot receive equipment";
+      else if(rg&&tm.regimentId!==rg.id)e.teamId=`Team ${tm.code} belongs to ${(I.reg[tm.regimentId]||{}).code||"another regiment"}, not ${rg.code}`;
+      else if((I.reg[tm.regimentId]||{}).status!=="Active")e.teamId="The team's regiment is Inactive";
+    }
+    if(tt==="Soldier"){
+      s=I.sol[f.soldierId];
+      if(!s)e.soldierId="Select a soldier code from the lookup";
+      else if(s.status!=="Active")e.soldierId=`${s.serviceCode} is ${s.status} — only Active personnel can receive custody`;
+      else if(rg&&s.regimentId!==rg.id)e.soldierId=`${s.serviceCode} is not in ${rg.code}`;
+      else if(tm&&s.teamId!==tm.id)e.soldierId=`${s.serviceCode} is not a member of team ${tcode(tm)}`;
+    }
+    return {tt,s,tm,code:tt==="Team"?tcode(tm):(s&&s.serviceCode),holderId:tt==="Team"?(tm&&tm.id):(s&&s.id)};
+  }
 
   /* ---- mutators: validate → mutate → audit → persist → notify ---- */
   function issue(f){
-    const e={}, a=I.ast[f.assetId], s=I.sol[f.soldierId], o=I.sol[f.authorizedById];
-    if(!a)e.assetId="Select an asset from the lookup"; else {const r=issueBlock(a); if(r)e.assetId=r;}
-    if(!s)e.soldierId="Select a soldier code from the lookup";
-    else if(s.status!=="Active")e.soldierId=`${s.serviceCode} is ${s.status} — only Active personnel can receive custody`;
+    const e={}, a=I.ast[f.assetId], o=I.sol[f.authorizedById], t=resolveTarget(f,e);
+    if(!a)e.assetId="Select an asset from the lookup"; else {const r=issueBlock(a,t.tt); if(r)e.assetId=r;}
     if(!CUSTODY_TYPES.includes(f.type))e.type="Choose a custody type";
     if(!isDate(f.effectiveDate))e.effectiveDate="Enter a valid effective date";
     else if(f.effectiveDate>today())e.effectiveDate="Effective date cannot be in the future";
     else if(a&&f.effectiveDate<a.acquisitionDate)e.effectiveDate="Earlier than the asset's acquisition date ("+a.acquisitionDate+")";
     if(!o)e.authorizedById="Select the authorising officer";
     else if(!isOfficer(o))e.authorizedById="Authoriser must be an Active officer";
-    else if(s&&o.id===s.id)e.authorizedById="A soldier cannot authorise their own custody record";
+    else if(t.s&&o.id===t.s.id)e.authorizedById="A soldier cannot authorise their own custody record";
     if(has(e))return fail(e); if(f._dry)return {ok:true};
-    const c=writeIssue(a,s,o,f,null,now());
-    commit(); return {ok:true,rec:c};
+    return atomic(()=>({ok:true,rec:writeIssue(a,t,o,f,null,now())}));
   }
   // one custody record + its own audit events for one physical asset (no commit — callers commit)
-  function writeIssue(a,s,o,f,batchId,ts){
+  function writeIssue(a,t,o,f,batchId,ts){
     const id=nid("CUS",5), remarks=str(f.remarks);
-    const c={id,soldierId:s.id,assetId:a.id,type:f.type,effectiveDate:f.effectiveDate,returnDate:null,status:"Active",
-      authorizedById:o.id,issuedBy:OP,receivedBy:s.serviceCode,remarks,returnCondition:null,returnRemarks:null,
-      returnReceivedBy:null,corrections:[],createdAt:ts,updatedAt:ts};
+    const c={id,targetType:t.tt,soldierId:t.s?t.s.id:null,teamId:t.tt==="Team"?t.tm.id:null,assetId:a.id,type:f.type,effectiveDate:f.effectiveDate,returnDate:null,status:"Active",
+      authorizedById:o.id,issuedBy:OP,receivedBy:t.code,remarks,returnCondition:null,returnRemarks:null,
+      returnReceivedBy:null,corrections:[],createdAt:ts,updatedAt:ts,
+      orgRegimentId:t.tt==="Team"?t.tm.regimentId:(t.s.regimentId||null),orgTeamId:t.tt==="Team"?t.tm.id:(t.s.teamId||null)};
     if(batchId)c.batchId=batchId;
     T.custody.push(c); const prev=a.status; a.status="In Custody"; a.updatedAt=ts;
     const via=batchId?" · batch "+batchId:"";
-    audit("Custody",id,"Custody issued",null,"Active",`${a.tag} → ${s.serviceCode}`+via+(remarks?" · "+remarks:""));
+    audit("Custody",id,"Custody issued",null,"Active",`${a.tag} → ${t.tt==="Team"?"team ":""}${t.code} · auth ${o.serviceCode}`+via+(remarks?" · "+remarks:""));
     audit("Asset",a.id,"Status changed",prev,"In Custody","Issued under "+id);
-    audit("Soldier",s.id,"Custody received",null,a.tag,"Record "+id);
+    audit(t.tt,t.holderId,"Custody received",null,a.tag,"Record "+id);
     I.active[a.id]=c; // so later assets in the same batch see this one as issued
     return c;
   }
-  /* multi-item issue: one submission → one independent custody record per asset, all or nothing.
-     Each asset is checked with exactly the single-issue rules (issue with _dry); errors per asset come back in
-     errors.items[assetId] so the UI can point at the problem item. batchId only groups the records. */
-  function issueBatch(f){
+  // stock allocation (bulk lines, Team holders only): a ledger entry — never converted into tracked assets
+  function stockErrors(lines,t,items){
+    const seen=new Set();
+    lines.forEach(l=>{
+      const k=str(l.catalogueKey), q=Number(l.qty), w=BYKEY[k], id="stock:"+k;
+      if(seen.has(k)){items[id]="Listed more than once";return;} seen.add(k);
+      if(!w){items[id]="Unknown catalogue line";return;}
+      const el=eligibility(w,t.tt);
+      if(el.mode!=="stock"){items[id]=el.mode==="asset"?"Tracked line — select individual assets instead of a quantity":el.why;return;}
+      if(!Number.isInteger(q)||q<1){items[id]="Enter a whole quantity of at least 1";return;}
+      const av=qty(w).reserve; if(q>av)items[id]=`Only ${av.toLocaleString()} unassigned — cannot allocate ${q.toLocaleString()}`;
+    });
+  }
+  function writeAlloc(w,q,t,o,f,batchId,ts){
+    const id=nid("ALC",5), ref=str(f.authRef), note=str(f.remarks);
+    const x={id,catalogueKey:w.key,targetType:"Team",teamId:t.tm.id,regimentId:t.tm.regimentId,qty:q,returnedQty:0,status:"Active",
+      allocatedAt:ts,authorizedById:o.id,authRef:ref,reason:note,by:OP,batchId:batchId||null,returns:[],updatedAt:ts};
+    T.allocations.push(x);
+    audit("Allocation",id,"Stock allocated",null,"Active",`${q.toLocaleString()} × ${w.name} → team ${t.code} · auth ${o.serviceCode} · ref ${ref}`+(note?" · "+note:""));
+    audit("Team",t.tm.id,"Stock allocated",null,`${q.toLocaleString()} × ${w.name}`,"Allocation "+id+" · ref "+ref);
+    (I.allocByKey[w.key]=I.allocByKey[w.key]||[]).push(x); // later lines in the same batch see the reduced reserve
+    return x;
+  }
+  /* one submission → one custody record per asset + one allocation per stock line, all or nothing.
+     Each asset uses exactly the single-issue rules (issue with _dry); per-item errors come back in
+     errors.items[assetId | "stock:"+key]. batchId only groups the records. */
+  function assign(f){
     const ids=Array.isArray(f.assetIds)?f.assetIds.map(str).filter(Boolean):[];
-    const base=Object.assign({},f,{_dry:true}); delete base.assetIds;
+    const lines=Array.isArray(f.stock)?f.stock.filter(l=>l&&l.catalogueKey):[];
+    const base=Object.assign({},f,{_dry:true}); delete base.assetIds; delete base.stock;
     const e={}, items={}, seen=new Set();
-    if(!ids.length)e.assetIds="Select at least one equipment asset";
+    if(!ids.length&&!lines.length)e.assetIds="Select at least one asset or stock line";
     ids.forEach(id=>{
       if(seen.has(id)){items[id]="Selected more than once — each physical asset can be issued only once";return;}
       seen.add(id);
-      if(!I.ast[id]){items[id]="Not a registered tracked asset — catalogue lines, ammunition and explosives cannot enter soldier custody";return;}
+      if(!I.ast[id]){items[id]="Not a registered tracked asset — catalogue lines, ammunition and explosives cannot enter custody as assets";return;}
       const r=issue(Object.assign({},base,{assetId:id}));
       if(!r.ok){
         if(r.errors.assetId)items[id]=r.errors.assetId;
@@ -1087,14 +1209,39 @@ const Store=(()=>{
         Object.entries(r.errors).forEach(([k,m])=>{if(k!=="assetId"&&!(k==="effectiveDate"&&/acquisition/.test(m)))e[k]=m;});
       }
     });
+    // target / authoriser checks even when only stock lines are present
+    const t=resolveTarget(f,e), o=I.sol[f.authorizedById];
     if(!ids.length){const r=issue(Object.assign({},base,{assetId:null}));Object.entries(r.errors||{}).forEach(([k,m])=>{if(k!=="assetId")e[k]=m;});}
-    if(has(items)){const n=Object.keys(items).length;e.assetIds=`${n} selected item${n===1?"":"s"} cannot be issued — remove or replace ${n===1?"it":"them"}`;e.items=items;}
+    if(lines.length){
+      stockErrors(lines,t,items);
+      if(str(f.authRef).length<3)e.authRef="Enter the authorisation reference for the stock allocation";
+    }
+    if(has(items)){const n=Object.keys(items).length;e.assetIds=`${n} selected item${n===1?"":"s"} cannot be assigned — remove or correct ${n===1?"it":"them"}`;e.items=items;}
     if(has(e))return fail(e); if(f._dry)return {ok:true};
-    const snap=JSON.stringify(T), s=I.sol[f.soldierId], o=I.sol[f.authorizedById], ts=now();
-    try{
-      const batchId=nid("BAT",4), recs=ids.map(id=>writeIssue(I.ast[id],s,o,f,batchId,ts));
-      commit(); return {ok:true,recs,batchId};
-    }catch(err){T=JSON.parse(snap);reindex();console.error(err);return fail({_:"Nothing was saved — the batch could not be completed"});}
+    return atomic(()=>{
+      const ts=now(), batchId=ids.length+lines.length>1?nid("BAT",4):null;
+      const recs=ids.map(id=>writeIssue(I.ast[id],t,o,f,batchId,ts));
+      const allocs=lines.map(l=>writeAlloc(BYKEY[l.catalogueKey],Number(l.qty),t,o,f,batchId,ts));
+      return {ok:true,recs,allocs,batchId,target:t.tt,holder:t.code};
+    });
+  }
+  const issueBatch=f=>assign(Object.assign({},f,{stock:[]}));
+  function returnStock(f){
+    const e={}, x=I.alloc[f.allocationId]; if(!x)return fail({_:"Allocation not found"});
+    if(x.status!=="Active")return fail({_:"This allocation is already fully returned"});
+    const out=x.qty-x.returnedQty, q=Number(f.qty), reason=str(f.reason);
+    if(!Number.isInteger(q)||q<1)e.qty="Enter a whole quantity of at least 1";
+    else if(q>out)e.qty=`Only ${out.toLocaleString()} outstanding on ${x.id}`;
+    if(reason.length<4)e.reason="Give a reason for the audit trail";
+    if(has(e))return fail(e); if(f._dry)return {ok:true};
+    return atomic(()=>{
+      const ts=now(), w=BYKEY[x.catalogueKey]||{}, left=out-q;
+      x.returns.push({ts,qty:q,by:OP,reason}); x.returnedQty+=q; x.updatedAt=ts;
+      if(!left){x.status="Returned";x.returnedAt=ts;}
+      audit("Allocation",x.id,left?"Stock partly returned":"Stock returned",String(out),String(left),`${q.toLocaleString()} × ${w.name} returned · ${reason}`);
+      audit("Team",x.teamId,"Stock returned",`${q.toLocaleString()} × ${w.name}`,null,"Allocation "+x.id);
+      return {ok:true,rec:x,left};
+    });
   }
   function returnAsset(f){
     const e={}, c=I.cus[f.custodyId];
@@ -1107,13 +1254,16 @@ const Store=(()=>{
     const remarks=str(f.remarks);
     if(f.condition&&!OK_COND.includes(f.condition)&&remarks.length<4)e.remarks="Describe the damage / fault (required for this condition)";
     if(has(e))return fail(e); if(f._dry)return {ok:true};
-    const a=I.ast[c.assetId], s=I.sol[c.soldierId], ts=now(), next=OK_COND.includes(f.condition)?"Available":"Inspection Pending";
-    c.status="Closed"; c.returnDate=f.returnDate; c.returnCondition=f.condition; c.returnRemarks=remarks; c.returnReceivedBy=OP; c.updatedAt=ts;
-    const prev=a.status; a.status=next; a.condition=f.condition; a.updatedAt=ts;
-    audit("Custody",c.id,"Custody closed","Active","Closed",`Returned · ${f.condition}`+(remarks?" · "+remarks:""));
-    audit("Asset",a.id,"Status changed",prev,next,"Returned under "+c.id+" · "+f.condition);
-    audit("Soldier",s.id,"Custody returned",a.tag,null,"Record "+c.id);
-    commit(); return {ok:true,rec:c,next};
+    return atomic(()=>{
+      const a=I.ast[c.assetId], ts=now(), next=OK_COND.includes(f.condition)?"Available":"Inspection Pending";
+      c.status="Closed"; c.returnDate=f.returnDate; c.returnCondition=f.condition; c.returnRemarks=remarks; c.returnReceivedBy=OP; c.updatedAt=ts;
+      const prev=a.status; a.status=next; a.condition=f.condition; a.updatedAt=ts;
+      audit("Custody",c.id,"Custody closed","Active","Closed",`Returned by ${holderCode(c)} · ${f.condition}`+(remarks?" · "+remarks:""));
+      audit("Asset",a.id,"Status changed",prev,next,"Returned under "+c.id+" · "+f.condition);
+      if(c.teamId)audit("Team",c.teamId,"Custody returned",a.tag,null,"Record "+c.id);
+      else audit("Soldier",c.soldierId,"Custody returned",a.tag,null,"Record "+c.id);
+      return {ok:true,rec:c,next};
+    });
   }
   function setAssetStatus(f){
     const e={}, a=I.ast[f.assetId]; if(!a)return fail({_:"Asset not found"});
@@ -1142,11 +1292,17 @@ const Store=(()=>{
     if(!RANKS.includes(f.rank))e.rank="Select a rank";
     ["department","unit","designation"].forEach(k=>{if(str(f[k]).length<2)e[k]="Required";});
     if(!SOLDIER_STATUS.includes(f.status))e.status="Select a status";
-    if(has(e))return fail(e);
-    const ts=now(), s={id:nid("SOL",4),serviceCode:code,rank:f.rank,department:str(f.department),unit:str(f.unit),
-      designation:str(f.designation),status:f.status,createdAt:ts,updatedAt:ts};
-    T.soldiers.push(s); audit("Soldier",s.id,"Record created",null,s.status,"Quick-create · "+code);
-    commit(); return {ok:true,rec:s};
+    const r=I.reg[f.regimentId]; regTarget(e,"regimentId",r,"receive soldiers");
+    if(has(e))return fail(e); if(f._dry)return {ok:true};
+    // one atomic unit: the soldier record and its first regiment membership are saved together or not at all
+    return atomic(()=>{
+      const ts=now(), s={id:nid("SOL",4),serviceCode:code,rank:f.rank,department:str(f.department),unit:str(f.unit),
+        designation:str(f.designation),status:f.status,createdAt:ts,updatedAt:ts};
+      T.soldiers.push(s); audit("Soldier",s.id,"Record created",null,s.status,"Quick-create · "+code);
+      const why=str(f.reason)||"New soldier record", m=startMem(s,r,"New soldier",null,why,ts);
+      audit("Soldier",s.id,"Assigned to regiment",null,r.code,why+" · "+m.id);
+      audit("Regiment",r.id,"Soldier assigned",null,s.serviceCode,"New soldier record · "+m.id);
+      return {ok:true,rec:s,regiment:r};});
   }
   function setSoldierStatus(f){
     const e={}, s=I.sol[f.soldierId]; if(!s)return fail({_:"Soldier record not found"});
@@ -1178,7 +1334,263 @@ const Store=(()=>{
     T.assets.push(a); audit("Asset",a.id,"Asset registered",null,st,"Catalogue "+w.name+(a.docRef!=="—"?" · "+a.docRef:""));
     commit(); return {ok:true,rec:a};
   }
-  function reset(){try{localStorage.removeItem(KEY);}catch(e){} T=fresh(); stale=false; reindex(); emit();}
+  /* ---- regiments: separate table; soldier.regimentId = the one open membership (history in T.memberships) ----
+     Every membership change writes audit events on the Soldier and the Regiment(s). Composite writes run
+     through atomic(): validate first, then write, and restore the snapshot if anything throws. */
+  const REG_STATUS=["Active","Inactive"], MEM_KINDS=["Transfer","Correction"];
+  function atomic(fn){
+    const snap=JSON.stringify(T);
+    try{const r=fn();commit();return r;}
+    catch(err){T=JSON.parse(snap);reindex();console.error(err);return fail({_:"Nothing was saved — the operation could not be completed and was rolled back"});}
+  }
+  const openMem=sid=>T.memberships.filter(m=>m.soldierId===sid&&!m.endedAt);
+  function startMem(s,r,kind,o,reason,ts){
+    const m={id:nid("MEM",5),soldierId:s.id,regimentId:r.id,startedAt:ts,endedAt:null,kind,authorizedById:o?o.id:null,reason,by:OP,endedBy:null,endReason:null};
+    T.memberships.push(m); s.regimentId=r.id; s.updatedAt=ts; return m;
+  }
+  function endMem(m,reason,ts){m.endedAt=ts;m.endedBy=OP;m.endReason=reason;}
+  const regCodeOk=c=>/^[A-Z][A-Z0-9-]{2,15}$/.test(c);
+  function checkOfficer(e,o,s){
+    if(!o)e.authorizedById="Select the authorising officer";
+    else if(!isOfficer(o))e.authorizedById="Authoriser must be an Active officer";
+    else if(s&&o.id===s.id)e.authorizedById="A soldier cannot authorise their own regiment change";
+  }
+  function regTarget(e,key,r,verb){
+    if(!r)e[key]="Select a valid regiment";
+    else if(r.status!=="Active")e[key]=`${r.code} is Inactive — it cannot ${verb}`;
+  }
+
+  /* versioned, idempotent migration (m1): adds the demo regiments, then gives every soldier without an open
+     membership one — seeded soldiers by ID + service code, others by unit name. Anyone it can't place stays
+     Unassigned (shown in the UI with a resolution flow). Re-running changes nothing. Returns #changes. */
+  const MIGRATION=3; // m1 regiments · m2 teams · m3 demo Gorkha regiment + team (added by the same idempotent steps)
+  function migrate(){
+    let n=0; const ts=now(), seedOf=SEED.regimentOf||{}, byUnit=SEED.regimentByUnit||{};
+    if(!Array.isArray(T.regiments)){T.regiments=[];n++;}
+    if(!Array.isArray(T.memberships)){T.memberships=[];n++;}
+    (SEED.regiments||[]).forEach(r=>{
+      if(T.regiments.some(x=>x.id===r.id||x.code.toUpperCase()===r.code.toUpperCase()))return;
+      T.regiments.push(clone(r)); audit("Regiment",r.id,"Regiment created",null,r.status,"Migration · illustrative demo regiment"); n++;});
+    const valid=id=>T.regiments.find(r=>r.id===id);
+    T.soldiers.forEach(s=>{
+      const open=openMem(s.id);
+      if(open.length===1){if(s.regimentId!==open[0].regimentId){s.regimentId=open[0].regimentId;n++;}return;}
+      if(open.length>1)return; // never auto-resolve a conflict; surfaced by integrity()
+      const sd=seedOf[s.id];
+      let r=valid(s.regimentId)||(sd&&sd.serviceCode===s.serviceCode?valid(sd.regimentId):null)||valid(byUnit[s.unit]);
+      if(r&&r.status!=="Active"&&!s.regimentId)r=null;
+      if(!r){if(s.regimentId&&!valid(s.regimentId)){delete s.regimentId;n++;}return;}
+      startMem(s,r,"Migration",null,"Initial regiment assignment (migration m1)",ts);
+      audit("Soldier",s.id,"Assigned to regiment",null,r.code,"Migration m1 · "+(sd?"seed register":"matched by unit "+s.unit));
+      n++;});
+    n+=migrateTeams();
+    if((T.mig||0)<MIGRATION){T.mig=MIGRATION;n++;}
+    T.seq.REG=Math.max(T.seq.REG||0,T.regiments.length);
+    return n;
+  }
+  function integrity(){
+    const out=[], ids=new Set(), codes=new Set();
+    T.regiments.forEach(r=>{if(ids.has(r.id))out.push("Duplicate regiment ID "+r.id);ids.add(r.id);const c=r.code.toUpperCase();if(codes.has(c))out.push("Duplicate regiment code "+c);codes.add(c);});
+    const sc=new Set(); T.soldiers.forEach(s=>{const c=s.serviceCode.toUpperCase();if(sc.has(c))out.push("Duplicate service code "+c);sc.add(c);
+      const open=openMem(s.id);
+      if(open.length>1)out.push(s.serviceCode+" has "+open.length+" open memberships");
+      if(s.regimentId&&!I.reg[s.regimentId])out.push(s.serviceCode+" points to missing regiment "+s.regimentId);
+      if((open[0]&&open[0].regimentId)!==(s.regimentId||undefined))out.push(s.serviceCode+" regimentId does not match its open membership");});
+    T.memberships.forEach(m=>{if(!I.sol[m.soldierId])out.push(m.id+" references missing soldier");if(!I.reg[m.regimentId])out.push(m.id+" references missing regiment");});
+    T.custody.forEach(c=>{if(c.teamId){if(!I.team[c.teamId])out.push(c.id+" references missing team");if(c.soldierId)out.push(c.id+" has both a team and a soldier holder");}
+      else if(!I.sol[c.soldierId])out.push(c.id+" references missing soldier");});
+    const act={}; T.custody.forEach(c=>{if(c.status==="Active"){if(act[c.assetId])out.push(c.assetId+" has two active custody records");act[c.assetId]=1;}});
+    T.soldiers.forEach(s=>{const open=openTeamMem(s.id), tm=s.teamId&&I.team[s.teamId];
+      if(open.length>1)out.push(s.serviceCode+" has "+open.length+" open team memberships");
+      if(s.teamId&&!tm)out.push(s.serviceCode+" points to missing team "+s.teamId);
+      if(tm&&tm.regimentId!==s.regimentId)out.push(s.serviceCode+" is in team "+tm.code+" of another regiment");
+      if((open[0]&&open[0].teamId)!==(s.teamId||undefined))out.push(s.serviceCode+" teamId does not match its open team membership");});
+    T.teams.forEach(t=>{if(!I.reg[t.regimentId])out.push("Team "+t.id+" references missing regiment");});
+    T.allocations.forEach(x=>{if(!I.team[x.teamId])out.push(x.id+" references missing team");if(x.returnedQty<0||x.returnedQty>x.qty)out.push(x.id+" has an invalid returned quantity");
+      const w=BYKEY[x.catalogueKey]; if(!w)out.push(x.id+" references unknown line"); else if(eligibility(w,"Team").mode!=="stock")out.push(x.id+" allocates a line that is not team stock");});
+    DATA.items.forEach(w=>{if(qty(w).reserve<0)out.push(w.key+" is over-assigned");});
+    return out;
+  }
+
+  function createRegiment(f){
+    const e={}, code=str(f.code).toUpperCase(), name=str(f.name), desc=str(f.description);
+    if(!regCodeOk(code))e.code="3–16 characters: letters, digits and hyphens, starting with a letter (e.g. DEMO-ECHO)";
+    else if(I.regCode[code])e.code="Regiment code "+code+" already exists";
+    if(name.length<3)e.name="Enter the regiment name";
+    else if(T.regiments.some(r=>r.name.toLowerCase()===name.toLowerCase()))e.name="A regiment with this name already exists";
+    if(desc.length>200)e.description="Keep the description under 200 characters";
+    if(!REG_STATUS.includes(f.status))e.status="Select a status";
+    if(has(e))return fail(e); if(f._dry)return {ok:true};
+    return atomic(()=>{
+      let id; do{id=nid("REG",2);}while(I.reg[id]);
+      const ts=now(), r={id,code,name,description:desc,status:f.status,createdAt:ts,updatedAt:ts};
+      T.regiments.push(r); audit("Regiment",id,"Regiment created",null,r.status,code+" · "+name);
+      return {ok:true,rec:r};});
+  }
+  function updateRegiment(f){
+    const e={}, r=I.reg[f.regimentId]; if(!r)return fail({_:"Regiment record not found"});
+    const name=str(f.name), desc=str(f.description), reason=str(f.reason);
+    if(name.length<3)e.name="Enter the regiment name";
+    else if(T.regiments.some(x=>x!==r&&x.name.toLowerCase()===name.toLowerCase()))e.name="A regiment with this name already exists";
+    if(desc.length>200)e.description="Keep the description under 200 characters";
+    if(!REG_STATUS.includes(f.status))e.status="Select a status";
+    else if(f.status==="Inactive"&&r.status!=="Inactive"&&(I.members[r.id]||[]).length)e.status=`Transfer its ${(I.members[r.id]||[]).length} current soldiers to another regiment before deactivating`;
+    if(name===r.name&&desc===(r.description||"")&&f.status===r.status)e._="No changes to save";
+    if(reason.length<4)e.reason="Give a reason for the audit trail";
+    if(has(e))return fail(e); if(f._dry)return {ok:true};
+    return atomic(()=>{
+      const ts=now(), changes=[];
+      if(name!==r.name)changes.push(`name “${r.name}” → “${name}”`);
+      if(desc!==(r.description||""))changes.push("description updated");
+      const prevSt=r.status; r.name=name; r.description=desc; r.status=f.status; r.updatedAt=ts;
+      if(changes.length)audit("Regiment",r.id,"Regiment updated",null,null,changes.join(" · ")+" · "+reason);
+      if(prevSt!==f.status)audit("Regiment",r.id,f.status==="Inactive"?"Regiment deactivated":"Regiment reactivated",prevSt,f.status,reason);
+      return {ok:true,rec:r};});
+  }
+  // first membership for a soldier who has none (unassigned). Existing members must be transferred instead.
+  function assignSoldier(f){
+    const e={}, s=I.sol[f.soldierId], r=I.reg[f.regimentId], o=I.sol[f.authorizedById], reason=str(f.reason);
+    if(!s)e.soldierId="Select an existing soldier from the lookup";
+    else if(s.regimentId){const c=I.reg[s.regimentId];e.soldierId=s.regimentId===f.regimentId?`${s.serviceCode} is already in ${c?c.code:"this regiment"}`:`${s.serviceCode} already belongs to ${c?c.code:s.regimentId} — use Transfer to move them`;}
+    regTarget(e,"regimentId",r,"receive soldiers");
+    checkOfficer(e,o,s);
+    if(reason.length<4)e.reason="Give a reason for the audit trail";
+    if(has(e))return fail(e); if(f._dry)return {ok:true};
+    return atomic(()=>{
+      const ts=now(), m=startMem(s,r,"Assignment",o,reason,ts);
+      const auth=" · auth "+o.serviceCode+" · "+m.id;
+      audit("Soldier",s.id,"Assigned to regiment",null,r.code,reason+auth);
+      audit("Regiment",r.id,"Soldier assigned",null,s.serviceCode,reason+auth);
+      return {ok:true,rec:m};});
+  }
+  // move between regiments: closes the open membership (kept as history) and opens the new one, atomically
+  function transferSoldier(f){
+    const e={}, s=I.sol[f.soldierId], r=I.reg[f.toRegimentId], o=I.sol[f.authorizedById], reason=str(f.reason), kind=f.kind||"Transfer";
+    if(!s)return fail({_:"Soldier record not found"});
+    const from=I.reg[s.regimentId];
+    if(!from)e.soldierId=`${s.serviceCode} has no current regiment — assign one instead of transferring`;
+    regTarget(e,"toRegimentId",r,"receive soldiers");
+    if(r&&from&&r.id===from.id)e.toRegimentId="Choose a different regiment from the current one";
+    if(!MEM_KINDS.includes(kind))e.kind="Select the change type";
+    checkOfficer(e,o,s);
+    if(reason.length<4)e.reason="Give a reason for the audit trail";
+    if(has(e))return fail(e); if(f._dry)return {ok:true};
+    return atomic(()=>{
+      const ts=now(), open=openMem(s.id);
+      if(open.length!==1)throw new Error("membership invariant broken for "+s.id);
+      endMem(open[0],(kind==="Correction"?"Corrected → ":"Transferred → ")+r.code+" · "+reason,ts);
+      const m=startMem(s,r,kind,o,reason,ts);
+      const act=kind==="Correction"?"Membership corrected":"Transferred";
+      const auth=" · auth "+o.serviceCode+" · "+m.id;
+      audit("Soldier",s.id,act,from.code,r.code,reason+auth);
+      audit("Regiment",from.id,kind==="Correction"?"Membership corrected (out)":"Soldier transferred out",s.serviceCode,null,"→ "+r.code+" · "+reason+auth);
+      audit("Regiment",r.id,kind==="Correction"?"Membership corrected (in)":"Soldier transferred in",null,s.serviceCode,"← "+from.code+" · "+reason+auth);
+      if(s.teamId)leaveTeam(s,"Regiment "+(kind==="Correction"?"correction":"transfer")+" → "+r.code+" · "+reason+auth,ts);
+      return {ok:true,rec:m,from,to:r};});
+  }
+  /* ---- teams: belong to exactly one regiment; soldier.teamId = the one open record in T.teamMemberships ----
+     A team's soldiers are always in the team's regiment: a regiment transfer closes the team membership. */
+  const TEAM_STATUS=["Active","Inactive"];
+  const openTeamMem=sid=>T.teamMemberships.filter(m=>m.soldierId===sid&&!m.endedAt);
+  function startTeamMem(s,tm,kind,o,reason,ts){
+    const m={id:nid("TMM",5),soldierId:s.id,teamId:tm.id,regimentId:tm.regimentId,startedAt:ts,endedAt:null,kind,
+      authorizedById:o?o.id:null,reason,by:OP,endedBy:null,endReason:null};
+    T.teamMemberships.push(m); s.teamId=tm.id; s.updatedAt=ts; return m;
+  }
+  function leaveTeam(s,why,ts){
+    openTeamMem(s.id).forEach(m=>{m.endedAt=ts;m.endedBy=OP;m.endReason=why;
+      audit("Team",m.teamId,"Soldier left team",s.serviceCode,null,why);});
+    if(s.teamId){audit("Soldier",s.id,"Left team",tcode(I.team[s.teamId]),null,why);s.teamId=null;s.updatedAt=ts;}
+  }
+  const teamCodeOk=c=>/^[A-Z][A-Z0-9-]{1,11}$/.test(c);
+  const teamBusy=tm=>({members:(I.teamMembers[tm.id]||[]).length,
+    custody:T.custody.filter(c=>c.teamId===tm.id&&c.status==="Active").length,
+    stock:T.allocations.filter(x=>x.teamId===tm.id&&x.status==="Active").length});
+  function createTeam(f){
+    const e={}, r=I.reg[f.regimentId], code=str(f.code).toUpperCase(), name=str(f.name);
+    regTarget(e,"regimentId",r,"get new teams");
+    if(!teamCodeOk(code))e.code="2–12 characters: letters, digits and hyphens, starting with a letter (e.g. E-COY)";
+    else if(r&&T.teams.some(t=>t.regimentId===r.id&&t.code.toUpperCase()===code))e.code=`${r.code} already has a team ${code}`;
+    if(name.length<3)e.name="Enter the team name";
+    else if(r&&T.teams.some(t=>t.regimentId===r.id&&t.name.toLowerCase()===name.toLowerCase()))e.name="This regiment already has a team with this name";
+    if(!TEAM_STATUS.includes(f.status))e.status="Select a status";
+    if(has(e))return fail(e); if(f._dry)return {ok:true};
+    return atomic(()=>{
+      let id; do{id=nid("TEM",3);}while(I.team[id]);
+      const ts=now(), tm={id,code,name,regimentId:r.id,status:f.status,createdAt:ts,updatedAt:ts};
+      T.teams.push(tm); I.team[id]=tm;
+      audit("Team",id,"Team created",null,tm.status,`${r.code}/${code} · ${name}`);
+      audit("Regiment",r.id,"Team created",null,code,name+" · "+id);
+      return {ok:true,rec:tm};});
+  }
+  function updateTeam(f){
+    const e={}, tm=I.team[f.teamId]; if(!tm)return fail({_:"Team record not found"});
+    const name=str(f.name), reason=str(f.reason);
+    if(name.length<3)e.name="Enter the team name";
+    else if(T.teams.some(t=>t!==tm&&t.regimentId===tm.regimentId&&t.name.toLowerCase()===name.toLowerCase()))e.name="This regiment already has a team with this name";
+    if(!TEAM_STATUS.includes(f.status))e.status="Select a status";
+    else if(f.status==="Inactive"&&tm.status!=="Inactive"){const b=teamBusy(tm);
+      if(b.members||b.custody||b.stock)e.status=`Move its ${b.members} soldiers and return ${b.custody} assets / ${b.stock} stock allocations before deactivating`;}
+    if(name===tm.name&&f.status===tm.status)e._="No changes to save";
+    if(reason.length<4)e.reason="Give a reason for the audit trail";
+    if(has(e))return fail(e); if(f._dry)return {ok:true};
+    return atomic(()=>{
+      const ts=now(), prev=tm.status;
+      if(name!==tm.name)audit("Team",tm.id,"Team updated",null,null,`name “${tm.name}” → “${name}” · ${reason}`);
+      tm.name=name; tm.status=f.status; tm.updatedAt=ts;
+      if(prev!==f.status)audit("Team",tm.id,f.status==="Inactive"?"Team deactivated":"Team reactivated",prev,f.status,reason);
+      return {ok:true,rec:tm};});
+  }
+  // move a soldier into a team of their current regiment, or out of their team (teamId "")
+  function setSoldierTeam(f){
+    const e={}, s=I.sol[f.soldierId], o=I.sol[f.authorizedById], reason=str(f.reason), to=f.teamId?I.team[f.teamId]:null;
+    if(!s)return fail({_:"Soldier record not found"});
+    if(!s.regimentId)e.soldierId=`${s.serviceCode} has no regiment — assign a regiment first`;
+    else if(f.teamId){
+      if(!to)e.teamId="Select a valid team";
+      else if(to.regimentId!==s.regimentId)e.teamId=`Team ${tcode(to)} is in another regiment — transfer ${s.serviceCode}'s regiment first`;
+      else if(to.status!=="Active")e.teamId=tcode(to)+" is Inactive";
+      else if(s.teamId===to.id)e.teamId=`${s.serviceCode} is already in ${tcode(to)}`;
+    } else if(!s.teamId)e.teamId=`${s.serviceCode} is not in a team`;
+    checkOfficer(e,o,s);
+    if(reason.length<4)e.reason="Give a reason for the audit trail";
+    if(has(e))return fail(e); if(f._dry)return {ok:true};
+    return atomic(()=>{
+      const ts=now(), from=s.teamId?I.team[s.teamId]:null, auth=" · auth "+o.serviceCode;
+      if(from)leaveTeam(s,(to?"Moved to "+tcode(to):"Removed from team")+" · "+reason+auth,ts);
+      let m=null;
+      if(to){m=startTeamMem(s,to,from?"Team change":"Team assignment",o,reason,ts);
+        audit("Soldier",s.id,from?"Team changed":"Assigned to team",from?tcode(from):null,tcode(to),reason+auth+" · "+m.id);
+        audit("Team",to.id,"Soldier joined team",null,s.serviceCode,reason+auth+" · "+m.id);}
+      return {ok:true,rec:m,from,to};});
+  }
+  /* migration m2: demo teams (only inside regiments that exist) + team membership by unit, within the
+     soldier's own regiment. Never creates custody records or changes counts. Idempotent. */
+  function migrateTeams(){
+    let n=0; const ts=now();
+    ["teams","teamMemberships","allocations"].forEach(k=>{if(!Array.isArray(T[k])){T[k]=[];n++;}});
+    (SEED.teams||[]).forEach(t=>{
+      if(T.teams.some(x=>x.id===t.id)||!T.regiments.some(r=>r.id===t.regimentId))return;
+      if(T.teams.some(x=>x.regimentId===t.regimentId&&x.code.toUpperCase()===t.code.toUpperCase()))return;
+      const tm=clone(t); delete tm.unit; T.teams.push(tm);
+      audit("Team",tm.id,"Team created",null,tm.status,"Migration · illustrative demo team"+(t.unit?" for "+t.unit:"")); n++;});
+    const byUnit={}; (SEED.teams||[]).forEach(t=>{if(t.unit)byUnit[t.unit]=t.id;});
+    T.soldiers.forEach(s=>{
+      const open=openTeamMem(s.id);
+      if(open.length===1){if(s.teamId!==open[0].teamId){s.teamId=open[0].teamId;n++;}return;}
+      if(open.length>1)return;
+      if(s.teamId){s.teamId=null;n++;}
+      const tm=T.teams.find(x=>x.id===byUnit[s.unit]);
+      if(!tm||!s.regimentId||tm.regimentId!==s.regimentId||tm.status!=="Active")return;
+      startTeamMem(s,tm,"Migration",null,"Initial team assignment (migration m2)",ts);
+      audit("Soldier",s.id,"Assigned to team",null,(T.regiments.find(r=>r.id===tm.regimentId)||{}).code+"/"+tm.code,"Migration m2 · matched by unit "+s.unit); n++;});
+    T.seq.TEM=Math.max(T.seq.TEM||0,T.teams.length);
+    return n;
+  }
+  function reset(){try{localStorage.removeItem(KEY);}catch(e){} T=fresh(); stale=false; reindex(); migrate(); commit();}
+
+  // run the migration on every load; it only writes when something actually changed
+  if(migrate()){reindex();try{localStorage.setItem(KEY,JSON.stringify(T));}catch(e){}}
 
   /* ---- read API ---- */
   const byTsDesc=(a,b)=>(b.ts||b.createdAt).localeCompare(a.ts||a.createdAt)||b.id.localeCompare(a.id);
@@ -1193,10 +1605,25 @@ const Store=(()=>{
     eligibleAssets:()=>T.assets.filter(a=>!issueBlock(a)),
     activeSoldiers:()=>T.soldiers.filter(s=>s.status==="Active"),
     officers:()=>T.soldiers.filter(isOfficer),
-    custodians:()=>new Set(Object.values(I.active).map(c=>c.soldierId)),
-    searchBlob:key=>(I.byCat[key]||[]).map(a=>{const c=I.active[a.id],s=c&&I.sol[c.soldierId];return a.tag+" "+a.serial+" "+(s?s.serviceCode:"");}).join(" "),
+    custodians:()=>new Set(Object.values(I.active).filter(c=>c.soldierId).map(c=>c.soldierId)),
+    searchBlob:key=>(I.byCat[key]||[]).map(a=>{const c=I.active[a.id];return a.tag+" "+a.serial+" "+(c?holderCode(c):"");}).join(" ")+" "+(I.allocByKey[key]||[]).filter(x=>x.status==="Active").map(x=>tcode(I.team[x.teamId])).join(" "),
     suggestTag:key=>{const l=I.byCat[key]||[];const p=l.length?l[0].tag.replace(/-\d{4}$/,""):"EKB-"+key.toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,6);
       let n=l.length+1;while(I.tag[(p+"-"+String(n).padStart(4,"0")).toUpperCase()])n++;return p+"-"+String(n).padStart(4,"0");},
+    REG_STATUS,MEM_KINDS,TEAM_STATUS,TARGETS,eligibility,holderCode,tcode,
+    teams:()=>T.teams, team:id=>I.team[id], teamsOf:rid=>I.teamsByReg[rid]||[], teamMembersOf:id=>I.teamMembers[id]||[],
+    teamMembershipsOfSoldier:id=>(I.tmBySol[id]||[]).slice().sort((a,b)=>b.startedAt.localeCompare(a.startedAt)||b.id.localeCompare(a.id)),
+    teamMembershipsOfTeam:id=>(I.tmByTeam[id]||[]).slice().sort((a,b)=>b.startedAt.localeCompare(a.startedAt)||b.id.localeCompare(a.id)),
+    custodyOfTeam:id=>(I.byTeam[id]||[]).slice().sort(byTsDesc),
+    allocations:()=>T.allocations.slice().sort((a,b)=>b.allocatedAt.localeCompare(a.allocatedAt)||b.id.localeCompare(a.id)), allocation:id=>I.alloc[id],
+    allocationsOfTeam:id=>(I.allocByTeam[id]||[]).slice().sort((a,b)=>b.allocatedAt.localeCompare(a.allocatedAt)||b.id.localeCompare(a.id)),
+    allocationsOfKey:k=>(I.allocByKey[k]||[]).slice().sort((a,b)=>b.allocatedAt.localeCompare(a.allocatedAt)||b.id.localeCompare(a.id)),
+    createTeam,updateTeam,setSoldierTeam,assign,returnStock,
+    regiments:()=>T.regiments, regiment:id=>I.reg[id], membersOf:id=>I.members[id]||[],
+    membershipsOfSoldier:id=>(I.memBySol[id]||[]).slice().sort((a,b)=>b.startedAt.localeCompare(a.startedAt)||b.id.localeCompare(a.id)),
+    membershipsOfRegiment:id=>(I.memByReg[id]||[]).slice().sort((a,b)=>b.startedAt.localeCompare(a.startedAt)||b.id.localeCompare(a.id)),
+    unassigned:()=>T.soldiers.filter(s=>!s.regimentId), integrity, migration:()=>T.mig||0,
+    migrate:()=>{const n=migrate();if(n)commit();return n;},
+    createRegiment,updateRegiment,assignSoldier,transferSoldier,
     issue,issueBatch,returnAsset,setAssetStatus,addCorrection,createSoldier,setSoldierStatus,registerAsset,reset,
     subscribe:fn=>subs.push(fn),
   };
@@ -1235,6 +1662,9 @@ function viewTitle(v){
   if(v.kind==="asset")return (Store.asset(v.id)||{}).tag||"asset";
   if(v.kind==="soldier")return (Store.soldier(v.id)||{}).serviceCode||"soldier";
   if(v.kind==="custody")return v.id;
+  if(v.kind==="team")return Store.tcode(Store.team(v.id))||"team";
+  if(v.kind==="allocation")return v.id;
+  if(v.kind==="regiment")return (Store.regiment(v.id)||{}).code||"regiment";
   return "previous";
 }
 function sheetOpen(v,reset){
@@ -1263,13 +1693,14 @@ function closeDetail(){$("#modal").hidden=true;document.body.style.overflow="";V
 /* ---- item view: custody control, quantity breakdown, tracked-assets subgrid ---- */
 function custodyItemSec(w){
   const pol=Store.policyOf(w.type);
-  if(pol==="sealed")return `<div class="d-sec"><div class="d-h">Custody Control</div><div class="restrict">⛔ Sealed restricted stock — held under authorised store custody only. Not issuable to individual soldiers; no soldier-level custody records exist for this category.</div></div>`;
-  if(pol!=="tracked")return `<div class="d-sec"><div class="d-h">Custody Control</div><div class="restrict soft">Restricted unit-issue stock — accounted in aggregate only. No soldier-level custody workflow for this category.</div></div>`;
+  if(pol!=="tracked"){const act=Store.allocationsOfKey(w.key).filter(x=>x.status==="Active"), q=Store.qty(w);
+    return `<div class="d-sec"><div class="d-h">Custody Control</div>${pol==="sealed"?`<div class="restrict">⛔ Sealed restricted stock — never issued to individual soldiers. Only authorised team stock allocations (officer + authorisation reference), via New custody record → team custody.</div>`:`<div class="restrict soft">Restricted unit-issue stock — never issued to individual soldiers. Only authorised team stock allocations (New custody record → team custody).</div>`}</div>
+    <div class="d-sec" id="trk"><div class="d-h">Team Stock Allocations <span class="dcount">${q.allocated.toLocaleString()} allocated · ${q.reserve.toLocaleString()} unassigned</span></div>${ctable(ALLOC_HEADS(false),act.length?[allocRows(act)]:[],10,"No stock allocated to teams.")}</div>`;}
   const q=Store.qty(w), ORD={"Available":0,"In Custody":1,"Inspection Pending":2,"Under Maintenance":3,"Retired":4};
   const list=Store.assetsOf(w.key).slice().sort((a,b)=>(ORD[a.status]-ORD[b.status])||a.tag.localeCompare(b.tag));
   const tiles=[["Total inventory",q.inventory,"arrived in armoury"],["Legacy bulk assigned",q.legacy,"issue codes"],["Tracked in custody",q.active,"of "+q.tracked+" tracked assets"],
     ["Tracked available",q.available,(q.other?q.other+" insp./maint. · ":"")+(q.retired?q.retired+" retired":"ready to issue")],["Total assigned",q.total,"legacy + tracked custody"],["Unassigned",q.reserve,"arrived − total assigned"]];
-  const rows=list.map(a=>{const c=Store.activeFor(a.id);return `<tr><td>${astLink(a.id)}</td><td class="mono sm">${esc(a.serial)}</td><td>${esc(a.condition)}</td><td>${astBadge(a)}</td><td>${c?solLink(c.soldierId):'<span class="faintx">in armoury</span>'}</td><td class="ta-r">${assetActs(a,c)}</td></tr>`;});
+  const rows=list.map(a=>{const c=Store.activeFor(a.id);return `<tr><td>${astLink(a.id)}</td><td class="mono sm">${esc(a.serial)}</td><td>${esc(a.condition)}</td><td>${astBadge(a)}</td><td>${c?holderLink(c):'<span class="faintx">in armoury</span>'}</td><td class="ta-r">${assetActs(a,c)}</td></tr>`;});
   const canReg=q.untracked>0;
   return `<div class="d-sec" id="trk"><div class="d-h">Tracked Assets <span class="dcount">${q.available} available · ${list.length} total</span>
       <span class="dh-sp"></span>${canReg?`<button type="button" class="cbtn" data-act="newasset" data-key="${w.key}">＋ Register asset</button>`:""}</div>
@@ -1300,7 +1731,7 @@ function viewAsset(v){
   const acts=[c?`<button type="button" class="cbtn pri" data-act="return" data-id="${c.id}">↩ Return to armoury</button>`:"",
     !block?`<button type="button" class="cbtn pri" data-act="issue" data-asset="${a.id}">＋ Create custody record</button>`:"",
     trans.length?`<button type="button" class="cbtn" data-act="status" data-id="${a.id}">Change status</button>`:""].join("");
-  const rows=hist.map(h=>`<tr><td>${cusLink(h.id)}</td><td>${solLink(h.soldierId)}</td><td>${esc(h.type)}</td><td class="mono sm">${fmtD(h.effectiveDate)}</td><td class="mono sm">${fmtD(h.returnDate)}</td><td>${esc(h.returnCondition||"—")}</td><td>${cusBadge(h)}</td></tr>`);
+  const rows=hist.map(h=>`<tr><td>${cusLink(h.id)}</td><td>${holderLink(h)}</td><td>${esc(h.type)}</td><td class="mono sm">${fmtD(h.effectiveDate)}</td><td class="mono sm">${fmtD(h.returnDate)}</td><td>${esc(h.returnCondition||"—")}</td><td>${cusBadge(h)}</td></tr>`);
   return `<div class="sheet-head"><div class="sheet-photo sm">${w.img?`<img src="${w.img}" alt="${esc(w.name||"")}">`:noimgSVG()}</div>
     <div class="sheet-hd"><div class="sheet-tags"><span class="ttag">${esc(w.typeLabel||"")}</span><span class="subtag">Tracked asset</span>${astBadge(a)}</div>
     <h2 class="mono">${esc(a.tag)}</h2><div class="sheet-origin">${esc(w.name||"")} · S/N ${esc(a.serial)}</div>
@@ -1310,10 +1741,10 @@ function viewAsset(v){
         ${fld("Asset ID",esc(a.id))}${fld("Asset Tag",esc(a.tag))}${fld("Serial Number",esc(a.serial))}${fld("Catalogue Model",itemLink(a.catalogueKey))}
         ${fld("Category",esc(w.typeLabel||"—"))}${fld("Manufacturer / Origin",esc(w.origin||"—"))}${fld("Acquisition Date",fmtD(a.acquisitionDate))}${fld("Documentation Ref",esc(a.docRef||"—"))}</div></div>
       <div class="d-sec" style="margin-top:0"><div class="d-h">Status &amp; Custody</div><div class="d-grid">
-        ${fld("Asset Status",astBadge(a))}${fld("Condition",esc(a.condition))}${fld("Current Custodian",c?solLink(c.soldierId):"— in armoury")}${fld("Custody Since",c?fmtD(c.effectiveDate):"—")}
+        ${fld("Asset Status",astBadge(a))}${fld("Condition",esc(a.condition))}${fld("Current Custodian",c?holderLink(c):"— in armoury")}${fld("Custody Since",c?fmtD(c.effectiveDate):"—")}
         ${fld("Active Record",c?cusLink(c.id):"—")}${fld("Custody Records",String(hist.length))}${fld("Created",fmtTs(a.createdAt))}${fld("Updated",fmtTs(a.updatedAt))}</div></div>
     </div>
-    <div class="d-sec"><div class="d-h">Custody History <span class="dcount">${hist.length}</span></div>${ctable(["Record","Soldier Code","Type","Effective","Returned","Return Condition","Status"],rows,7,"No custody records for this asset yet.")}</div>
+    <div class="d-sec"><div class="d-h">Custody History <span class="dcount">${hist.length}</span></div>${ctable(["Record","Holder","Type","Effective","Returned","Return Condition","Status"],rows,7,"No custody records for this asset yet.")}</div>
     <div class="d-sec"><div class="d-h">Audit Timeline <span class="dcount">${ev.length}</span></div>${timeline(ev)}</div>`;
 }
 
@@ -1324,11 +1755,13 @@ function viewSoldier(v){
   const ev=sortEv(Store.auditFor("Soldier",s.id).concat(...recs.map(c=>Store.auditFor("Custody",c.id))));
   const cur=act.map(c=>{const a=Store.asset(c.assetId)||{},w=BYKEY[a.catalogueKey]||{};return `<tr class="rowlink" data-go="asset:${a.id}"><td>${itemLink(a.catalogueKey)}</td><td>${esc(w.sub||"")}</td><td>${astLink(a.id)}</td><td>${esc(w.typeLabel||"")}</td><td>${esc(a.condition||"")}</td><td class="mono sm">${fmtD(c.effectiveDate)}</td><td>${cusBadge(c)}</td></tr>`;});
   const hist=past.map(c=>{const a=Store.asset(c.assetId)||{};return `<tr><td>${cusLink(c.id)}</td><td>${astLink(a.id)}</td><td>${itemLink(a.catalogueKey)}</td><td class="mono sm">${fmtD(c.effectiveDate)}</td><td class="mono sm">${fmtD(c.returnDate)}</td><td>${esc(c.returnCondition||"—")}</td></tr>`;});
-  const authored=Store.custody().filter(c=>c.authorizedById===s.id).length;
+  const authored=Store.custody().filter(c=>c.authorizedById===s.id).length, mh=Store.membershipsOfSoldier(s.id), th=Store.teamMembershipsOfSoldier(s.id);
   return `<div class="sheet-head"><div class="sheet-photo sm codeav"><span>${esc(s.serviceCode.slice(3))}</span><em>SERVICE CODE</em></div>
     <div class="sheet-hd"><div class="sheet-tags"><span class="ttag">Soldier record</span><span class="subtag">${esc(s.rank)}</span>${solBadge(s)}</div>
-    <h2 class="mono">${esc(s.serviceCode)}</h2><div class="sheet-origin">${esc(s.designation)} · ${esc(s.unit)} · ${esc(s.department)}</div>
+    <h2 class="mono">${esc(s.serviceCode)}</h2><div class="sheet-origin">${esc(s.designation)} · ${esc(s.unit)} · ${esc(s.department)} · ${regOf(s)}${s.teamId?" · "+teamOf(s):""}</div>
     <div class="cacts">${s.status==="Active"?`<button type="button" class="cbtn pri" data-act="issue" data-soldier="${s.id}">＋ Create custody record</button>`:`<span class="cnote">${esc(s.status)} — cannot receive new custody</span>`}
+      <button type="button" class="cbtn" data-act="membership" data-id="${s.id}">${s.regimentId?"Transfer regiment":"Assign regiment"}</button>
+      <button type="button" class="cbtn" data-act="teamset" data-id="${s.id}">${s.teamId?"Change team":"Assign team"}</button>
       <button type="button" class="cbtn" data-act="solstatus" data-id="${s.id}">Change status</button></div></div></div>
     <div class="d-sec"><div class="d-h">Overview</div><div class="qgrid">
       <div class="qt"><div class="ql">Current items</div><div class="qv tnum">${act.length}</div><div class="qn">active custody records</div></div>
@@ -1336,9 +1769,11 @@ function viewSoldier(v){
       <div class="qt"><div class="ql">Authorised</div><div class="qv tnum">${authored}</div><div class="qn">records as officer</div></div></div></div>
     <div class="d-sec"><div class="d-h">Personnel Information</div><div class="d-grid">
       ${fld("Soldier ID",esc(s.id))}${fld("Service Code",esc(s.serviceCode))}${fld("Rank",esc(s.rank))}${fld("Arm / Department",esc(s.department))}
-      ${fld("Unit",esc(s.unit))}${fld("Designation",esc(s.designation))}${fld("Employment Status",solBadge(s))}${fld("Updated",fmtTs(s.updatedAt))}</div></div>
+      ${fld("Regiment",regOf(s))}${fld("Team",teamOf(s))}${fld("Unit",esc(s.unit))}${fld("Designation",esc(s.designation))}${fld("Employment Status",solBadge(s))}${fld("Updated",fmtTs(s.updatedAt))}</div></div>
     <div class="d-sec" id="soleq"><div class="d-h">Current Equipment Records <span class="dcount">${act.length}</span></div>${ctable(["Equipment","Model","Asset Tag","Category","Condition","Custody Start","Status"],cur,7,"No equipment currently in this soldier's custody.")}</div>
     <div class="d-sec"><div class="d-h">Equipment History <span class="dcount">${past.length}</span></div>${ctable(["Record","Asset Tag","Equipment","Effective","Returned","Return Condition"],hist,6,"No closed custody records.")}</div>
+    <div class="d-sec"><div class="d-h">Team History <span class="dcount">${th.length}</span></div>${ctable(["Team","Type","From","To","Authorised By","Reason"],th.map(m=>`<tr><td>${teamLink(m.teamId)}</td><td>${esc(m.kind)}</td><td class="mono sm">${fmtD(m.startedAt)}</td><td class="mono sm">${m.endedAt?fmtD(m.endedAt):'<span class="cbadge av"><i></i>Current</span>'}</td><td>${m.authorizedById?solLink(m.authorizedById):'<span class="faintx">—</span>'}</td><td class="sm">${esc(m.endReason||m.reason||"")}</td></tr>`),6,"No team membership recorded.")}</div>
+    <div class="d-sec"><div class="d-h">Regiment History <span class="dcount">${mh.length}</span></div>${ctable(["Regiment","Type","From","To","Authorised By","Reason"],mh.map(m=>`<tr><td>${regLink(m.regimentId)}</td><td>${esc(m.kind)}</td><td class="mono sm">${fmtD(m.startedAt)}</td><td class="mono sm">${m.endedAt?fmtD(m.endedAt):'<span class="cbadge av"><i></i>Current</span>'}</td><td>${m.authorizedById?solLink(m.authorizedById):'<span class="faintx">—</span>'}</td><td class="sm">${esc(m.endReason||m.reason||"")}</td></tr>`),6,"No regiment membership recorded — use Assign regiment.")}</div>
     <div class="d-sec"><div class="d-h">Activity Timeline <span class="dcount">${ev.length}</span></div>${timeline(ev)}</div>`;
 }
 
@@ -1353,7 +1788,7 @@ function viewCustody(v){
       <button type="button" class="cbtn" data-act="correct" data-id="${c.id}">Add correction note</button></div></div></div>
     <div class="sheet-cols">
       <div class="d-sec" style="margin-top:0"><div class="d-h">Relationship</div><div class="d-grid">
-        ${fld("Soldier",solLink(c.soldierId))}${fld("Asset",astLink(c.assetId))}${fld("Catalogue Model",itemLink(a.catalogueKey))}${fld("Custody Type",esc(c.type))}
+        ${fld(c.teamId?"Team (holder)":"Soldier (holder)",holderLink(c))}${fld("Holder Type",c.teamId?"Team custody":"Individual")}${fld("Asset",astLink(c.assetId))}${fld("Catalogue Model",itemLink(a.catalogueKey))}${fld("Custody Type",esc(c.type))}
         ${fld("Authorised By",solLink(c.authorizedById))}${fld("Issued By",esc(c.issuedBy))}${fld("Received By",esc(c.receivedBy))}${fld("Remarks",esc(c.remarks||"—"))}</div></div>
       <div class="d-sec" style="margin-top:0"><div class="d-h">Dates &amp; Return</div><div class="d-grid">
         ${fld("Effective Date",fmtD(c.effectiveDate))}${fld("Return Date",fmtD(c.returnDate))}${fld("Return Condition",esc(c.returnCondition||"—"))}${fld("Return Received By",esc(c.returnReceivedBy||"—"))}
@@ -1401,32 +1836,17 @@ function formWrap(tag,title,sub,form,body,submit){
 }
 const nActive=sid=>Store.custodyOfSoldier(sid).filter(c=>c.status==="Active").length;
 const assetOpt=a=>{const w=BYKEY[a.catalogueKey]||{};return {id:a.id,label:a.tag,sub:`${w.name||""} · S/N ${a.serial} · ${a.condition}`,dis:Store.issueBlock(a)};};
-const solOpt=s=>({id:s.id,label:s.serviceCode,sub:`${s.rank} · ${s.designation} · ${s.unit}`,dis:s.status!=="Active"?s.status+" — cannot receive custody":null});
+const solOpt=s=>({id:s.id,label:s.serviceCode,sub:`${s.rank} · ${s.designation} · ${(Store.regiment(s.regimentId)||{}).code||"Unassigned"}`,dis:s.status!=="Active"?s.status+" — cannot receive custody":null});
 const offOpt=s=>({id:s.id,label:s.serviceCode,sub:`${s.rank} · ${s.designation} · ${s.unit}`,dis:s.status!=="Active"?s.status:null});
 LKCTX.assetId=id=>{const a=Store.asset(id),w=a&&BYKEY[a.catalogueKey];return a?`<span>Model <b>${esc(w.name)}</b></span><span>Category <b>${esc(w.typeLabel)}</b></span><span>Serial <b>${esc(a.serial)}</b></span><span>Condition <b>${esc(a.condition)}</b></span>`:"";};
 LKCTX.soldierId=id=>{const s=Store.soldier(id);if(!s)return "";const held=Store.custodyOfSoldier(id).filter(c=>c.status==="Active").map(c=>(Store.asset(c.assetId)||{}).tag).filter(Boolean),n=held.length;
-  return `<span><b>${esc(s.rank)}</b> · ${esc(s.designation)}</span><span>${esc(s.unit)}</span><span>Currently holds <b>${n}</b> item${n===1?"":"s"}${n?": "+held.slice(0,6).map(esc).join(", ")+(n>6?" …":""):""}</span>`;};
+  const rg=Store.regiment(s.regimentId);
+  return `<span><b>${esc(s.rank)}</b> · ${esc(s.designation)}</span><span>${esc(s.unit)}</span><span>Regiment <b>${rg?esc(rg.code):"Unassigned"}${s.teamId&&Store.team(s.teamId)?" / "+esc(Store.team(s.teamId).code):""}</b></span><span>Currently holds <b>${n}</b> item${n===1?"":"s"}${n?": "+held.slice(0,6).map(esc).join(", ")+(n>6?" …":""):""}</span>`;};
 LKCTX.authorizedById=id=>{const s=Store.soldier(id);return s?`<span><b>${esc(s.rank)}</b> · ${esc(s.designation)}</span><span>${esc(s.unit)}</span>`:"";};
-function viewIssue(v){
-  const officers=Store.soldiers().filter(s=>Store.OFFICER_RANKS.includes(s.rank));
-  const body=`<div class="fgrid">
-    ${fstep(1,"Equipment")}
-    ${fl("Equipment item",lookup("assetId",Store.assets().filter(a=>Store.policyOf((BYKEY[a.catalogueKey]||{}).type)==="tracked").map(assetOpt),v.assetId,"Asset tag, serial or model"),"assetId",true)}
-    ${fstep(2,"Recipient")}
-    ${fl("Issue to soldier",lookup("soldierId",Store.soldiers().map(solOpt),v.soldierId,"Service code, rank or unit"),"soldierId",true)}
-    ${fstep(3,"Authorisation")}
-    ${fl("Approving officer",lookup("authorizedById",officers.map(offOpt),null,"Officer code or rank"),"authorizedById",true)}
-    ${fl("Issue type",sel("type",Store.CUSTODY_TYPES,"Personal Issue"),"type",false,"Personal issue is held until returned; a temporary loan is short-term.")}
-    ${fl("Issue date",inp("effectiveDate",Store.today(),`type="date" max="${Store.today()}"`),"effectiveDate")}
-    ${fl("Remarks <em>optional</em>",inp("remarks","",`maxlength="160" placeholder="e.g. Annual issue, course loan"`),"remarks",true)}
-    <div class="fmeta wide">Recorded by <b>${esc(Store.operator)}</b>. You'll review the details before anything is saved.
-      <button type="button" class="cbtn mx-hop" data-act="multi">Issue several items together →</button></div></div>`;
-  return formWrap("New custody record","Issue equipment to a soldier","Administrative accountability record. Explosives and ammunition cannot be issued to individuals.","issue",body,"Review custody record");
-}
 function viewReturn(v){
   const c=Store.custodyRec(v.id); if(!c)return null; const a=Store.asset(c.assetId)||{}, s=Store.soldier(c.soldierId)||{}, w=BYKEY[a.catalogueKey]||{};
   const body=`<div class="fgrid">
-    <div class="fmeta wide"><b>${esc(a.tag||"")}</b> · ${esc(w.name||"")} — held by <b>${esc(s.serviceCode||"")}</b> since ${fmtD(c.effectiveDate)} under ${esc(c.id)}.</div>
+    <div class="fmeta wide"><b>${esc(a.tag||"")}</b> · ${esc(w.name||"")} — held by <b>${esc(Store.holderCode(c))}</b>${c.teamId?" (team)":""} since ${fmtD(c.effectiveDate)} under ${esc(c.id)}.</div>
     ${fstep(1,"Return details")}
     ${fl("Return date",inp("returnDate",Store.today(),`type="date" min="${c.effectiveDate}" max="${Store.today()}"`),"returnDate")}
     ${fl("Condition at return",sel0("condition",Store.CONDITIONS,"Select condition…"),"condition",false,"Serviceable / Minor wear → Available. Unserviceable / Damaged → Inspection pending.")}
@@ -1456,8 +1876,12 @@ function viewSolStatus(v){
     ${fl("Reason",inp("reason","",`maxlength="160" placeholder="e.g. Posted out"`),"reason",true)}<input type="hidden" name="soldierId" value="${esc(s.id)}"></div>`;
   return formWrap("Personnel status","Change status of "+s.serviceCode,"","solstatus",body,"Update status");
 }
-function viewNewSoldier(){
+function viewNewSoldier(v){
+  const pre=v&&v.regimentId?Store.regiment(v.regimentId):null;
+  const regCtl=pre?`<div class="fmeta wide">The new soldier is created and added to <b>${esc(pre.code)}</b> · ${esc(pre.name)} in one step — if either part fails, nothing is saved.</div><input type="hidden" name="regimentId" value="${esc(pre.id)}"><input type="hidden" name="_from" value="regiment">`
+    :fl("Regiment",`<select class="fin" name="regimentId"><option value="">Select regiment…</option>${Store.regiments().slice().sort(byCode).map(r=>`<option value="${esc(r.id)}"${r.status!=="Active"?" disabled":""}>${esc(r.code)} · ${esc(r.name)}${r.status!=="Active"?" (Inactive)":""}</option>`).join("")}</select>`,"regimentId",true,"Every soldier belongs to exactly one regiment.");
   const body=`<div class="fgrid">
+    ${regCtl}
     ${fstep(1,"Identity")}
     ${fl("Service code",inp("serviceCode","",`placeholder="SC-12345" maxlength="8" autocapitalize="characters"`),"serviceCode",false,"Format SC- followed by 5 digits. Must be unique.")}
     ${fl("Rank",sel0("rank",Store.RANKS,"Select rank…"),"rank")}
@@ -1467,7 +1891,7 @@ function viewNewSoldier(){
     ${fl("Designation",inp("designation","",`placeholder="e.g. Rifleman" maxlength="40"`),"designation")}
     ${fl("Employment status",sel("status",Store.SOLDIER_STATUS,"Active"),"status")}
     <div class="fmeta wide">Codes only — personal names and photographs are never recorded.</div></div>`;
-  return formWrap("New soldier","Create soldier record","","newsoldier",body,"Create soldier record");
+  return formWrap("New soldier",pre?"Create soldier in "+pre.code:"Create soldier record",pre?"Check the register first — use this only when the soldier does not exist yet.":"","newsoldier",body,"Create soldier record");
 }
 function regLines(){return DATA.items.filter(w=>Store.policyOf(w.type)==="tracked"&&Store.qty(w).untracked>0);}
 function viewNewAsset(v){
@@ -1489,20 +1913,34 @@ function viewConfirm(){
     <div class="sheet-origin">Restores the seeded soldier records, tracked assets, custody and audit history. Reorders, theme and the equipment catalogue are not touched.</div></div>
     <div class="factions"><button type="button" class="ro-place danger" data-act="do-reset">Reset demo data</button><button type="button" class="cbtn" data-act="back">Cancel</button></div>`;
 }
-/* ---- multi-item custody: hierarchical browser + persistent selection ----
-   Category → sub-group → catalogue model → physical assets. One submission creates one independent
-   custody record per asset through Store.issueBatch (all or nothing). Browse state lives on the view. */
+/* ---- New custody record: Regiment → Team → Team custody | Individual → equipment browser → review ----
+   Category → sub-group → catalogue model → assets (or a stock quantity for team stock lines). What can be
+   picked comes only from Store.eligibility(line, target); Store.assign re-validates everything atomically. */
 const GRP={};
 (DATA.groups||[]).forEach(g=>g.subs.forEach(s=>s.items.forEach(k=>{GRP[k]={g,s};})));
-const POLICY_NOTE={bulk:"Unit-issue stock — accounted in aggregate, not issuable to individuals",sealed:"Sealed restricted stock — authorised store custody only, never issued to individuals"};
-const isTracked=k=>{const w=BYKEY[k];return !!w&&Store.policyOf(w.type)==="tracked";};
-const lineNote=w=>{const p=Store.policyOf(w.type);if(p!=="tracked")return POLICY_NOTE[p]||POLICY_NOTE.bulk;return Store.qty(w).tracked?null:"No individually tracked units registered on this line yet";};
-const availOf=keys=>keys.reduce((n,k)=>n+(isTracked(k)?Store.qty(BYKEY[k]).available:0),0);
 const mxTop=()=>{const v=VIEWS[VIEWS.length-1];return v&&v.kind==="multi"?v:null;};
 const mxForm=()=>$("#sheet").querySelector('.cform[data-form="multi"]');
-const selIn=(v,keys)=>{const set=new Set(keys);return v.sel.filter(id=>{const a=Store.asset(id);return a&&set.has(a.catalogueKey);}).length;};
+const elig=(k,tt)=>Store.eligibility(BYKEY[k],tt);
+const mxCount=v=>v.sel.length+Object.keys(v.stock).length;
+const selIn=(v,keys)=>{const set=new Set(keys);return v.sel.filter(id=>{const a=Store.asset(id);return a&&set.has(a.catalogueKey);}).length+keys.filter(k=>v.stock[k]).length;};
 const selChip=n=>n?`<span class="mx-selc">✓ ${n} selected</span>`:"";
-const mxBtn=v=>v.sel.length?`Review ${v.sel.length} item${v.sel.length===1?"":"s"}`:"Review custody records";
+const mxBtn=v=>{const n=mxCount(v);return n?`Review ${n} item${n===1?"":"s"}`:"Review assignment";};
+const TT_LABEL={Team:"Team",Soldier:"Individual Soldier"};
+/* step 1: destination — Regiment → Individual Soldier (of the regiment) | Team (of the regiment) */
+function mxDest(v){
+  const regs=Store.regiments().slice().sort(byCode), rg=Store.regiment(v.rid);
+  const rOpt=r=>{const why=r.status!=="Active"?"Inactive":"";return `<option value="${esc(r.id)}"${r.id===v.rid?" selected":""}${why?" disabled":""}>${esc(r.code)} · ${esc(r.name)}${why?" — "+why:""}</option>`;};
+  const mem=rg?Store.membersOf(rg.id):[], teams=rg?Store.teamsOf(rg.id).slice().sort(byCode):[];
+  const ttDis={Soldier:!rg?"Choose a regiment first":!mem.some(s=>s.status==="Active")?"No Active soldiers in "+rg.code:null,
+    Team:!rg?"Choose a regiment first":!teams.some(t=>t.status==="Active")?"No active teams in "+rg.code:null};
+  const card=(k,sub)=>`<label class="mx-tt${ttDis[k]?" dis":""}${v.tt===k?" on":""}"><input type="radio" name="targetType" value="${k}"${v.tt===k?" checked":""}${ttDis[k]?" disabled":""}><b>${TT_LABEL[k]}</b><span>${ttDis[k]?esc(ttDis[k]):sub}</span></label>`;
+  const tOpt=t=>{const n=Store.teamMembersOf(t.id).length,why=t.status!=="Active"?"Inactive":"";return `<option value="${esc(t.id)}"${t.id===v.tid?" selected":""}${why?" disabled":""}>${esc(t.code)} · ${esc(t.name)} · ${n} soldier${n===1?"":"s"}${why?" — "+why:""}</option>`;};
+  return `${v.note?`<div class="fmeta wide">${esc(v.note)}</div>`:""}${fl("Regiment",`<select class="fin mx-rg" name="regimentId"><option value="">Select regiment…</option>${regs.map(rOpt).join("")}</select>`,"regimentId",true)}
+    <div class="fl wide"><span>Assign to</span><div class="mx-tts" role="radiogroup">${card("Soldier","Personal equipment — weapons, protection, night vision")}${card("Team","Shared equipment — ammunition, explosives, radios, vehicles")}</div>${ferr("targetType")}</div>
+    ${v.tt==="Soldier"&&rg?fl("Soldier of "+esc(rg.code),lookup("soldierId",mem.map(solOpt),v.soldierId,"Service code or rank"),"soldierId",true,"Only soldiers of "+esc(rg.code)+" are listed."):""}
+    ${v.tt==="Team"&&rg?fl("Team of "+esc(rg.code),`<select class="fin mx-tm" name="teamId"><option value="">${teams.length?"Select team…":"No teams in "+esc(rg.code)}</option>${teams.map(tOpt).join("")}</select>`,"teamId",true,"Only teams of "+esc(rg.code)+" are listed."):""}`;
+}
+/* step 2: browser */
 function mxCrumb(v){
   const g=DATA.groups.find(x=>x.key===v.g), s=g&&g.subs.find(x=>x.key===v.s), w=s&&v.k&&BYKEY[v.k];
   const p=[["All categories",""]]; if(v.q)return mxCrumbHTML(p.concat([[`Search “${v.q}” across all categories`,null]]));
@@ -1513,112 +1951,400 @@ function mxCrumbHTML(p){
   return p.map(([l,path],i)=>i===p.length-1?`<span class="mx-cr cur" aria-current="location">${esc(l)}</span>`:`<button type="button" class="mx-cr" data-act="mx-nav" data-path="${esc(path)}">${esc(l)}</button>`).join("");
 }
 function mxTile(v,label,path,keys){
-  const tr=keys.some(isTracked), av=availOf(keys);
-  return `<button type="button" class="mx-tile${tr?"":" lock"}" data-act="mx-nav" data-path="${esc(path)}"><b>${esc(label)}</b><span>${keys.length} model${keys.length===1?"":"s"}</span>
-    <span class="mx-cnt">${tr?`<b>${av}</b> available to issue`:"⛔ Restricted — not issuable"}</span>${selChip(selIn(v,keys))}</button>`;
+  let av=0, stock=0, why=null;
+  keys.forEach(k=>{const e=elig(k,v.tt);if(e.mode==="asset")av+=Store.qty(BYKEY[k]).available;else if(e.mode==="stock"){if(Store.qty(BYKEY[k]).reserve>0)stock++;}else why=why||e.why;});
+  const open=keys.some(k=>elig(k,v.tt).mode);
+  const cnt=open?[`<b>${av}</b> asset${av===1?"":"s"} available`].concat(stock?[`<b>${stock}</b> stock line${stock===1?"":"s"}`]:[]).join(" · "):"⛔ "+esc(why||"Not assignable");
+  return `<button type="button" class="mx-tile${open?"":" lock"}" data-act="mx-nav" data-path="${esc(path)}"><b>${esc(label)}</b><span>${keys.length} model${keys.length===1?"":"s"}</span>
+    <span class="mx-cnt">${cnt}</span>${selChip(selIn(v,keys))}</button>`;
+}
+/* only eligible categories are browsable; the rest are listed (not selectable) with the short reason */
+function mxTiles(v,entries){
+  const okE=entries.filter(e=>e[2].some(k=>elig(k,v.tt).mode)), noE=entries.filter(e=>!okE.includes(e));
+  const why=keys=>{for(const k of keys){const e=elig(k,v.tt);if(!e.mode)return e.why;}return "";};
+  return `<div class="mx-tiles">${okE.map(e=>mxTile(v,...e)).join("")||`<div class="cempty">Nothing in this category can go to ${esc(TT_LABEL[v.tt])}.</div>`}</div>`
+    +(noE.length?`<div class="mx-na"><div class="mx-sh">Not available for ${esc(TT_LABEL[v.tt])}</div>${noE.map(e=>`<div class="mx-nai"><b>${esc(e[0])}</b><span>${esc(why(e[2]))}</span></div>`).join("")}</div>`:"");
 }
 function mxModelRow(v,w){
-  const G=GRP[w.key], note=lineNote(w), meta=`<span class="mx-ln"><b>${esc(w.name)}</b><span>${esc(G?G.s.label:w.sub)} · ${esc(w.origin||"")}</span></span>`;
-  if(Store.policyOf(w.type)!=="tracked")return `<div class="mx-line dis">${meta}<span class="mx-lock">${Store.policyOf(w.type)==="sealed"?"⛔ ":""}${esc(note)}</span></div>`;
+  const G=GRP[w.key], e=elig(w.key,v.tt), meta=`<span class="mx-ln"><b>${esc(w.name)}</b><span>${esc(G?G.s.label:w.sub)} · ${esc(w.origin||"")}</span></span>`;
+  if(!e.mode)return `<div class="mx-line dis">${meta}<span class="mx-lock">${e.policy==="sealed"?"⛔ ":""}${esc(e.why)}</span></div>`;
   const q=Store.qty(w);
+  if(e.mode==="stock"){const cur=v.stock[w.key]||"";
+    return `<div class="mx-line stock${cur?" on":""}">${meta}${selChip(cur?1:0)}<span class="mx-cnt"><b>${q.reserve.toLocaleString()}</b> unassigned</span>
+      ${q.reserve>0?`<span class="mx-qtyw"><input class="fin mx-qty" type="number" min="1" max="${q.reserve}" step="1" inputmode="numeric" value="${cur}" placeholder="Qty" aria-label="Quantity of ${esc(w.name)}" data-key="${w.key}"><button type="button" class="cbtn pri" data-act="mx-stock" data-key="${w.key}">${cur?"Update":"Add"}</button></span>`:`<span class="mx-lock">No unassigned stock</span>`}</div>`;}
   return `<button type="button" class="mx-line" data-act="mx-nav" data-path="${G.g.key}|${G.s.key}|${w.key}">${meta}${selChip(selIn(v,[w.key]))}
     <span class="mx-cnt">${q.tracked?`<b>${q.available}</b> available · ${q.tracked} tracked`:"No tracked units yet"}</span><span class="mx-go" aria-hidden="true">›</span></button>`;
 }
 function mxAssetRow(v,a){
-  const w=BYKEY[a.catalogueKey]||{}, blk=Store.issueBlock(a), on=v.sel.includes(a.id);
+  const w=BYKEY[a.catalogueKey]||{}, blk=Store.issueBlock(a,v.tt), on=v.sel.includes(a.id);
   return `<label class="mx-ast${blk&&!on?" dis":""}${on?" on":""}"><input type="checkbox" class="mx-chk" value="${esc(a.id)}"${on?" checked":""}${blk&&!on?" disabled":""}>
     <span class="mx-at"><b class="mono">${esc(a.tag)}</b><span>${esc(w.name||"")} · S/N ${esc(a.serial)} · ${esc(a.condition)}</span>${blk?`<span class="why">${esc(blk)}</span>`:""}</span>${astBadge(a)}</label>`;
 }
-const ORD_AV=(a,b)=>(!!Store.issueBlock(a))-(!!Store.issueBlock(b))||a.tag.localeCompare(b.tag);
 function mxBrowse(v){
+  if(!v.tt)return `<div class="cempty">Choose the regiment and the destination (Individual Soldier or Team) above — the equipment list then shows only what that destination may hold.</div>`;
+  const ORD=(a,b)=>(!!Store.issueBlock(a,v.tt))-(!!Store.issueBlock(b,v.tt))||a.tag.localeCompare(b.tag);
   const q=(v.q||"").trim().toLowerCase();
   if(q){
     const words=q.split(/\s+/), m=s=>words.every(x=>s.toLowerCase().includes(x)), gl=k=>{const G=GRP[k];return G?G.g.label+" "+G.s.label:"";};
     const lines=DATA.items.filter(w=>m([w.name,w.sub,w.typeLabel,gl(w.key)].join(" ")));
-    const assets=Store.assets().filter(a=>{const w=BYKEY[a.catalogueKey]||{};return m([a.tag,a.serial,w.name,w.sub,gl(a.catalogueKey)].join(" "));}).sort(ORD_AV);
+    const assets=Store.assets().filter(a=>{const w=BYKEY[a.catalogueKey]||{};return m([a.tag,a.serial,w.name,w.sub,gl(a.catalogueKey)].join(" "));}).sort(ORD);
     const out=(lines.length?`<div class="mx-sh">Equipment models <span>${lines.length}</span></div><div class="mx-list">${lines.slice(0,12).map(w=>mxModelRow(v,w)).join("")}</div>`:"")
       +(assets.length?`<div class="mx-sh">Physical assets <span>${assets.length}</span></div><div class="mx-list">${assets.slice(0,40).map(a=>mxAssetRow(v,a)).join("")}</div>${assets.length>40?`<div class="faintx">First 40 shown — refine the search.</div>`:""}`:"");
     return out||`<div class="cempty">Nothing matches “${esc(v.q)}”. Try a model name, category or asset tag.</div>`;
   }
   const g=DATA.groups.find(x=>x.key===v.g), s=g&&g.subs.find(x=>x.key===v.s), w=s&&v.k&&BYKEY[v.k];
   if(w){
-    const list=Store.assetsOf(w.key).slice().sort(ORD_AV), note=lineNote(w), av=Store.qty(w).available;
+    const list=Store.assetsOf(w.key).slice().sort(ORD), e=elig(w.key,v.tt), av=Store.qty(w).available;
+    if(e.mode!=="asset")return `<div class="mx-list">${mxModelRow(v,w)}</div>`;
     return `<div class="mx-head"><b>${esc(w.name)}</b><span>${esc(g.label)} › ${esc(s.label)} · ${av} of ${list.length} tracked units available</span></div>`
-      +(note?`<div class="restrict soft">${esc(note)}</div>`:`<div class="mx-list">${list.map(a=>mxAssetRow(v,a)).join("")}</div>`)
-      +(!av&&list.length?`<div class="cempty">No unit of this model is available to issue right now.</div>`:"");
+      +(list.length?`<div class="mx-list">${list.map(a=>mxAssetRow(v,a)).join("")}</div>`:`<div class="restrict soft">No individually tracked units registered on this line yet.</div>`)
+      +(!av&&list.length?`<div class="cempty">No unit of this model is available right now.</div>`:"");
   }
   if(s)return `<div class="mx-list">${s.items.map(k=>mxModelRow(v,BYKEY[k])).join("")}</div>`;
-  if(g)return `<div class="mx-tiles">${g.subs.map(x=>mxTile(v,x.label,g.key+"|"+x.key,x.items)).join("")}</div>`;
-  return `<div class="mx-tiles">${DATA.groups.map(x=>mxTile(v,x.label,x.key,x.subs.flatMap(y=>y.items))).join("")}</div>`;
+  if(g)return mxTiles(v,g.subs.map(x=>[x.label,g.key+"|"+x.key,x.items]));
+  return mxTiles(v,DATA.groups.map(x=>[x.label,x.key,x.subs.flatMap(y=>y.items)]));
+}
+/* why a selected item can't go to the current destination (null = fine) */
+function mxWhy(v,id){
+  if(v.bad[id])return v.bad[id];
+  if(id.startsWith("stock:")){const k=id.slice(6),w=BYKEY[k];if(!w)return "Unknown catalogue line";
+    if(!v.tt)return null; const e=Store.eligibility(w,v.tt);
+    if(e.mode!=="stock")return e.why||"Not allocatable as stock to this destination";
+    const r=Store.qty(w).reserve;return v.stock[k]>r?`Only ${r.toLocaleString()} unassigned`:null;}
+  const a=Store.asset(id); if(!a)return "This asset no longer exists";
+  return Store.issueBlock(a,v.tt||"Soldier");
 }
 function mxSelPanel(v){
-  const bad=v.bad||{};
+  const n=mxCount(v), rm=(id,l)=>`<button type="button" class="mx-rm" data-act="mx-rm" data-id="${esc(id)}" aria-label="Remove ${esc(l)}" title="Remove">✕</button>`;
+  const why=id=>{const m=mxWhy(v,id);return m?`<span class="why">${esc(m)}</span>`:"";};
   const rows=v.sel.map(id=>{const a=Store.asset(id),w=(a&&BYKEY[a.catalogueKey])||{},G=a&&GRP[a.catalogueKey];
-    const why=bad[id]||(a?Store.issueBlock(a):"This asset no longer exists");
-    return `<li class="${why?"bad":""}"><span class="mx-at"><b class="mono">${esc(a?a.tag:id)}</b><span>${esc(w.name||"")}${G?" · "+esc(G.s.label):""}</span>${why?`<span class="why">${esc(why)}</span>`:""}</span>
-      <button type="button" class="mx-rm" data-act="mx-rm" data-id="${esc(id)}" aria-label="Remove ${esc(a?a.tag:id)}" title="Remove">✕</button></li>`;}).join("");
-  return `<div class="mx-sh">Selected items <span>${v.sel.length}</span>${v.sel.length?`<button type="button" class="mx-clr" data-act="mx-clear">Clear all</button>`:""}</div>
-    ${v.sel.length?`<ul class="mx-picked">${rows}</ul>`:`<div class="cempty">Nothing selected yet. Browse or search, then tick the assets to issue.</div>`}`;
+    return `<li class="${mxWhy(v,id)?"bad":""}"><span class="mx-at"><b class="mono">${esc(a?a.tag:id)}</b><span>${esc(w.name||"")}${G?" · "+esc(G.s.label):""}</span>${why(id)}</span>${rm(id,a?a.tag:id)}</li>`;})
+    .concat(Object.entries(v.stock).map(([k,q])=>{const w=BYKEY[k]||{},id="stock:"+k;
+      return `<li class="${mxWhy(v,id)?"bad":""}"><span class="mx-at"><b class="mono">${Number(q).toLocaleString()} ×</b><span>${esc(w.name||k)} · stock allocation</span>${why(id)}</span>${rm(id,w.name||k)}</li>`;})).join("");
+  return `<div class="mx-sh">Selected items <span>${n}</span>${n?`<button type="button" class="mx-clr" data-act="mx-clear">Clear all</button>`:""}</div>
+    ${n?`<ul class="mx-picked">${rows}</ul>`:`<div class="cempty">Nothing selected yet. Browse or search, then tick assets${v.tt==="Team"?" or add a stock quantity":""}.</div>`}`;
 }
 function viewMulti(v){
-  v.sel=v.sel||[]; v.bad=v.bad||{}; const f=v.f||{};
+  v.sel=v.sel||[]; v.stock=v.stock||{}; v.bad=v.bad||{}; const f=v.f||{};
   const officers=Store.soldiers().filter(s=>Store.OFFICER_RANKS.includes(s.rank));
   const body=`<div class="fgrid">
-    ${fstep(1,"Recipient")}
-    ${fl("Issue to soldier",lookup("soldierId",Store.soldiers().map(solOpt),f.soldierId||v.soldierId,"Service code, rank or unit"),"soldierId",true)}
+    ${fstep(1,"Destination")}
+    <div class="mx-dest">${mxDest(v)}</div>
     ${fstep(2,"Equipment")}
     <div class="mx">
       <div class="mx-browse"><div class="mx-bar"><input class="fin mx-q" type="search" autocomplete="off" placeholder="Search models, categories or asset tags" value="${esc(v.q||"")}" aria-label="Search equipment">
         <nav class="mx-crumbs" aria-label="Category path">${mxCrumb(v)}</nav></div><div class="mx-body">${mxBrowse(v)}</div></div>
       <aside class="mx-sel" aria-label="Selected items"><div class="mx-selin" aria-live="polite">${mxSelPanel(v)}</div><div class="ferr" data-err="assetIds" role="alert"></div></aside>
-    </div><input type="hidden" name="assetIds" value="${esc(v.sel.join(","))}">
+    </div><input type="hidden" name="assetIds" value="${esc(v.sel.join(","))}"><input type="hidden" name="stock" value="${esc(JSON.stringify(v.stock))}">
     ${fstep(3,"Authorisation")}
     ${fl("Approving officer",lookup("authorizedById",officers.map(offOpt),f.authorizedById,"Officer code or rank"),"authorizedById",true)}
-    ${fl("Issue type",sel("type",Store.CUSTODY_TYPES,f.type||"Personal Issue"),"type",false,"Applies to every selected item.")}
+    ${fl("Custody type",sel("type",Store.CUSTODY_TYPES,f.type||"Personal Issue"),"type",false,"Applies to every asset selected.")}
     ${fl("Issue date",inp("effectiveDate",f.effectiveDate||Store.today(),`type="date" max="${Store.today()}"`),"effectiveDate")}
-    ${fl("Remarks <em>optional</em>",inp("remarks",f.remarks||"",`maxlength="160" placeholder="e.g. Annual issue, course loan"`),"remarks",true)}
-    <div class="fmeta wide">Each selected asset gets its own custody record, ID and audit trail — all are created together, or none are. Explosives and ammunition are restricted stock and can't be selected. Recorded by <b>${esc(Store.operator)}</b>.</div></div>`;
-  return formWrap("New custody record","Issue equipment to a soldier","Pick the soldier, add one or more individually tracked assets, then review.","multi",body,mxBtn(v));
+    ${fl("Authorisation reference <em>required for stock</em>",inp("authRef",f.authRef||"",`maxlength="40" placeholder="e.g. Allocation order 31/2026"`),"authRef",false,"Recorded on every stock allocation.")}
+    ${fl("Remarks <em>optional</em>",inp("remarks",f.remarks||"",`maxlength="160" placeholder="e.g. Annual issue, exercise"`),"remarks")}
+    <div class="fmeta wide">Each asset gets its own custody record and each stock line its own allocation — all are created together, or none are. Ammunition, explosives and other unit stock go only to a team, as an authorised quantity allocation — never to an individual soldier. Recorded by <b>${esc(Store.operator)}</b>.</div></div>`;
+  return formWrap("New custody record","Assign equipment","Regiment → Individual Soldier or Team → equipment.","multi",body,mxBtn(v));
 }
-/* repaint the browser + selection in place (keeps typed field values); full=false only refreshes the selection */
+/* repaint in place (keeps typed values); full=false only refreshes the selection */
 function mxPaint(full){
   const v=mxTop(), f=mxForm(); if(!v||!f)return;
   if(full!==false){f.querySelector(".mx-crumbs").innerHTML=mxCrumb(v);f.querySelector(".mx-body").innerHTML=mxBrowse(v);}
   f.querySelector(".mx-selin").innerHTML=mxSelPanel(v);
   f.querySelector('input[name="assetIds"]').value=v.sel.join(",");
+  f.querySelector('input[name="stock"]').value=JSON.stringify(v.stock);
   f.querySelector(":scope>.factions .ro-place").textContent=mxBtn(v);
-  if(v.sel.length&&!Object.keys(v.bad).length)f.querySelector('[data-err="assetIds"]').textContent="";
+  if(mxCount(v)&&!Object.keys(v.bad).length)f.querySelector('[data-err="assetIds"]').textContent="";
 }
-/* after a removal during review: refresh the review, or step back out of it if nothing is left */
-function mxReReview(){const f=mxForm();if(!f||!f.classList.contains("confirming"))return;unconfirm(f);if(mxTop().sel.length)submitForm(f);}
-const mxReviewList=ids=>`<ul class="mx-picked rev">${ids.map(id=>{const a=Store.asset(id);if(!a)return "";const w=BYKEY[a.catalogueKey]||{},G=GRP[a.catalogueKey];
-  return `<li><span class="mx-at"><b class="mono">${esc(a.tag)}</b><span>${esc(w.name||"")} · ${esc(G?G.g.label+" › "+G.s.label:w.sub)} · S/N ${esc(a.serial)}</span></span>${astBadge(a)}<button type="button" class="mx-rm" data-act="mx-rm" data-id="${esc(a.id)}" aria-label="Remove ${esc(a.tag)}" title="Remove">✕</button></li>`;}).join("")}</ul>`;
+function mxPaintDest(){
+  const v=mxTop(), f=mxForm(); if(!v||!f)return;
+  f.querySelector(".mx-dest").innerHTML=mxDest(v); mxPaint();
+}
+const mxSync=()=>{const v=mxTop(),f=mxForm(),h=f&&f.querySelector('input[name="soldierId"]');if(v&&h)v.soldierId=h.value||null;};
+function mxReReview(){const f=mxForm();if(!f||!f.classList.contains("confirming"))return;unconfirm(f);if(mxCount(mxTop()))submitForm(f);}
 const mxIds=d=>String(d.assetIds||"").split(",").filter(Boolean);
+const mxStock=d=>{try{return Object.entries(JSON.parse(d.stock||"{}")).map(([catalogueKey,qty])=>({catalogueKey,qty:Number(qty)}));}catch(e){return [];}};
+const mxReviewList=d=>`<ul class="mx-picked rev">${mxIds(d).map(id=>{const a=Store.asset(id);if(!a)return "";const w=BYKEY[a.catalogueKey]||{},G=GRP[a.catalogueKey];
+  return `<li><span class="mx-at"><b class="mono">${esc(a.tag)}</b><span>${esc(w.name||"")} · ${esc(G?G.g.label+" › "+G.s.label:w.sub)} · S/N ${esc(a.serial)}</span></span>${astBadge(a)}<button type="button" class="mx-rm" data-act="mx-rm" data-id="${esc(a.id)}" aria-label="Remove ${esc(a.tag)}" title="Remove">✕</button></li>`;}).join("")}
+  ${mxStock(d).map(l=>{const w=BYKEY[l.catalogueKey]||{},G=GRP[l.catalogueKey];return `<li><span class="mx-at"><b class="mono">${l.qty.toLocaleString()} ×</b><span>${esc(w.name||"")} · ${esc(G?G.g.label+" › "+G.s.label:"")} · stock allocation (${Store.qty(w).reserve.toLocaleString()} unassigned)</span></span><button type="button" class="mx-rm" data-act="mx-rm" data-id="stock:${esc(l.catalogueKey)}" aria-label="Remove ${esc(w.name||"")}" title="Remove">✕</button></li>`;}).join("")}</ul>`;
 
+/* ---- regiments: register, record, add-soldier (lookup first, create only when asked), transfer/assign ---- */
+const regLink=id=>{const r=Store.regiment(id);return r?goBtn("regiment",id,r.code):'<span class="faintx">—</span>';};
+const regBadge=r=>badge(r.status,r.status==="Active"?"av":"rt");
+const unassignedBadge=()=>`<span class="cbadge ip"><i></i>Unassigned</span>`;
+const regOf=s=>s.regimentId&&Store.regiment(s.regimentId)?regLink(s.regimentId):unassignedBadge();
+const byCode=(a,b)=>a.code.localeCompare(b.code);
+const remapErr=(r,map)=>{if(!r.ok){const e={};Object.entries(r.errors).forEach(([k,m])=>{e[map[k]||k]=m;});r.errors=e;}return r;};
+function viewRegiment(v){
+  const r=Store.regiment(v.id); if(!r)return null;
+  const mem=Store.membersOf(r.id).slice().sort((a,b)=>a.serviceCode.localeCompare(b.serviceCode));
+  const past=Store.membershipsOfRegiment(r.id).filter(m=>m.endedAt);
+  const act=mem.filter(s=>s.status==="Active").length, holding=mem.filter(s=>nActive(s.id)>0).length;
+  const since=s=>{const m=Store.membershipsOfSoldier(s.id).find(x=>!x.endedAt);return m?fmtD(m.startedAt):"—";};
+  const rows=mem.map(s=>`<tr><td>${solLink(s.id)}</td><td>${esc(s.rank)}</td><td>${esc(s.unit)}</td><td>${esc(s.designation)}</td><td>${solBadge(s)}</td><td class="mono sm">${since(s)}</td><td class="ta-r"><span class="rowacts"><button type="button" class="cbtn" data-act="membership" data-id="${s.id}">Transfer</button></span></td></tr>`);
+  const prow=past.map(m=>`<tr><td>${solLink(m.soldierId)}</td><td>${esc(m.kind)}</td><td class="mono sm">${fmtD(m.startedAt)}</td><td class="mono sm">${fmtD(m.endedAt)}</td><td class="sm">${esc(m.endReason||"")}</td></tr>`);
+  const ev=sortEv(Store.auditFor("Regiment",r.id));
+  return `<div class="sheet-head"><div class="sheet-photo sm codeav"><span>${esc(r.code.replace(/^DEMO-/,"").slice(0,7))}</span><em>REGIMENT</em></div>
+    <div class="sheet-hd"><div class="sheet-tags"><span class="ttag">Regiment</span>${regBadge(r)}</div>
+    <h2 class="mono">${esc(r.code)}</h2><div class="sheet-origin">${esc(r.name)}${r.description?" — "+esc(r.description):""}</div>
+    <div class="cacts">${r.status==="Active"?`<button type="button" class="cbtn pri" data-act="regadd" data-id="${r.id}">＋ Add soldier</button>`:`<span class="cnote">Inactive — reactivate it to add soldiers</span>`}
+      <button type="button" class="cbtn" data-act="regedit" data-id="${r.id}">Edit regiment</button></div></div></div>
+    <div class="d-sec"><div class="d-h">Overview</div><div class="qgrid">
+      <div class="qt"><div class="ql">Current soldiers</div><div class="qv tnum">${mem.length}</div><div class="qn">one regiment each</div></div>
+      <div class="qt"><div class="ql">Active</div><div class="qv tnum">${act}</div><div class="qn">${mem.length-act} on leave / inactive</div></div>
+      <div class="qt"><div class="ql">Holding equipment</div><div class="qv tnum">${holding}</div><div class="qn">with active custody</div></div>
+      <div class="qt"><div class="ql">Former members</div><div class="qv tnum">${past.length}</div><div class="qn">transferred out</div></div></div></div>
+    <div class="d-sec"><div class="d-h">Regiment Details</div><div class="d-grid">
+      ${fld("Regiment ID",esc(r.id))}${fld("Code",esc(r.code))}${fld("Name",esc(r.name))}${fld("Status",regBadge(r))}
+      ${fld("Description",esc(r.description||"—"))}${fld("Created",fmtTs(r.createdAt))}${fld("Updated",fmtTs(r.updatedAt))}</div></div>
+    <div class="d-sec" id="regmem"><div class="d-h">Soldiers <span class="dcount">${mem.length}</span><span class="dh-sp"></span>${r.status==="Active"?`<button type="button" class="cbtn" data-act="regadd" data-id="${r.id}">＋ Add soldier</button>`:""}</div>
+      ${ctable(["Service Code","Rank","Unit","Designation","Status","Member Since",'<span class="ta-r">Action</span>'],rows,7,"No soldiers in this regiment yet. Use + Add soldier to look one up or create one.")}</div>
+    ${regTeamsSec(r)}
+    <div class="d-sec"><div class="d-h">Membership History <span class="dcount">${past.length}</span></div>${ctable(["Soldier","Joined As","From","To","Ended"],prow,5,"No soldier has left this regiment.")}</div>
+    <div class="d-sec"><div class="d-h">Audit Timeline <span class="dcount">${ev.length}</span></div>${timeline(ev)}</div>`;
+}
+function viewRegForm(v){
+  const r=v.id?Store.regiment(v.id):null; if(v.id&&!r)return null;
+  const body=`<div class="fgrid">
+    ${r?`<div class="fmeta wide">Code <b>${esc(r.code)}</b> · ID ${esc(r.id)} — codes and IDs never change, so existing memberships stay valid.</div><input type="hidden" name="regimentId" value="${esc(r.id)}">`
+      :fl("Regiment code",inp("code","",`placeholder="e.g. DEMO-ECHO" maxlength="16" autocapitalize="characters"`),"code",false,"Unique. Letters, digits and hyphens. Cannot be changed later.")}
+    ${fl("Regiment name",inp("name",r?r.name:"",`placeholder="e.g. Echo Regiment (Demo)" maxlength="60"`),"name",!r)}
+    ${fl("Status",sel("status",Store.REG_STATUS,r?r.status:"Active"),"status",false,r?"A regiment can be made Inactive only once it has no soldiers.":"")}
+    ${fl("Description <em>optional</em>",`<textarea class="fin" name="description" rows="2" maxlength="200" placeholder="What this regiment record covers">${esc(r?r.description||"":"")}</textarea>`,"description",true)}
+    ${r?fl("Reason for change",inp("reason","",`maxlength="160" placeholder="e.g. Name corrected per order 42"`),"reason",true):""}
+    <div class="fmeta wide">${r?"Every change is written to the audit trail.":"Demo data — use clearly illustrative names, not real organisational records."}</div></div>`;
+  return formWrap(r?"Edit regiment":"New regiment",r?"Edit "+r.code:"Create regiment","",r?"regedit":"regnew",body,r?"Save changes":"Create regiment");
+}
+function viewRegAdd(v){
+  const r=Store.regiment(v.id); if(!r)return null;
+  if(r.status!=="Active")return `<div class="fhead"><h2>${esc(r.code)} is Inactive</h2><div class="sheet-origin">Reactivate the regiment before adding soldiers.</div></div><div class="factions"><button type="button" class="cbtn" data-act="back">Back</button></div>`;
+  const opts=Store.soldiers().map(s=>{const c=Store.regiment(s.regimentId);
+    return {id:s.id,label:s.serviceCode,sub:`${s.rank} · ${s.unit} · ${c?(c.id===r.id?"in this regiment":"in "+c.code+" — will be a transfer"):"Unassigned"}`,dis:c&&c.id===r.id?"Already in this regiment":null};});
+  const officers=Store.soldiers().filter(s=>Store.OFFICER_RANKS.includes(s.rank));
+  const body=`<div class="fgrid">
+    ${fstep(1,"Soldier")}
+    ${fl("Find existing soldier",lookup("soldierId",opts,v.soldierId,"Service code, rank or unit"),"soldierId",true)}
+    <div class="fmeta wide regnew">Not in the register? <button type="button" class="cbtn" data-act="regnewsol" data-id="${r.id}">＋ Create new soldier in ${esc(r.code)}</button></div>
+    ${fstep(2,"Authorisation")}
+    ${fl("Approving officer",lookup("authorizedById",officers.map(offOpt),null,"Officer code or rank"),"authorizedById",true)}
+    ${fl("Reason",inp("reason","",`maxlength="160" placeholder="e.g. Posted in on reorganisation"`),"reason",true)}
+    <input type="hidden" name="regimentId" value="${esc(r.id)}">
+    <div class="fmeta wide">The existing soldier record is linked — never copied. If they already belong to another regiment this is recorded as a transfer, and their previous membership stays in history.</div></div>`;
+  return formWrap("Add soldier","Add soldier to "+r.code,esc(r.name),"regadd",body,"Review");
+}
+function viewMembership(v){
+  const s=Store.soldier(v.id); if(!s)return null; const cur=Store.regiment(s.regimentId);
+  const opts=Store.regiments().slice().sort(byCode).map(r=>{const off=r.status!=="Active"||(cur&&r.id===cur.id);
+    return `<option value="${esc(r.id)}"${off?" disabled":""}>${esc(r.code)} · ${esc(r.name)}${r.status!=="Active"?" (Inactive)":cur&&r.id===cur.id?" (current)":""}</option>`;}).join("");
+  const officers=Store.soldiers().filter(x=>Store.OFFICER_RANKS.includes(x.rank));
+  const body=`<div class="fgrid">
+    <div class="fmeta wide"><b>${esc(s.serviceCode)}</b> · ${esc(s.rank)} · ${esc(s.unit)} — current regiment ${cur?`<b>${esc(cur.code)}</b> (${esc(cur.name)})`:"<b>Unassigned</b>"}</div>
+    ${fstep(1,cur?"Destination":"Regiment")}
+    ${fl(cur?"Move to regiment":"Assign to regiment",`<select class="fin" name="${cur?"toRegimentId":"regimentId"}"><option value="">Select regiment…</option>${opts}</select>`,cur?"toRegimentId":"regimentId",!cur)}
+    ${cur?fl("Change type",`<select class="fin" name="kind"><option value="Transfer">Transfer</option><option value="Correction">Record correction</option></select>`,"kind",false,"Use Record correction only when the current regiment was recorded wrongly."):""}
+    ${fstep(2,"Authorisation")}
+    ${fl("Approving officer",lookup("authorizedById",officers.map(offOpt),null,"Officer code or rank"),"authorizedById",true)}
+    ${fl("Reason",inp("reason","",`maxlength="160" placeholder="${cur?"e.g. Posting order 17/2026":"e.g. Missing regiment resolved"}"`),"reason",true)}
+    <input type="hidden" name="soldierId" value="${esc(s.id)}"></div>`;
+  return formWrap(cur?"Transfer":"Assign regiment",cur?"Transfer "+s.serviceCode:"Assign "+s.serviceCode+" to a regiment","The soldier record is updated in place; the previous membership is kept as history.","membership",body,"Review");
+}
+function regTeamsSec(r){
+  const teams=Store.teamsOf(r.id).slice().sort(byCode);
+  const rows=teams.map(t=>{const al=Store.allocationsOfTeam(t.id).filter(x=>x.status==="Active");return `<tr><td>${teamLink(t.id)}</td><td>${esc(t.name)}</td><td class="mono">${Store.teamMembersOf(t.id).length}</td><td class="mono">${Store.custodyOfTeam(t.id).filter(c=>c.status==="Active").length}</td><td class="mono">${al.reduce((n,x)=>n+outQty(x),0).toLocaleString()}</td><td>${regBadge(t)}</td>
+    <td class="ta-r"><span class="rowacts">${t.status==="Active"?`<button type="button" class="cbtn" data-act="issue" data-team="${t.id}">Assign</button>`:""}<button type="button" class="cbtn" data-go="team:${t.id}">Open</button></span></td></tr>`;});
+  return `<div class="d-sec" id="regteams"><div class="d-h">Teams <span class="dcount">${teams.length}</span><span class="dh-sp"></span>${r.status==="Active"?`<button type="button" class="cbtn" data-act="teamnew" data-id="${r.id}">＋ New team</button>`:""}</div>
+    ${ctable(["Team","Name","Soldiers","Team-held Assets","Stock Outstanding","Status",'<span class="ta-r">Action</span>'],rows,7,"No teams yet — create one to start team custody.")}</div>`;
+}
+function renderRegimentsTab(){
+  const rows=Store.regiments().slice().sort(byCode).filter(r=>(CT.rstat==="all"||r.status===CT.rstat)&&hit(CT.rq,[r.code,r.name,r.description,r.id].join(" ")));
+  $("#rgbody").innerHTML=rows.map(r=>{const m=Store.membersOf(r.id),act=m.filter(s=>s.status==="Active").length,hold=m.filter(s=>nActive(s.id)>0).length;
+    return `<tr><td>${regLink(r.id)}</td><td>${esc(r.name)}${r.description?`<div class="faintx">${esc(r.description)}</div>`:""}</td><td class="mono">${m.length}</td><td class="mono">${act}</td><td class="mono">${hold}</td><td>${regBadge(r)}</td><td class="mono sm">${fmtD(r.updatedAt)}</td>
+      <td class="ta-r"><span class="rowacts">${r.status==="Active"?`<button type="button" class="cbtn" data-act="regadd" data-id="${r.id}">＋ Add soldier</button>`:""}<button type="button" class="cbtn" data-go="regiment:${r.id}">Open</button></span></td></tr>`;}).join("")
+    ||emptyRow(8,Store.regiments().length?"No regiments match these filters.":"No regiments yet. Create one with + New regiment.");
+  $("#rgnote").innerHTML=`<b>${rows.length}</b> of ${Store.regiments().length} regiments`; labelTables($("#rgbody").closest("table"));
+  const un=Store.unassigned(), box=$("#rgun");
+  box.hidden=!un.length;
+  box.innerHTML=un.length?`<b>⚠ ${un.length} soldier${un.length===1?" has":"s have"} no regiment.</b> Every soldier must belong to exactly one regiment — assign each one:
+    <span class="unlist">${un.map(s=>`<button type="button" class="cbtn" data-act="membership" data-id="${s.id}">${esc(s.serviceCode)} → Assign</button>`).join("")}</span>`:"";
+  $("#nc-regiments").textContent=Store.regiments().length; renderTeamsPanel();
+  const sel=$("#sreg");
+  sel.innerHTML=`<option value="">All regiments</option>`+Store.regiments().slice().sort(byCode).map(r=>`<option value="${r.id}"${r.id===CT.sreg?" selected":""}>${esc(r.code)}</option>`).join("")+`<option value="none"${CT.sreg==="none"?" selected":""}>Unassigned</option>`;
+}
+/* ---- teams + team custody + stock allocations ---- */
+const teamLink=id=>{const t=Store.team(id);return t?goBtn("team",id,Store.tcode(t)):'<span class="faintx">—</span>';};
+const alcLink=id=>goBtn("allocation",id,id);
+const holderLink=c=>c.teamId?`${teamLink(c.teamId)} <span class="faintx">team</span>`:solLink(c.soldierId);
+const teamOf=s=>s.teamId&&Store.team(s.teamId)?teamLink(s.teamId):`<span class="faintx">No team</span>`;
+const outQty=x=>x.qty-x.returnedQty;
+const alcBadge=x=>badge(x.status==="Active"?"Allocated":"Returned",x.status==="Active"?"cu":"cl");
+function allocRows(list,withAct){
+  return list.map(x=>{const w=BYKEY[x.catalogueKey]||{};return `<tr><td>${alcLink(x.id)}</td><td>${itemLink(x.catalogueKey)}<div class="faintx">${esc(w.typeLabel||"")}</div></td>${withAct==="team"?"":`<td>${teamLink(x.teamId)}</td>`}<td class="mono">${x.qty.toLocaleString()}</td><td class="mono">${x.returnedQty.toLocaleString()}</td><td class="mono"><b>${outQty(x).toLocaleString()}</b></td><td class="mono sm">${esc(x.authRef)}</td><td class="mono sm">${fmtD(x.allocatedAt)}</td><td>${alcBadge(x)}</td>
+    <td class="ta-r"><span class="rowacts">${x.status==="Active"?`<button type="button" class="cbtn" data-act="stockret" data-id="${x.id}">↩ Return stock</button>`:`<button type="button" class="cbtn" data-go="allocation:${x.id}">View</button>`}</span></td></tr>`;}).join("");
+}
+const ALLOC_HEADS=team=>["Allocation","Stock Line"].concat(team?[]:["Team"]).concat(["Allocated","Returned","Outstanding","Auth Ref","Date","Status",'<span class="ta-r">Action</span>']);
+function viewTeam(v){
+  const tm=Store.team(v.id); if(!tm)return null; const rg=Store.regiment(tm.regimentId)||{};
+  const mem=Store.teamMembersOf(tm.id).slice().sort((a,b)=>a.serviceCode.localeCompare(b.serviceCode));
+  const cus=Store.custodyOfTeam(tm.id), act=cus.filter(c=>c.status==="Active"), closed=cus.filter(c=>c.status!=="Active");
+  const al=Store.allocationsOfTeam(tm.id), alAct=al.filter(x=>x.status==="Active"), alDone=al.filter(x=>x.status!=="Active");
+  const indiv=mem.reduce((n,s)=>n+nActive(s.id),0), past=Store.teamMembershipsOfTeam(tm.id).filter(m=>m.endedAt);
+  const since=s=>{const m=Store.teamMembershipsOfSoldier(s.id).find(x=>!x.endedAt);return m?fmtD(m.startedAt):"—";};
+  const mrows=mem.map(s=>`<tr><td>${solLink(s.id)}</td><td>${esc(s.rank)}</td><td>${esc(s.designation)}</td><td>${solBadge(s)}</td><td class="mono">${nActive(s.id)}</td><td class="mono sm">${since(s)}</td>
+    <td class="ta-r"><span class="rowacts">${s.status==="Active"&&tm.status==="Active"?`<button type="button" class="cbtn" data-act="issue" data-soldier="${s.id}">Assign</button>`:""}<button type="button" class="cbtn" data-act="teamset" data-id="${s.id}">Change team</button></span></td></tr>`);
+  const crow=c=>{const a=Store.asset(c.assetId)||{};return `<tr><td>${cusLink(c.id)}</td><td>${astLink(c.assetId)}</td><td>${itemLink(a.catalogueKey)}</td><td class="mono sm">${fmtD(c.effectiveDate)}</td><td class="mono sm">${fmtD(c.returnDate)}</td><td>${cusBadge(c)}</td>
+    <td class="ta-r"><span class="rowacts">${c.status==="Active"?`<button type="button" class="cbtn" data-act="return" data-id="${c.id}">↩ Return</button>`:`<button type="button" class="cbtn" data-go="custody:${c.id}">View</button>`}</span></td></tr>`;};
+  const ev=sortEv(Store.auditFor("Team",tm.id));
+  return `<div class="sheet-head"><div class="sheet-photo sm codeav"><span>${esc(tm.code.slice(0,7))}</span><em>TEAM</em></div>
+    <div class="sheet-hd"><div class="sheet-tags"><span class="ttag">Team</span><span class="subtag">${esc(rg.code||"")}</span>${regBadge(tm)}</div>
+    <h2 class="mono">${esc(Store.tcode(tm))}</h2><div class="sheet-origin">${esc(tm.name)} · regiment ${regLink(tm.regimentId)}</div>
+    <div class="cacts">${tm.status==="Active"?`<button type="button" class="cbtn pri" data-act="issue" data-team="${tm.id}">＋ Assign equipment</button><button type="button" class="cbtn" data-act="teamadd" data-id="${tm.id}">＋ Add soldier</button>`:`<span class="cnote">Inactive — cannot receive equipment or soldiers</span>`}
+      <button type="button" class="cbtn" data-act="teamedit" data-id="${tm.id}">Edit team</button></div></div></div>
+    <div class="d-sec"><div class="d-h">Overview</div><div class="qgrid">
+      <div class="qt"><div class="ql">Soldiers</div><div class="qv tnum">${mem.length}</div><div class="qn">current members</div></div>
+      <div class="qt"><div class="ql">Team-held assets</div><div class="qv tnum">${act.length}</div><div class="qn">active team custody</div></div>
+      <div class="qt"><div class="ql">Stock allocated</div><div class="qv tnum">${alAct.reduce((n,x)=>n+outQty(x),0).toLocaleString()}</div><div class="qn">${alAct.length} outstanding allocation${alAct.length===1?"":"s"}</div></div>
+      <div class="qt"><div class="ql">Held by members</div><div class="qv tnum">${indiv}</div><div class="qn">individual custody</div></div></div></div>
+    <div class="d-sec" id="teammem"><div class="d-h">Soldiers <span class="dcount">${mem.length}</span></div>${ctable(["Service Code","Rank","Designation","Status","Items Held","In Team Since",'<span class="ta-r">Action</span>'],mrows,7,"No soldiers in this team. Use + Add soldier.")}</div>
+    <div class="d-sec" id="teamcus"><div class="d-h">Team Custody — Assets <span class="dcount">${act.length}</span></div>${ctable(["Record","Asset Tag","Equipment","Issued","Returned","Status",'<span class="ta-r">Action</span>'],act.map(crow),7,"No assets held in team custody.")}</div>
+    <div class="d-sec"><div class="d-h">Team Stock Allocations <span class="dcount">${alAct.length}</span></div>${ctable(ALLOC_HEADS(true),[allocRows(alAct,"team")].filter(Boolean),9,"No stock allocated to this team.")}</div>
+    <div class="d-sec"><div class="d-h">Team Custody History <span class="dcount">${closed.length+alDone.length}</span></div>
+      ${ctable(["Record","Asset Tag","Equipment","Issued","Returned","Status",'<span class="ta-r">Action</span>'],closed.map(crow),7,"No returned team assets.")}
+      ${alDone.length?ctable(ALLOC_HEADS(true),[allocRows(alDone,"team")],9,""):""}</div>
+    <div class="d-sec"><div class="d-h">Former Members <span class="dcount">${past.length}</span></div>${ctable(["Soldier","Joined As","From","To","Left"],past.map(m=>`<tr><td>${solLink(m.soldierId)}</td><td>${esc(m.kind)}</td><td class="mono sm">${fmtD(m.startedAt)}</td><td class="mono sm">${fmtD(m.endedAt)}</td><td class="sm">${esc(m.endReason||"")}</td></tr>`),5,"No soldier has left this team.")}</div>
+    <div class="d-sec"><div class="d-h">Audit Timeline <span class="dcount">${ev.length}</span></div>${timeline(ev)}</div>`;
+}
+function viewAllocation(v){
+  const x=Store.allocation(v.id); if(!x)return null; const w=BYKEY[x.catalogueKey]||{}, ev=sortEv(Store.auditFor("Allocation",x.id));
+  const rets=x.returns.map(r=>`<tr><td class="mono sm">${fmtTs(r.ts)}</td><td class="mono">${r.qty.toLocaleString()}</td><td class="sm">${esc(r.reason)}</td><td class="mono sm">${esc(r.by)}</td></tr>`);
+  return `<div class="sheet-head"><div class="sheet-hd"><div class="sheet-tags"><span class="ttag">Stock allocation</span><span class="subtag">Team custody</span>${alcBadge(x)}</div>
+    <h2 class="mono">${esc(x.id)}</h2><div class="sheet-origin">${outQty(x).toLocaleString()} of ${x.qty.toLocaleString()} × ${esc(w.name||"")} outstanding · ${teamLink(x.teamId)}</div>
+    <div class="cacts">${x.status==="Active"?`<button type="button" class="cbtn pri" data-act="stockret" data-id="${x.id}">↩ Return stock</button>`:""}</div></div></div>
+    <div class="d-sec"><div class="d-h">Allocation</div><div class="d-grid">
+      ${fld("Stock Line",itemLink(x.catalogueKey))}${fld("Holder",teamLink(x.teamId)+" (Team)")}${fld("Regiment",regLink(x.regimentId))}${fld("Allocated",x.qty.toLocaleString())}
+      ${fld("Returned",x.returnedQty.toLocaleString())}${fld("Outstanding",outQty(x).toLocaleString())}${fld("Authorised By",solLink(x.authorizedById))}${fld("Authorisation Ref",esc(x.authRef))}
+      ${fld("Recorded By",esc(x.by))}${fld("Date",fmtTs(x.allocatedAt))}${fld("Batch",esc(x.batchId||"—"))}${fld("Remarks",esc(x.reason||"—"))}</div></div>
+    <div class="d-sec"><div class="d-h">Returns <span class="dcount">${x.returns.length}</span></div>${ctable(["When","Quantity","Reason","Received By"],rets,4,"Nothing returned yet.")}</div>
+    <div class="d-sec"><div class="d-h">Audit Timeline <span class="dcount">${ev.length}</span></div>${timeline(ev)}</div>`;
+}
+function viewTeamForm(v){
+  const tm=v.id?Store.team(v.id):null; if(v.id&&!tm)return null; const rg=Store.regiment(tm?tm.regimentId:v.regimentId);
+  const body=`<div class="fgrid">
+    ${tm?`<div class="fmeta wide">Team <b>${esc(Store.tcode(tm))}</b> · ID ${esc(tm.id)} — code and regiment never change.</div><input type="hidden" name="teamId" value="${esc(tm.id)}">`
+      :rg?`<div class="fmeta wide">New team in <b>${esc(rg.code)}</b> · ${esc(rg.name)}</div><input type="hidden" name="regimentId" value="${esc(rg.id)}">`
+      :fl("Regiment",`<select class="fin" name="regimentId"><option value="">Select regiment…</option>${Store.regiments().slice().sort(byCode).map(r=>`<option value="${esc(r.id)}"${r.status!=="Active"?" disabled":""}>${esc(r.code)}${r.status!=="Active"?" (Inactive)":""}</option>`).join("")}</select>`,"regimentId",true)}
+    ${tm?"":fl("Team code",inp("code","",`placeholder="e.g. E-COY" maxlength="12" autocapitalize="characters"`),"code",false,"Unique within the regiment. Cannot be changed later.")}
+    ${fl("Team name",inp("name",tm?tm.name:"",`placeholder="e.g. E Coy Team (Demo)" maxlength="60"`),"name",!!tm)}
+    ${fl("Status",sel("status",Store.TEAM_STATUS,tm?tm.status:"Active"),"status",false,tm?"A team can be made Inactive only when it has no soldiers and holds nothing.":"")}
+    ${tm?fl("Reason for change",inp("reason","",`maxlength="160" placeholder="e.g. Team stood down"`),"reason",true):""}</div>`;
+  return formWrap(tm?"Edit team":"New team",tm?"Edit "+Store.tcode(tm):"Create team","",tm?"teamedit":"teamnew",body,tm?"Save changes":"Create team");
+}
+function viewTeamAdd(v){
+  const tm=Store.team(v.id); if(!tm)return null; const rg=Store.regiment(tm.regimentId)||{};
+  const opts=Store.soldiers().map(s=>{const t=Store.team(s.teamId);
+    const dis=s.regimentId!==tm.regimentId?`In ${(Store.regiment(s.regimentId)||{}).code||"no regiment"} — transfer the regiment first`:s.teamId===tm.id?"Already in this team":null;
+    return {id:s.id,label:s.serviceCode,sub:`${s.rank} · ${s.unit} · ${t?"team "+t.code+" — will move":"no team"}`,dis};});
+  const officers=Store.soldiers().filter(s=>Store.OFFICER_RANKS.includes(s.rank));
+  const body=`<div class="fgrid">
+    ${fstep(1,"Soldier")}
+    ${fl("Soldier of "+esc(rg.code||""),lookup("soldierId",opts,null,"Service code, rank or unit"),"soldierId",true,"Only soldiers already in this regiment can join its teams.")}
+    ${fstep(2,"Authorisation")}
+    ${fl("Approving officer",lookup("authorizedById",officers.map(offOpt),null,"Officer code or rank"),"authorizedById",true)}
+    ${fl("Reason",inp("reason","",`maxlength="160" placeholder="e.g. Section reorganised"`),"reason",true)}
+    <input type="hidden" name="teamId" value="${esc(tm.id)}"></div>`;
+  return formWrap("Add soldier","Add soldier to "+Store.tcode(tm),"The existing soldier record is linked; any previous team membership is closed and kept in history.","teamadd",body,"Review");
+}
+function viewTeamSet(v){
+  const s=Store.soldier(v.id); if(!s)return null; const cur=Store.team(s.teamId), rg=Store.regiment(s.regimentId);
+  if(!rg)return `<div class="fhead"><h2>${esc(s.serviceCode)} has no regiment</h2><div class="sheet-origin">Assign a regiment first — teams belong to a regiment.</div></div><div class="factions"><button type="button" class="cbtn pri" data-act="membership" data-id="${s.id}">Assign regiment</button><button type="button" class="cbtn" data-act="back">Back</button></div>`;
+  const opts=Store.teamsOf(rg.id).slice().sort(byCode).map(t=>{const off=t.status!=="Active"||(cur&&t.id===cur.id);return `<option value="${esc(t.id)}"${off?" disabled":""}>${esc(t.code)} · ${esc(t.name)}${t.status!=="Active"?" (Inactive)":cur&&t.id===cur.id?" (current)":""}</option>`;}).join("");
+  const officers=Store.soldiers().filter(x=>Store.OFFICER_RANKS.includes(x.rank));
+  const body=`<div class="fgrid">
+    <div class="fmeta wide"><b>${esc(s.serviceCode)}</b> · regiment <b>${esc(rg.code)}</b> · current team ${cur?`<b>${esc(cur.code)}</b>`:"<b>none</b>"}</div>
+    ${fl("Team",`<select class="fin" name="teamId"><option value="">${cur?"Remove from team (no team)":"Select team…"}</option>${opts}</select>`,"teamId",true,"Only teams of "+esc(rg.code)+" are listed. To move to another regiment's team, transfer the regiment first.")}
+    ${fl("Approving officer",lookup("authorizedById",officers.map(offOpt),null,"Officer code or rank"),"authorizedById",true)}
+    ${fl("Reason",inp("reason","",`maxlength="160" placeholder="e.g. Section reorganised"`),"reason",true)}
+    <input type="hidden" name="soldierId" value="${esc(s.id)}"></div>`;
+  return formWrap("Team",cur?"Change team of "+s.serviceCode:"Assign "+s.serviceCode+" to a team","","teamset",body,"Review");
+}
+function viewStockRet(v){
+  const x=Store.allocation(v.id); if(!x)return null; const w=BYKEY[x.catalogueKey]||{};
+  const body=`<div class="fgrid">
+    <div class="fmeta wide"><b>${esc(x.id)}</b> · ${esc(w.name||"")} — ${outQty(x).toLocaleString()} of ${x.qty.toLocaleString()} outstanding with ${teamLink(x.teamId)} (ref ${esc(x.authRef)}).</div>
+    ${fl("Quantity returned",inp("qty",String(outQty(x)),`type="number" min="1" max="${outQty(x)}" step="1" inputmode="numeric"`),"qty",false,"Partial returns keep the allocation open.")}
+    ${fl("Reason",inp("reason","",`maxlength="160" placeholder="e.g. Exercise complete — returned to store"`),"reason",true)}
+    <input type="hidden" name="allocationId" value="${esc(x.id)}"></div>`;
+  return formWrap("Return stock","Return stock from "+Store.tcode(Store.team(x.teamId)),"The allocation is kept in history — never deleted.","stockret",body,"Review return");
+}
+function renderTeamsPanel(){
+  const list=Store.teams().slice().sort((a,b)=>((Store.regiment(a.regimentId)||{}).code||"").localeCompare((Store.regiment(b.regimentId)||{}).code||"")||a.code.localeCompare(b.code))
+    .filter(t=>(!CT.treg||t.regimentId===CT.treg)&&hit(CT.rq,[t.code,t.name,(Store.regiment(t.regimentId)||{}).code].join(" ")));
+  $("#tmbody").innerHTML=list.map(t=>{const m=Store.teamMembersOf(t.id).length,c=Store.custodyOfTeam(t.id).filter(x=>x.status==="Active").length,al=Store.allocationsOfTeam(t.id).filter(x=>x.status==="Active");
+    return `<tr><td>${teamLink(t.id)}</td><td>${esc(t.name)}</td><td>${regLink(t.regimentId)}</td><td class="mono">${m}</td><td class="mono">${c}</td><td class="mono">${al.reduce((n,x)=>n+outQty(x),0).toLocaleString()}</td><td>${regBadge(t)}</td>
+      <td class="ta-r"><span class="rowacts">${t.status==="Active"?`<button type="button" class="cbtn" data-act="issue" data-team="${t.id}">Assign</button>`:""}<button type="button" class="cbtn" data-go="team:${t.id}">Open</button></span></td></tr>`;}).join("")||emptyRow(8,"No teams match.");
+  $("#tmnote").innerHTML=`<b>${list.length}</b> of ${Store.teams().length} teams`; labelTables($("#tmbody").closest("table"));
+  const sel=$("#tmreg"); sel.innerHTML=`<option value="">All regiments</option>`+Store.regiments().slice().sort(byCode).map(r=>`<option value="${r.id}"${r.id===CT.treg?" selected":""}>${esc(r.code)}</option>`).join("");
+}
 const VIEW_RENDER={item:v=>{const s=BYKEY[v.key];return s?detailHTML(s):null;},asset:viewAsset,soldier:viewSoldier,custody:viewCustody,
-  issue:viewIssue,return:viewReturn,status:viewStatus,correct:viewCorrect,solstatus:viewSolStatus,newsoldier:viewNewSoldier,newasset:viewNewAsset,confirm:viewConfirm,multi:viewMulti};
+  return:viewReturn,status:viewStatus,correct:viewCorrect,solstatus:viewSolStatus,newsoldier:viewNewSoldier,newasset:viewNewAsset,confirm:viewConfirm,multi:viewMulti,
+  regiment:viewRegiment,regform:viewRegForm,regadd:viewRegAdd,membership:viewMembership,
+  team:viewTeam,allocation:viewAllocation,teamform:viewTeamForm,teamadd:viewTeamAdd,teamset:viewTeamSet,stockret:viewStockRet};
 const codeOf=id=>{const s=Store.soldier(id);return s?esc(s.serviceCode)+" · "+esc(s.rank):"—";};
+const TEAMSET={confirmTitle:"Review team change",confirmBtn:"Confirm",
+  confirm:d=>{const s=Store.soldier(d.soldierId),to=Store.team(d.teamId),c=Store.team(s.teamId);
+    return [["Soldier",codeOf(s.id)+" · "+esc(s.id)],["From",c?esc(Store.tcode(c)):"No team"],["To",to?esc(Store.tcode(to)):"No team (removed)"],["Approved by",codeOf(d.authorizedById)],["Reason",esc(d.reason)],
+      ["Records","Existing soldier record updated — no new soldier is created; the previous team membership is kept in history"]];},
+  run:d=>{const s=Store.soldier(d.soldierId),r=Store.setSoldierTeam(d);if(r.ok&&!d._dry)r.msg=r.to?`✓ ${s.serviceCode} → ${Store.tcode(r.to)}`:`✓ ${s.serviceCode} removed from ${Store.tcode(r.from)}`;return r;}};
 const FORMS={
-  issue:{confirmTitle:"Review custody record",confirmBtn:"Confirm & create record",
-    confirm:d=>{const a=Store.asset(d.assetId),w=BYKEY[a.catalogueKey];return [["Equipment",`${esc(a.tag)} · ${esc(w.name)}`],["Issue to",codeOf(d.soldierId)],["Approved by",codeOf(d.authorizedById)],["Type",esc(d.type)],["Issue date",fmtD(d.effectiveDate)],["Asset after",`In Custody`]];},
-    run:d=>{const r=Store.issue(d);if(r.ok&&!d._dry){const a=Store.asset(r.rec.assetId),s=Store.soldier(r.rec.soldierId);r.msg=`✓ ${a.tag} issued to ${s.serviceCode} · ${r.rec.id}`;r.next={kind:"custody",id:r.rec.id};}return r;}},
-  multi:{confirmTitle:"Review custody records",confirmBtn:d=>{const n=mxIds(d).length;return `Confirm & create ${n} record${n===1?"":"s"}`;},
-    confirm:d=>{const ids=mxIds(d);return [["Issue to",codeOf(d.soldierId)],["Approved by",codeOf(d.authorizedById)],["Type",esc(d.type)],["Issue date",fmtD(d.effectiveDate)],
-      [`Items (${ids.length})`,mxReviewList(ids)],["Result",`${ids.length} separate custody record${ids.length===1?"":"s"} — one per asset · each asset → In Custody`]];},
-    run:d=>{const v=mxTop(),r=Store.issueBatch(Object.assign({},d,{assetIds:mxIds(d)}));
+  multi:{confirmTitle:"Review assignment",confirmBtn:d=>{const n=mxIds(d).length+mxStock(d).length;return `Confirm & create ${n} record${n===1?"":"s"}`;},
+    confirm:d=>{const tm=Store.team(d.teamId),rg=Store.regiment(d.regimentId),n=mxIds(d).length,m=mxStock(d).length;
+      return [["Regiment",esc(rg.code)+" · "+esc(rg.name)],["Assign to",d.targetType==="Team"?"Team — "+esc(Store.tcode(tm))+" · "+esc(tm.name):"Individual Soldier — "+codeOf(d.soldierId)],["Approved by",codeOf(d.authorizedById)]]
+        .concat(n?[["Custody type",esc(d.type)+" · from "+fmtD(d.effectiveDate)]]:[]).concat(m?[["Authorisation ref",esc(d.authRef)]]:[])
+        .concat([[`Items (${n+m})`,mxReviewList(d)],["Result",[n?`${n} custody record${n===1?"":"s"} (one per asset)`:"",m?`${m} stock allocation${m===1?"":"s"} (one per line)`:""].filter(Boolean).join(" + ")]]);},
+    run:d=>{const v=mxTop(), pre={};
+      if(!d.regimentId)pre.regimentId="Select the regiment"; else if(!d.targetType)pre.targetType="Choose Individual Soldier or Team"; else if(d.targetType==="Team"&&!d.teamId)pre.teamId="Select a team of this regiment";
+      if(Object.keys(pre).length)return {ok:false,errors:pre};
+      const r=Store.assign({regimentId:d.regimentId,teamId:d.targetType==="Team"?d.teamId:null,targetType:d.targetType,soldierId:d.targetType==="Soldier"?d.soldierId:null,assetIds:mxIds(d),stock:mxStock(d),
+        authorizedById:d.authorizedById,type:d.type,effectiveDate:d.effectiveDate,authRef:d.authRef,remarks:d.remarks,_dry:d._dry});
       if(v){v.bad=(!r.ok&&r.errors.items)||{};mxPaint(false);}
       if(!r.ok){const e=Object.assign({},r.errors);delete e.items;r.errors=e;return r;}
-      if(!d._dry){const s=Store.soldier(d.soldierId),n=r.recs.length;r.msg=`✓ ${n} custody record${n===1?"":"s"} created for ${s.serviceCode} · ${r.recs[0].id}${n>1?" – "+r.recs[n-1].id:""}`;r.next={kind:"soldier",id:s.id,focus:"soleq"};}
+      if(!d._dry){const n=r.recs.length+r.allocs.length;
+        r.msg=`✓ ${n} record${n===1?"":"s"} created for ${r.holder}`+(r.recs.length?` · ${r.recs[0].id}${r.recs.length>1?" – "+r.recs[r.recs.length-1].id:""}`:"")+(r.allocs.length?` · ${r.allocs.map(x=>x.id).join(", ")}`:"");
+        r.next=r.target==="Team"?{kind:"team",id:d.teamId,focus:"teamcus"}:{kind:"soldier",id:d.soldierId,focus:"soleq"};}
       return r;}},
+  teamnew:{run:d=>{const r=Store.createTeam(d);if(r.ok){r.msg=`✓ Team ${Store.tcode(r.rec)} created`;r.next={kind:"team",id:r.rec.id};}return r;}},
+  teamedit:{when:d=>d.status==="Inactive"&&(Store.team(d.teamId)||{}).status!=="Inactive",confirmTitle:"Deactivate this team?",confirmBtn:"Confirm deactivation",
+    confirm:d=>[["Team",esc(Store.tcode(Store.team(d.teamId)))],["New status","Inactive — cannot receive equipment or soldiers"],["Reason",esc(d.reason)]],
+    run:d=>{const r=Store.updateTeam(d);if(r.ok&&!d._dry)r.msg=`✓ ${Store.tcode(r.rec)} updated`;return r;}},
+  teamadd:TEAMSET, teamset:TEAMSET,
+  stockret:{confirmTitle:"Review stock return",confirmBtn:"Confirm return",
+    confirm:d=>{const x=Store.allocation(d.allocationId),w=BYKEY[x.catalogueKey]||{},left=outQty(x)-Number(d.qty);
+      return [["Allocation",esc(x.id)+" · "+esc(w.name||"")],["Team",esc(Store.tcode(Store.team(x.teamId)))],["Returning",Number(d.qty).toLocaleString()],["Outstanding after",left.toLocaleString()+(left?"":" — allocation closed")],["Reason",esc(d.reason)]];},
+    run:d=>{const r=Store.returnStock(d);if(r.ok&&!d._dry)r.msg=`✓ ${Number(d.qty).toLocaleString()} returned · ${r.rec.id} ${r.left?r.left.toLocaleString()+" still outstanding":"closed"}`;return r;}},
   return:{confirmTitle:"Review return",confirmBtn:"Confirm return",
-    confirm:d=>{const c=Store.custodyRec(d.custodyId),a=Store.asset(c.assetId);return [["Equipment",esc(a.tag)],["Returned by",codeOf(c.soldierId)],["Return date",fmtD(d.returnDate)],["Condition",esc(d.condition)],["Asset after",Store.OK_COND.includes(d.condition)?"Available":"Inspection Pending"]];},
+    confirm:d=>{const c=Store.custodyRec(d.custodyId),a=Store.asset(c.assetId);return [["Equipment",esc(a.tag)],["Returned by",c.teamId?esc(Store.holderCode(c))+" (team custody)":codeOf(c.soldierId)],["Return date",fmtD(d.returnDate)],["Condition",esc(d.condition)],["Asset after",Store.OK_COND.includes(d.condition)?"Available":"Inspection Pending"]];},
     run:d=>{const r=Store.returnAsset(d);if(r.ok&&!d._dry){r.msg=`✓ Returned · ${r.rec.id} closed · asset now ${r.next}`;delete r.next;}return r;}},
   status:{when:d=>d.status==="Retired",confirmTitle:"Retire this asset permanently?",confirmBtn:"Confirm retirement",
     confirm:d=>[["Asset",esc((Store.asset(d.assetId)||{}).tag||"")],["New status","Retired (final)"],["Reason",esc(d.reason)]],
     run:d=>{const r=Store.setAssetStatus(d);if(r.ok&&!d._dry)r.msg=`✓ ${r.rec.tag} → ${r.rec.status}`;return r;}},
   correct:{run:d=>{const r=Store.addCorrection(d);if(r.ok)r.msg="✓ Correction appended to "+r.rec.id;return r;}},
   solstatus:{run:d=>{const r=Store.setSoldierStatus(d);if(r.ok)r.msg=`✓ ${r.rec.serviceCode} → ${r.rec.status}`;return r;}},
-  newsoldier:{run:d=>{const r=Store.createSoldier(d);if(r.ok){r.msg="✓ Soldier record "+r.rec.serviceCode+" created";r.next={kind:"soldier",id:r.rec.id};}return r;}},
+  newsoldier:{run:d=>{const r=Store.createSoldier(d);if(r.ok){r.msg=`✓ Soldier ${r.rec.serviceCode} created and added to ${r.regiment.code}`;if(d._from!=="regiment")r.next={kind:"soldier",id:r.rec.id};}return r;}},
+  regnew:{run:d=>{const r=Store.createRegiment(d);if(r.ok){r.msg=`✓ Regiment ${r.rec.code} created`;r.next={kind:"regiment",id:r.rec.id};}return r;}},
+  regedit:{when:d=>d.status==="Inactive"&&(Store.regiment(d.regimentId)||{}).status!=="Inactive",confirmTitle:"Deactivate this regiment?",confirmBtn:"Confirm deactivation",
+    confirm:d=>[["Regiment",esc((Store.regiment(d.regimentId)||{}).code||"")],["New status","Inactive — cannot receive soldiers"],["Reason",esc(d.reason)]],
+    run:d=>{const r=Store.updateRegiment(d);if(r.ok&&!d._dry)r.msg=`✓ ${r.rec.code} updated`;return r;}},
+  regadd:{confirmTitle:"Review regiment change",confirmBtn:"Confirm",
+    confirm:d=>{const s=Store.soldier(d.soldierId),r=Store.regiment(d.regimentId),c=Store.regiment(s.regimentId);
+      return [["Soldier",codeOf(s.id)+" · "+esc(s.id)],["Action",c?`Transfer ${esc(c.code)} → ${esc(r.code)}`:`Assign to ${esc(r.code)}`],["Approved by",codeOf(d.authorizedById)],["Reason",esc(d.reason)],
+        ["Records","Existing soldier record linked — no new soldier is created"+(c?"; the "+esc(c.code)+" membership is closed and kept in history":"")]];},
+    run:d=>{const s=Store.soldier(d.soldierId), from=s&&Store.regiment(s.regimentId);
+      const r=from?remapErr(Store.transferSoldier({soldierId:d.soldierId,toRegimentId:d.regimentId,authorizedById:d.authorizedById,reason:d.reason,kind:"Transfer",_dry:d._dry}),{toRegimentId:"_"})
+        :remapErr(Store.assignSoldier(d),{regimentId:"_"});
+      if(r.ok&&!d._dry){const to=Store.regiment(d.regimentId);r.msg=from?`✓ ${s.serviceCode} transferred ${from.code} → ${to.code}`:`✓ ${s.serviceCode} added to ${to.code}`;}return r;}},
+  membership:{confirmTitle:"Review regiment change",confirmBtn:"Confirm",
+    confirm:d=>{const s=Store.soldier(d.soldierId),c=Store.regiment(s.regimentId),to=Store.regiment(d.toRegimentId||d.regimentId);
+      return [["Soldier",codeOf(s.id)],["From",c?esc(c.code)+" · "+esc(c.name):"Unassigned"],["To",esc(to.code)+" · "+esc(to.name)],["Type",c?(d.kind==="Correction"?"Record correction":"Transfer"):"Assignment"],["Approved by",codeOf(d.authorizedById)],["Reason",esc(d.reason)]];},
+    run:d=>{const s=Store.soldier(d.soldierId),from=s&&Store.regiment(s.regimentId);const r=d.toRegimentId!==undefined?Store.transferSoldier(d):Store.assignSoldier(d);
+      if(r.ok&&!d._dry){const to=Store.regiment(d.toRegimentId||d.regimentId);r.msg=from?`✓ ${s.serviceCode} ${d.kind==="Correction"?"corrected":"transferred"} ${from.code} → ${to.code}`:`✓ ${s.serviceCode} assigned to ${to.code}`;}return r;}},
   newasset:{run:d=>{if(!d.catalogueKey)return {ok:false,errors:{catalogueKey:"Choose the equipment line"}};const r=Store.registerAsset(d);if(r.ok){r.msg="✓ Asset "+r.rec.tag+" registered";r.next={kind:"asset",id:r.rec.id};}return r;}},
 };
 function clearErrs(f){f.querySelectorAll(".ferr").forEach(x=>x.textContent="");f.querySelectorAll(".bad").forEach(x=>x.classList.remove("bad"));}
@@ -1646,7 +2372,7 @@ function submitForm(f){
 }
 
 /* ---- workspaces: Asset Register · Soldiers · Custody Records · Audit ---- */
-const CT={cview:"active",cq:"",sstat:"all",sq:"",aent:"all",aq:"",astat:"all",acat:"",asq:""};
+const CT={rstat:"all",rq:"",sreg:"",treg:"",cview:"active",cq:"",sstat:"all",sq:"",aent:"all",aq:"",astat:"all",acat:"",asq:""};
 const hit=(q,s)=>!q||s.toLowerCase().includes(q.toLowerCase());
 function labelTables(root){
   if(!root)return;
@@ -1669,41 +2395,47 @@ function renderCStats(){
 function renderAssetsTab(){
   const held=["Inspection Pending","Under Maintenance"];
   const rows=Store.assets().filter(a=>(CT.astat==="all"||(CT.astat==="held"?held.includes(a.status):a.status===CT.astat))&&(!CT.acat||a.catalogueKey===CT.acat)).filter(a=>{
-    const c=Store.activeFor(a.id),s=c&&Store.soldier(c.soldierId),w=BYKEY[a.catalogueKey]||{};return hit(CT.asq,[a.tag,a.serial,w.name,w.typeLabel,s?s.serviceCode:"",a.status].join(" "));});
+    const c=Store.activeFor(a.id),w=BYKEY[a.catalogueKey]||{};return hit(CT.asq,[a.tag,a.serial,w.name,w.typeLabel,c?Store.holderCode(c):"",a.status].join(" "));});
   $("#asbody").innerHTML=rows.map(a=>{const c=Store.activeFor(a.id),w=BYKEY[a.catalogueKey]||{};
-    return `<tr><td>${astLink(a.id)}</td><td>${itemLink(a.catalogueKey)}<div class="faintx">${esc(w.typeLabel||"")}</div></td><td class="mono sm">${esc(a.serial)}</td><td>${esc(a.condition)}</td><td>${astBadge(a)}</td><td>${c?solLink(c.soldierId):'<span class="faintx">in armoury</span>'}</td><td class="mono sm">${c?fmtD(c.effectiveDate):"—"}</td><td class="ta-r">${assetActs(a,c)}</td></tr>`;}).join("")||emptyRow(8,"No assets match these filters.");
+    return `<tr><td>${astLink(a.id)}</td><td>${itemLink(a.catalogueKey)}<div class="faintx">${esc(w.typeLabel||"")}</div></td><td class="mono sm">${esc(a.serial)}</td><td>${esc(a.condition)}</td><td>${astBadge(a)}</td><td>${c?holderLink(c):'<span class="faintx">in armoury</span>'}</td><td class="mono sm">${c?fmtD(c.effectiveDate):"—"}</td><td class="ta-r">${assetActs(a,c)}</td></tr>`;}).join("")||emptyRow(8,"No assets match these filters.");
   $("#asnote").innerHTML=`<b>${rows.length}</b> of ${Store.assets().length} assets`; labelTables($("#asbody").closest("table"));
 }
 function renderCustodyTab(){
   const v=CT.cview, list=Store.custody().filter(c=>v==="all"||(v==="active"?c.status==="Active":v==="closed"?c.status==="Closed":c.status==="Closed"&&!Store.OK_COND.includes(c.returnCondition)));
-  const rows=list.filter(c=>{const a=Store.asset(c.assetId)||{},s=Store.soldier(c.soldierId)||{},w=BYKEY[a.catalogueKey]||{};return hit(CT.cq,[c.id,a.tag,a.serial,s.serviceCode,w.name,c.type].join(" "));});
-  $("#cbody").innerHTML=rows.map(c=>{const a=Store.asset(c.assetId)||{};return `<tr><td>${cusLink(c.id)}</td><td>${astLink(c.assetId)}</td><td>${itemLink(a.catalogueKey)}</td><td>${solLink(c.soldierId)}</td><td>${esc(c.type)}</td><td class="mono sm">${fmtD(c.effectiveDate)}</td><td class="mono sm">${fmtD(c.returnDate)}</td><td>${cusBadge(c)}</td><td class="ta-r"><span class="rowacts">${c.status==="Active"?`<button type="button" class="cbtn" data-act="return" data-id="${c.id}">↩ Return</button>`:`<button type="button" class="cbtn" data-go="custody:${c.id}">View</button>`}</span></td></tr>`;}).join("")||emptyRow(9,v==="active"?"No equipment is currently issued.":"No custody records match this view.");
+  const rows=list.filter(c=>{const a=Store.asset(c.assetId)||{},w=BYKEY[a.catalogueKey]||{};return hit(CT.cq,[c.id,a.tag,a.serial,Store.holderCode(c),c.teamId?"team":"",w.name,c.type].join(" "));});
+  $("#cbody").innerHTML=rows.map(c=>{const a=Store.asset(c.assetId)||{};return `<tr><td>${cusLink(c.id)}</td><td>${astLink(c.assetId)}</td><td>${itemLink(a.catalogueKey)}</td><td>${holderLink(c)}</td><td>${esc(c.type)}</td><td class="mono sm">${fmtD(c.effectiveDate)}</td><td class="mono sm">${fmtD(c.returnDate)}</td><td>${cusBadge(c)}</td><td class="ta-r"><span class="rowacts">${c.status==="Active"?`<button type="button" class="cbtn" data-act="return" data-id="${c.id}">↩ Return</button>`:`<button type="button" class="cbtn" data-go="custody:${c.id}">View</button>`}</span></td></tr>`;}).join("")||emptyRow(9,v==="active"?"No equipment is currently issued.":"No custody records match this view.");
   $("#cnote").innerHTML=`<b>${rows.length}</b> of ${Store.custody().length} records`; labelTables($("#cbody").closest("table"));
 }
 function renderSoldiersTab(){
-  const rows=Store.soldiers().filter(s=>(CT.sstat==="all"||(CT.sstat==="holding"?nActive(s.id)>0:s.status===CT.sstat))&&hit(CT.sq,[s.serviceCode,s.rank,s.department,s.unit,s.designation,s.id].join(" ")));
-  $("#sbody").innerHTML=rows.map(s=>{const n=nActive(s.id);return `<tr><td>${goBtn("soldier",s.id,s.serviceCode)}</td><td>${esc(s.rank)}</td><td>${esc(s.unit)}</td><td>${esc(s.designation)}</td><td>${solBadge(s)}</td><td>${n?`<span class="cbadge cu"><i></i>${n} item${n===1?"":"s"}</span>`:`<span class="cbadge none">None held</span>`}</td><td class="ta-r"><span class="rowacts">${s.status==="Active"?`<button type="button" class="cbtn" data-act="issue" data-soldier="${s.id}">Assign</button>`:""}<button type="button" class="cbtn" data-act="soldier" data-id="${s.id}" title="View equipment and history">View</button></span></td></tr>`;}).join("")||emptyRow(7,"No soldier records match.");
+  const rows=Store.soldiers().filter(s=>(CT.sstat==="all"||(CT.sstat==="holding"?nActive(s.id)>0:s.status===CT.sstat))
+    &&(!CT.sreg||(CT.sreg==="none"?!s.regimentId:s.regimentId===CT.sreg))
+    &&hit(CT.sq,[s.serviceCode,s.rank,s.department,s.unit,s.designation,s.id,(Store.regiment(s.regimentId)||{}).code||"Unassigned",(Store.regiment(s.regimentId)||{}).name||"",(Store.team(s.teamId)||{}).code||""].join(" ")));
+  $("#sbody").innerHTML=rows.map(s=>{const n=nActive(s.id);return `<tr><td>${goBtn("soldier",s.id,s.serviceCode)}</td><td>${esc(s.rank)}</td><td>${regOf(s)}${s.teamId&&Store.team(s.teamId)?`<div class="faintx">${esc(Store.team(s.teamId).code)}</div>`:""}</td><td>${esc(s.unit)}</td><td>${esc(s.designation)}</td><td>${solBadge(s)}</td><td>${n?`<span class="cbadge cu"><i></i>${n} item${n===1?"":"s"}</span>`:`<span class="cbadge none">None held</span>`}</td><td class="ta-r"><span class="rowacts">${s.status==="Active"?`<button type="button" class="cbtn" data-act="issue" data-soldier="${s.id}">Assign</button>`:""}<button type="button" class="cbtn" data-act="soldier" data-id="${s.id}" title="View equipment and history">View</button></span></td></tr>`;}).join("")||emptyRow(8,"No soldier records match.");
   $("#snote").innerHTML=`<b>${rows.length}</b> of ${Store.soldiers().length} soldiers`; labelTables($("#sbody").closest("table"));
 }
 function renderAuditTab(){
   const rows=Store.audit().filter(e=>(CT.aent==="all"||e.entityType===CT.aent)&&hit(CT.aq,[e.id,e.entityId,e.action,e.prev,e.next,e.reason,e.by].join(" ")));
-  const link=e=>e.entityType==="Asset"?astLink(e.entityId):e.entityType==="Soldier"?solLink(e.entityId):cusLink(e.entityId);
+  const link=e=>e.entityType==="Asset"?astLink(e.entityId):e.entityType==="Soldier"?solLink(e.entityId):e.entityType==="Regiment"?regLink(e.entityId):e.entityType==="Team"?teamLink(e.entityId):e.entityType==="Allocation"?alcLink(e.entityId):cusLink(e.entityId);
   $("#abody").innerHTML=rows.slice(0,400).map(e=>`<tr><td class="mono sm">${fmtTs(e.ts)}</td><td>${esc(e.entityType)}</td><td>${link(e)}</td><td>${esc(e.action)}</td><td class="mono sm">${e.prev||e.next?esc(e.prev||"∅")+" → "+esc(e.next||"∅"):"—"}</td><td class="sm">${esc(e.reason)}</td><td class="mono sm">${esc(e.by)}</td></tr>`).join("")||emptyRow(7,"No audit events match.");
   $("#anote").innerHTML=`<b>${Math.min(rows.length,400)}</b> of ${rows.length} events`+(rows.length>400?" (newest 400 shown)":""); labelTables($("#abody").closest("table"));
 }
-function renderCustodyTabs(){renderCStats();renderAssetsTab();renderCustodyTab();renderSoldiersTab();renderAuditTab();}
+function renderCustodyTabs(){renderRegimentsTab();renderCStats();renderAssetsTab();renderCustodyTab();renderSoldiersTab();renderAuditTab();}
 function setChip(groupId,val){document.querySelectorAll(groupId+" [data-v]").forEach(x=>x.classList.toggle("on",x.dataset.v===val));}
 function wireCustody(){
   const chipGroup=(id,keyName,render)=>$(id).addEventListener("click",e=>{const b=e.target.closest("[data-v]");if(!b)return;CT[keyName]=b.dataset.v;setChip(id,b.dataset.v);render();});
   chipGroup("#cviews","cview",renderCustodyTab); chipGroup("#sviews","sstat",renderSoldiersTab); chipGroup("#aviews","aent",renderAuditTab); chipGroup("#asviews","astat",renderAssetsTab);
   $("#cq").addEventListener("input",e=>{CT.cq=e.target.value.trim();renderCustodyTab();});
   $("#sq").addEventListener("input",e=>{CT.sq=e.target.value.trim();renderSoldiersTab();});
+  $("#sreg").addEventListener("change",e=>{CT.sreg=e.target.value;renderSoldiersTab();});
+  $("#rgq").addEventListener("input",e=>{CT.rq=e.target.value.trim();renderRegimentsTab();});
+  chipGroup("#rgviews","rstat",renderRegimentsTab);
+  $("#tmreg").addEventListener("change",e=>{CT.treg=e.target.value;renderTeamsPanel();});
   $("#aq").addEventListener("input",e=>{CT.aq=e.target.value.trim();renderAuditTab();});
   $("#asq").addEventListener("input",e=>{CT.asq=e.target.value.trim();renderAssetsTab();});
   $("#ascat").addEventListener("change",e=>{CT.acat=e.target.value;renderAssetsTab();});
   // record navigation + actions anywhere on the page (sheet, workspaces, cards, sidebar)
   document.addEventListener("click",e=>{
-    {const mv=mxTop(),mf=mxForm();if(mv&&mf)mv.f=Object.fromEntries(new FormData(mf));}
+    {const mv=mxTop(),mf=mxForm();if(mv&&mf){mv.f=Object.fromEntries(new FormData(mf));mxSync();}}
     const g=e.target.closest("[data-go]");
     if(g&&!e.target.closest(".lk")){e.preventDefault();const i=g.dataset.go.indexOf(":"),kind=g.dataset.go.slice(0,i),id=g.dataset.go.slice(i+1);
       sheetOpen(kind==="item"?{kind,key:id}:{kind,id},!g.closest("#sheet"));return;}
@@ -1711,18 +2443,34 @@ function wireCustody(){
     const inSheet=!!b.closest("#sheet"), a=b.dataset.act, open=v=>sheetOpen(v,!inSheet);
     if(a==="back")sheetBack();
     else if(a==="unconfirm"){const f=b.closest(".cform");if(f){unconfirm(f);const s=f.querySelector(".factions .ro-place");if(s)s.focus();}}
-    else if(a==="issue")open(b.dataset.asset?{kind:"issue",form:1,assetId:b.dataset.asset,soldierId:b.dataset.soldier}:{kind:"multi",form:1,soldierId:b.dataset.soldier,sel:[]});
-    else if(a==="multi"){const f=b.closest(".cform"),aid=f&&f.elements.assetId?f.elements.assetId.value:"",sid=f&&f.elements.soldierId?f.elements.soldierId.value:"";
-      VIEWS.pop();VIEWS.push({kind:"multi",form:1,soldierId:sid,sel:aid?[aid]:[]});renderSheet(false);}
+    else if(a==="issue"){const v={kind:"multi",form:1,sel:[],stock:{}};
+      if(b.dataset.asset)v.sel=[b.dataset.asset];
+      const tm=b.dataset.team&&Store.team(b.dataset.team); if(tm){v.rid=tm.regimentId;v.tid=tm.id;v.tt="Team";}
+      const so=b.dataset.soldier&&Store.soldier(b.dataset.soldier);
+      if(so){v.rid=so.regimentId||null;v.tt="Soldier";v.soldierId=so.id;if(!so.regimentId)v.note=`${so.serviceCode} has no regiment — assign a regiment on the soldier record first.`;}
+      open(v);}
+    else if(a==="mx-stock"){const v=mxTop();if(!v)return;const k=b.dataset.key,i=b.parentElement.querySelector(".mx-qty"),q=Number(i&&i.value);
+      if(!i||!Number.isInteger(q)||q<1){if(i){i.classList.add("bad");i.focus();}toast("Enter a whole quantity of at least 1","err");return;}
+      v.stock[k]=q;delete v.bad["stock:"+k];mxPaint();mxReReview();}
+    else if(a==="teamnew")open({kind:"teamform",form:1,regimentId:b.dataset.id});
+    else if(a==="teamedit")open({kind:"teamform",form:1,id:b.dataset.id});
+    else if(a==="teamadd")open({kind:"teamadd",form:1,id:b.dataset.id});
+    else if(a==="teamset")open({kind:"teamset",form:1,id:b.dataset.id});
+    else if(a==="stockret")open({kind:"stockret",form:1,id:b.dataset.id});
     else if(a==="mx-nav"){const v=mxTop();if(!v)return;const p=b.dataset.path.split("|");v.g=p[0]||null;v.s=p[1]||null;v.k=p[2]||null;v.q="";
       const q=$("#sheet").querySelector(".mx-q");if(q)q.value="";mxPaint();const bd=$("#sheet").querySelector(".mx-body");if(bd){bd.scrollTop=0;const t=bd.querySelector("button,input:not([disabled])");if(t)t.focus({preventScroll:true});}}
-    else if(a==="mx-rm"){const v=mxTop();if(!v)return;v.sel=v.sel.filter(x=>x!==b.dataset.id);delete v.bad[b.dataset.id];mxPaint();mxReReview();}
-    else if(a==="mx-clear"){const v=mxTop();if(!v)return;v.sel=[];v.bad={};mxPaint();const f=mxForm();if(f&&f.classList.contains("confirming"))unconfirm(f);}
+    else if(a==="mx-rm"){const v=mxTop();if(!v)return;const id=b.dataset.id;if(id.startsWith("stock:"))delete v.stock[id.slice(6)];else v.sel=v.sel.filter(x=>x!==id);delete v.bad[id];mxPaint();mxReReview();}
+    else if(a==="mx-clear"){const v=mxTop();if(!v)return;v.sel=[];v.stock={};v.bad={};mxPaint();const f=mxForm();if(f&&f.classList.contains("confirming"))unconfirm(f);}
     else if(a==="return")open({kind:"return",form:1,id:b.dataset.id});
     else if(a==="status")open({kind:"status",form:1,id:b.dataset.id});
     else if(a==="correct")open({kind:"correct",form:1,id:b.dataset.id});
     else if(a==="solstatus")open({kind:"solstatus",form:1,id:b.dataset.id});
     else if(a==="newsoldier")open({kind:"newsoldier",form:1});
+    else if(a==="regnew")open({kind:"regform",form:1});
+    else if(a==="regedit")open({kind:"regform",form:1,id:b.dataset.id});
+    else if(a==="regadd")open({kind:"regadd",form:1,id:b.dataset.id});
+    else if(a==="membership")open({kind:"membership",form:1,id:b.dataset.id});
+    else if(a==="regnewsol"){if(inSheet&&VIEWS.length&&VIEWS[VIEWS.length-1].kind==="regadd"){VIEWS.pop();VIEWS.push({kind:"newsoldier",form:1,regimentId:b.dataset.id});renderSheet(false);}else open({kind:"newsoldier",form:1,regimentId:b.dataset.id});}
     else if(a==="newasset")open({kind:"newasset",form:1,key:b.dataset.key});
     else if(a==="assets")sheetOpen({kind:"item",key:b.dataset.key,focus:"trk"},true);
     else if(a==="soldier")open({kind:"soldier",id:b.dataset.id,focus:"soleq"});
@@ -1735,6 +2483,10 @@ function wireCustody(){
     const i=e.target.closest(".lk-in");if(!i)return;const box=i.closest(".lk");box.querySelector("input[type=hidden]").value="";
     const ctx=box.parentElement.querySelector(".lk-ctx");if(ctx)ctx.innerHTML="";lkFilter(box);});
   sh.addEventListener("change",e=>{const t=e.target;
+    const mv=mxTop();
+    if(mv&&t.classList.contains("mx-rg")){mxSync();mv.rid=t.value||null;mv.tid=null;mv.tt=null;mv.soldierId=null;mv.note=null;mv.bad={};mxPaintDest();return;}
+    if(mv&&t.classList.contains("mx-tm")){mxSync();mv.tid=t.value||null;mv.note=null;mv.bad={};mxPaintDest();return;}
+    if(mv&&t.name==="targetType"&&t.closest(".mx-dest")){mxSync();mv.tt=t.value;mv.bad={};mxPaintDest();return;}
     if(t.classList.contains("mx-chk")){const v=mxTop();if(!v)return;const id=t.value;
       if(t.checked){if(!v.sel.includes(id))v.sel.push(id);}else{v.sel=v.sel.filter(x=>x!==id);delete v.bad[id];}
       t.closest(".mx-ast").classList.toggle("on",t.checked);mxPaint(false);return;}if(t.name==="catalogueKey"&&t.tagName==="SELECT"){const f=t.closest(".cform");if(f&&f.tag)f.tag.value=t.value?Store.suggestTag(t.value):"";}});
@@ -1742,6 +2494,7 @@ function wireCustody(){
   sh.addEventListener("focusout",e=>{const i=e.target.closest(".lk-in");if(i){const box=i.closest(".lk");setTimeout(()=>{if(!box.contains(document.activeElement))lkClose(box);},120);}});
   sh.addEventListener("mousedown",e=>{const o=e.target.closest(".lk-opt");if(!o)return;e.preventDefault();lkPick(o.closest(".lk"),o.dataset.id);});
   sh.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.classList.contains("mx-q")){e.preventDefault();return;}
+    if(e.key==="Enter"&&e.target.classList.contains("mx-qty")){e.preventDefault();const bt=e.target.parentElement.querySelector('[data-act="mx-stock"]');if(bt)bt.click();return;}
     const i=e.target.closest(".lk-in");if(!i)return;const box=i.closest(".lk"),list=box.querySelector(".lk-list");
     if(e.key==="Escape"&&!list.hidden){e.stopPropagation();lkClose(box);return;}
     const opts=[...list.querySelectorAll(".lk-opt:not(.dis)")],cur=opts.findIndex(o=>o.classList.contains("hi"));
@@ -1754,7 +2507,7 @@ function wireCustody(){
 }
 
 /* ---- app shell: hash navigation, collapsible sidebar, mobile drawer ---- */
-const APPVIEWS={overview:"Overview",catalogue:"Equipment Catalogue",assets:"Asset Register",soldiers:"Soldiers",custody:"Custody Records",audit:"Audit History"};
+const APPVIEWS={overview:"Overview",catalogue:"Equipment Catalogue",assets:"Asset Register",soldiers:"Soldiers",regiments:"Regiments",custody:"Custody Records",audit:"Audit History"};
 let PENDING_FOCUS=null;
 const currentView=()=>{const h=decodeURIComponent(location.hash.slice(1));return APPVIEWS[h]?h:"overview";};
 function setDrawer(open){

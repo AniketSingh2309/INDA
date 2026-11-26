@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os, json, io, base64
 from PIL import Image
-from equip_items import ITEMS, TYPES, SUBS, CATEGORY_POLICY, GROUPS
+from equip_items import ITEMS, TYPES, SUBS, CATEGORY_POLICY, GROUPS, ASSIGNMENT_RULES, ASSIGNMENT_CLASS
 from custody_seed import build_seed
 from photomap import PHOTO
 
@@ -210,7 +210,9 @@ def build_groups(items):
     return out
 
 payload = {"items": out_items, "types": TYPES, "subOrder": SUBS, "policy": CATEGORY_POLICY, "custody": CUSTODY,
-           "groups": build_groups(out_items)}
+           "groups": build_groups(out_items), "assignRules": ASSIGNMENT_RULES,
+           "assignClass": ASSIGNMENT_CLASS}
+assert set(ASSIGNMENT_CLASS) <= {t for t, _ in TYPES} and set(ASSIGNMENT_CLASS.values()) <= {"individual", "team"}
 DATA = json.dumps(payload, ensure_ascii=False)
 GEO_PATH = os.path.abspath(os.path.join(HERE, "..", "maps", "india.min.json"))
 GEO = open(GEO_PATH, encoding="utf-8").read() if os.path.exists(GEO_PATH) else "null"

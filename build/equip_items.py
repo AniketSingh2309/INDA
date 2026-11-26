@@ -28,6 +28,34 @@ CATEGORY_POLICY = {
     "ammunition": "bulk", "attachments": "bulk", "drones": "bulk", "armoured": "bulk", "artillery": "bulk",
     "explosives": "sealed",
 }
+# assignment eligibility (single source of truth, read by the page's Store.eligibility):
+#   custody policy -> holder type -> how it may be held. "asset" = individually tracked asset custody,
+#   "stock" = quantity allocation from unassigned stock (authorised, audited), None = never.
+#   Sealed stock (explosives) may go to a TEAM only, as an authorised stock allocation; never to a soldier.
+ASSIGNMENT_RULES = {
+    "tracked": {"Soldier": "asset", "Team": "asset"},
+    "bulk":    {"Soldier": None,    "Team": "stock"},
+    "sealed":  {"Soldier": None,    "Team": "stock"},
+}
+
+# Destination classification (overrides ASSIGNMENT_RULES for the categories listed; others keep the
+# policy-based rules above). "individual" = Individual Soldier only, "team" = Team only.
+# How it is held still follows CATEGORY_POLICY: tracked -> asset custody, bulk/sealed -> team stock allocation.
+ASSIGNMENT_CLASS = {
+    # Individual Soldier only
+    "weapons": "individual",      # 1. personal guns, rifles, pistols
+    "helmets": "individual",      # 2. helmets, jackets, body armour
+    "armor": "individual",        # 2.
+    "plates": "individual",       # 2.
+    "nightvision": "individual",  # 3. personal night-vision / optics
+    # Team only
+    "explosives": "team",         # 1. grenades, mines, explosives
+    "ammunition": "team",         # 2. ammunition
+    "comms": "team",              # 3. shared radios / communication equipment
+    "armoured": "team",           # 4. vehicles / shared transport
+    # 5. shared tools and support equipment: no matching catalogue category yet
+}
+
 # custody selection hierarchy: broad group -> sub-group -> catalogue lines, matched by (type, sub);
 # sub None = every line of that type. gen_site.py asserts every catalogue line lands in exactly one
 # sub-group. Restricted groups are browsable but never selectable (custody follows CATEGORY_POLICY).

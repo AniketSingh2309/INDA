@@ -148,4 +148,45 @@ def build_seed(items):
     tables = {"soldiers": soldiers, "assets": assets, "custody": custody, "audit": audit, "seq": seq}
     tables["hash"] = hashlib.md5(json.dumps(tables, sort_keys=True).encode()).hexdigest()[:12]
     tables["operator"] = OPERATOR
+    # Regiments are added AFTER the hash on purpose: saved browser state keeps matching the seed, and the
+    # page's versioned migration (Store.migrate) adds these regiments and memberships to it in place.
+    tables.update(build_regiments(soldiers))
     return tables
+
+
+# Illustrative demo regiments only, not real Indian Army organisational data.
+# (id, code, name, description, status, unit prefixes whose soldiers belong to it)
+DEMO_REGIMENTS = [
+    ("REG-01", "DEMO-ALPHA", "Alpha Regiment (Demo)", "Illustrative demo regiment holding the 1 Inf Bn companies.", "Active", ["1 Inf Bn"]),
+    ("REG-02", "DEMO-BRAVO", "Bravo Regiment (Demo)", "Illustrative demo regiment holding the 2 Inf Bn companies.", "Active", ["2 Inf Bn"]),
+    ("REG-03", "DEMO-CHARLIE", "Charlie Support Regiment (Demo)", "Illustrative demo regiment for support detachments: recce, signals and EME.", "Active", ["Recce Pl", "Sig Coy", "EME Wksp Det"]),
+    ("REG-04", "DEMO-DELTA", "Delta Reserve Regiment (Demo)", "Illustrative inactive demo regiment with no current members.", "Inactive", []),
+    ("REG-90", "DEMO-GORKHA", "Gorkha Regiment (Demo)", "Illustrative demo regiment with one demo team; add soldiers as needed.", "Active", []),
+]
+# demo teams that do not come from a seeded unit: (id, code, name, regiment id)
+EXTRA_TEAMS = [("TEM-090", "A-COY", "A Coy Team (Demo)", "REG-90")]
+
+
+def build_regiments(soldiers):
+    regs, by_unit = [], {}
+    for i, (rid, code, name, desc, status, prefixes) in enumerate(DEMO_REGIMENTS):
+        ts = _ts(520 - i, 9)
+        regs.append({"id": rid, "code": code, "name": name, "description": desc, "status": status, "createdAt": ts, "updatedAt": ts})
+        for u in UNITS:
+            if any(u.startswith(p) for p in prefixes):
+                by_unit[u] = rid
+    assert set(by_unit) == set(UNITS), "every demo unit must map to one demo regiment"
+    # seeded soldier -> regiment, keyed by ID and checked against the service code during migration
+    regiment_of = {s["id"]: {"serviceCode": s["serviceCode"], "regimentId": by_unit[s["unit"]]} for s in soldiers}
+    # demo teams: one per demo unit, inside that unit's regiment (codes unique within the regiment)
+    teams = []
+    for i, u in enumerate(UNITS):
+        short = u.split(" · ")[-1]
+        code = short.upper().replace(" COY", "-COY").replace(" PL", "").replace(" WKSP DET", "").replace(" ", "-")
+        ts = _ts(500 - i, 9)
+        teams.append({"id": f"TEM-{i + 1:03d}", "code": code, "name": f"{short} Team (Demo)", "regimentId": by_unit[u],
+                      "unit": u, "status": "Active", "createdAt": ts, "updatedAt": ts})
+    for tid, code, name, rid in EXTRA_TEAMS:
+        ts = _ts(480, 9)
+        teams.append({"id": tid, "code": code, "name": name, "regimentId": rid, "unit": None, "status": "Active", "createdAt": ts, "updatedAt": ts})
+    return {"regiments": regs, "regimentByUnit": by_unit, "regimentOf": regiment_of, "teams": teams}

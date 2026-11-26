@@ -43,9 +43,17 @@ is served from `index.html` automatically.
   (a 60-asset sample on 6 lines), custody issue/return with full history, audit trail, searchable
   lookups, and Custody Records / Soldiers / Audit tabs. *New Custody Record* lets you browse a category
   hierarchy (Firearms › Assault Rifles › INSAS …), pick several assets for one soldier and submit them
-  together. Each asset still gets its own custody record, and the batch is all-or-nothing. Explosives are sealed store stock and ammunition
-  is unit-issue stock: neither can be issued to a soldier. Design and quantity rules:
+  together. Each asset still gets its own custody record, and the batch is all-or-nothing. Explosives
+  (sealed) and ammunition (unit-issue) stock can never be issued to a soldier. Design and quantity rules:
   [`docs/superpowers/specs/2026-11-26-equipment-custody-design.md`](docs/superpowers/specs/2026-11-26-equipment-custody-design.md).
+- **Regiments** — every soldier belongs to exactly one regiment (illustrative demo regiments are
+  seeded). From a regiment, *Add soldier* looks up existing soldiers first (never duplicating them) or
+  creates a new one in the same step. Transfers are authorised, reviewed and kept as membership history.
+- **Teams & team custody** — each regiment has teams. *New Custody Record* starts from Regiment →
+  *Individual Soldier* or *Team* of that regiment. Personal weapons, helmets/armour and night vision go to
+  individual soldiers only; explosives, ammunition, radios and vehicles go to teams only (stock lines as
+  authorised allocations with officer + authorisation reference and partial returns). A demo *Gorkha Regiment (Demo)* with one team is seeded. Design:
+  [`docs/superpowers/specs/2026-11-26-teams-custody-design.md`](docs/superpowers/specs/2026-11-26-teams-custody-design.md).
 - Theme toggle (dark / light), search, sort — state persisted in `localStorage`
   (`armoury-theme`, `armoury-reorders`, `armoury-custody-v1`; *Reset demo data* clears only the last).
 
