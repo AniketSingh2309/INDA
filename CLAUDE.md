@@ -70,6 +70,12 @@ Indian Armed Forces–themed equipment inventory and custody dashboard. All data
 - **Team stock** (`T.allocations`, `ALC-00001`): quantity ledger for `stock` lines, Team holders only. It needs
   an officer and `authRef`, can never exceed `qty(w).reserve`, and supports partial `returnStock`.
   `Store.qty`: total assigned = legacy + active tracked custody + outstanding allocations.
+- **Custody has two record types.** Any view that lists or counts custody must read both `Store.custody()`
+  (CUS-…, asset custody) **and** `Store.allocations()` (ALC-…, team stock). Leaving out allocations made team
+  assignments look unsaved, because almost every team-only line is stock. Custody Records, the sidebar
+  count and the Overview strip use both; `custodyRows()` builds the combined list.
+- Custody types depend on the holder (`Store.TYPES_FOR`): Soldier → Personal Issue / Temporary Loan;
+  Team → Team Issue / Temporary Loan. This is enforced in `issue()`.
 - **Migration:** `migrate()` (version `T.mig`, currently 3; m2 = `migrateTeams()`, m3 = demo Gorkha regiment `REG-90` + team `TEM-090`) runs on every load and on reset. It is idempotent:
   it adds missing demo regiments and gives soldiers without a membership one (seed ID + service code, then
   unit name). Anyone it can't place stays Unassigned and is listed on the Regiments page with an Assign

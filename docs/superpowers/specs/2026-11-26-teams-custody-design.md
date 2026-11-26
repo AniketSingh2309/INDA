@@ -94,6 +94,14 @@ category yet.
   Assign / Change team.
 - **Holders everywhere:** the Custody, Asset Register and item sheets show the holder (soldier or team).
   Bulk item sheets list team allocations.
+- **Custody Records** (fixed 2026-11-26) lists both asset custody (CUS-…) and team stock allocations
+  (ALC-…). It has filters for status, holder (Individual / Team), record type, regiment and team. The
+  sidebar count and the Overview strip ("Team stock allocations") also include allocations.
+  - Before the fix, allocations were saved, audited and shown on team pages, but Custody Records read
+    only asset custody.
+  - Almost every team-only line is stock, so team assignments looked unsaved.
+- **Custody type per holder:** Personal Issue / Temporary Loan for soldiers, Team Issue / Temporary Loan
+  for teams, enforced in the Store.
 
 ## Limitations
 
