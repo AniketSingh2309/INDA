@@ -1,0 +1,410 @@
+<title>Bharat Armoury Control</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* Layout: Indian Armed Forces command-center — gunmetal ground, saffron accent, India-green readiness,
+   Ashoka-blue crest; weapons rendered as transparent cutouts floating on dark stages. */
+:root{
+  --bg:#0c0f0b; --surface:#141a13; --surface-2:#1a211a; --raise:#202a1e; --stage:#0f130e;
+  --line:#2a3327; --line-soft:#222a1f;
+  --fg:#eaf0e2; --muted:#9aa891; --faint:#6f7d66;
+  --accent:#e2922f; --accent-soft:#3a2a14; --accent-2:#5aa364;
+  --chakra:#3f7fd0;
+  --ok:#58b877; --ok-bg:#15271a; --warn:#e2ad46; --warn-bg:#2a2210; --crit:#e2673f; --crit-bg:#2b1611;
+  --saffron:#e2922f; --india-green:#3f9e52; --flagwhite:#e8ece2;
+  --shadow:rgba(0,0,0,.55);
+  --head:"Oswald",system-ui,sans-serif; --body:"Inter",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+  --radius:7px; --maxw:1320px;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:light){ :root:not([data-theme="dark"]){
+  --bg:#e9eae2; --surface:#ffffff; --surface-2:#f3f4ec; --raise:#eceee3; --stage:#f1f2ea;
+  --line:#d3d6c7; --line-soft:#e0e2d5;
+  --fg:#1b221a; --muted:#59644f; --faint:#8a947f;
+  --accent:#b06a12; --accent-soft:#f0e5cd; --accent-2:#2f7a3e;
+  --chakra:#1f4fa0;
+  --ok:#2f8a4f; --ok-bg:#e3f1e6; --warn:#9c7716; --warn-bg:#f6ecd2; --crit:#bd4a26; --crit-bg:#f6e2da;
+  --shadow:rgba(40,45,30,.28);
+  color-scheme:light;
+}}
+:root[data-theme="light"]{
+  --bg:#e9eae2; --surface:#ffffff; --surface-2:#f3f4ec; --raise:#eceee3; --stage:#f1f2ea;
+  --line:#d3d6c7; --line-soft:#e0e2d5;
+  --fg:#1b221a; --muted:#59644f; --faint:#8a947f;
+  --accent:#b06a12; --accent-soft:#f0e5cd; --accent-2:#2f7a3e;
+  --chakra:#1f4fa0;
+  --ok:#2f8a4f; --ok-bg:#e3f1e6; --warn:#9c7716; --warn-bg:#f6ecd2; --crit:#bd4a26; --crit-bg:#f6e2da;
+  --shadow:rgba(40,45,30,.28);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.5;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(1100px 380px at 82% -140px, rgba(226,146,47,.08), transparent 70%);
+  background-attachment:fixed;}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:60}
+.wrap{max-width:var(--maxw);margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+h1,h2,h3{font-family:var(--head);font-weight:600;margin:0;letter-spacing:.02em;text-wrap:balance}
+.mono{font-family:var(--mono)} .tnum{font-variant-numeric:tabular-nums}
+
+/* header */
+.hero{background:linear-gradient(180deg,#0f140d,var(--bg));border-bottom:1px solid var(--line);position:relative}
+:root[data-theme="light"] .hero{background:linear-gradient(180deg,#f1f2ea,var(--bg))}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .hero{background:linear-gradient(180deg,#f1f2ea,var(--bg))}}
+.hero .wrap{padding-block:24px 20px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px 26px;justify-content:space-between}
+.tricolor{height:4px;width:100%;display:flex}
+.tricolor span{flex:1} .tricolor .s{background:var(--saffron)} .tricolor .w{background:var(--flagwhite)} .tricolor .g{background:var(--india-green)}
+.brand{display:flex;align-items:center;gap:15px;min-width:0}
+.crest{width:50px;height:50px;flex:none;border:1.5px solid var(--chakra);border-radius:50%;display:grid;place-items:center;
+  background:color-mix(in srgb,var(--chakra) 12%,transparent);color:var(--chakra)}
+.crest svg{width:38px;height:38px}
+.brand h1{font-size:clamp(22px,3.3vw,33px);font-weight:700;letter-spacing:.05em;line-height:1}
+.brand h1 b{color:var(--saffron);font-weight:700}
+.brand .sub{font-size:11.5px;color:var(--muted);letter-spacing:.17em;text-transform:uppercase;margin-top:6px;font-weight:500}
+.hero-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.asof{font-family:var(--mono);font-size:11.5px;color:var(--muted);text-align:right;line-height:1.7}
+.asof b{color:var(--fg);font-weight:500}
+.asof .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 8px var(--ok)}
+.tbtn{font-family:var(--mono);font-size:12px;background:var(--surface);color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:8px 11px;cursor:pointer}
+.tbtn:hover{color:var(--fg);border-color:var(--accent)}
+
+section{padding-block:24px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);
+  display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--line)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px;position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);opacity:.85}
+.kpi.k-ok::before{background:var(--ok)} .kpi.k-warn::before{background:var(--warn)} .kpi.k-crit::before{background:var(--crit)}
+.kpi.k-blue::before{background:var(--chakra)}
+.kpi .lab{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.kpi .val{font-family:var(--head);font-size:32px;font-weight:700;line-height:1.05;margin-top:7px}
+.kpi .note{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:4px}
+
+.pipe{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+.pipe-top{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:11px}
+.pipe-top .t{font-family:var(--head);font-size:15px;letter-spacing:.04em;font-weight:600}
+.pipe-top .pct{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.bar{height:16px;border-radius:5px;background:var(--surface-2);overflow:hidden;display:flex;border:1px solid var(--line-soft)}
+.bar>span{display:block;height:100%}
+.bar .b-ok{background:linear-gradient(180deg,#6ec98a,var(--ok))}
+.bar .b-rem{background:repeating-linear-gradient(45deg,var(--warn-bg),var(--warn-bg) 6px,transparent 6px,transparent 12px)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:11px;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:7px} .legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.sw-ok{background:var(--ok)} .sw-rem{background:var(--warn);opacity:.55}
+
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.toolbar .wrap{padding-block:12px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.search{flex:1 1 220px;min-width:0;display:flex;align-items:center;gap:9px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:8px 12px}
+.search:focus-within{border-color:var(--accent)}
+.search svg{width:16px;height:16px;color:var(--faint);flex:none}
+.search input{border:0;background:transparent;color:var(--fg);font-family:var(--body);font-size:14px;width:100%;outline:none}
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-size:12px;padding:7px 12px;border-radius:20px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer;white-space:nowrap}
+.chip:hover{color:var(--fg);border-color:var(--faint)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#17120a;font-weight:700}
+.india-toggle{font-family:var(--mono);font-size:11.5px;padding:7px 12px;border-radius:20px;border:1px solid var(--india-green);
+  background:transparent;color:var(--india-green);cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:7px}
+.india-toggle i{width:8px;height:8px;border-radius:50%;background:currentColor}
+.india-toggle.on{background:var(--india-green);color:#07140a;font-weight:700}
+.statusfilter{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.sbtn{font-family:var(--mono);font-size:11.5px;padding:7px 11px;border-radius:6px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.sbtn i{width:8px;height:8px;border-radius:50%;background:currentColor}
+.sbtn.on{background:var(--surface);color:var(--fg);border-color:var(--faint)}
+.sbtn[data-s="deployed"]{--c:var(--ok)} .sbtn[data-s="partial"]{--c:var(--warn)} .sbtn[data-s="production"]{--c:var(--crit)}
+.sbtn[data-s] i{color:var(--c)}
+
+.catsec{margin-top:30px}
+.cathead{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.cathead h2{font-size:20px;letter-spacing:.04em;font-weight:600;display:flex;align-items:center;gap:11px}
+.cathead .cidx{font-family:var(--mono);font-size:12px;color:var(--accent);border:1px solid var(--accent);border-radius:5px;padding:2px 7px}
+.cathead .ccount{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.cathead .cmini{margin-left:auto;display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.cathead .cbar{width:120px;height:7px;border-radius:4px;background:var(--surface-2);overflow:hidden;border:1px solid var(--line-soft)}
+.cathead .cbar>span{display:block;height:100%;background:var(--ok)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:15px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:border-color .15s,transform .15s}
+.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.ph{position:relative;aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid var(--line);
+  background:radial-gradient(130% 100% at 50% 8%, color-mix(in srgb,var(--accent) 9%,transparent), transparent 58%), var(--stage);
+  display:grid;place-items:center}
+.ph::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line-soft) 1px,transparent 1px),linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);background-size:22px 22px;opacity:.14}
+.ph .groundshadow{position:absolute;bottom:11%;left:50%;transform:translateX(-50%);width:62%;height:11px;background:radial-gradient(ellipse at center,var(--shadow),transparent 72%);filter:blur(2px)}
+.ph img{position:relative;max-width:90%;max-height:84%;object-fit:contain;filter:drop-shadow(0 7px 9px var(--shadow))}
+.ph .noimg{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--faint)}
+.ph .noimg svg{width:50px;height:50px;opacity:.55} .ph .noimg span{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em}
+.pill{position:absolute;top:9px;right:9px;z-index:2;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:4px 9px;border-radius:20px;display:inline-flex;align-items:center;gap:5px;backdrop-filter:blur(3px)}
+.pill i{width:7px;height:7px;border-radius:50%;background:currentColor}
+.pill.deployed{color:var(--ok);background:color-mix(in srgb,var(--ok-bg) 86%,transparent);border:1px solid var(--ok)}
+.pill.partial{color:var(--warn);background:color-mix(in srgb,var(--warn-bg) 86%,transparent);border:1px solid var(--warn)}
+.pill.production{color:var(--crit);background:color-mix(in srgb,var(--crit-bg) 86%,transparent);border:1px solid var(--crit)}
+.origin-tag{position:absolute;top:9px;left:9px;z-index:2;font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:#eef;background:rgba(8,10,8,.6);padding:3px 8px;border-radius:5px;backdrop-filter:blur(3px)}
+:root[data-theme="light"] .origin-tag{color:#fff;background:rgba(30,34,22,.72)}
+.mii{position:absolute;bottom:9px;left:9px;z-index:2;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.04em;
+  color:#0b1409;background:linear-gradient(90deg,var(--saffron),var(--india-green));padding:3px 8px;border-radius:5px;display:inline-flex;align-items:center;gap:5px}
+
+.cbody{padding:14px 15px 15px;display:flex;flex-direction:column;gap:12px;flex:1}
+.ctitle{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.ctitle h3{font-size:18px;font-weight:700;line-height:1.15} .ctitle .yr{font-family:var(--mono);font-size:11px;color:var(--faint);flex:none}
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);border-radius:6px;overflow:hidden}
+.specs div{background:var(--surface);padding:7px 10px}
+.specs .sl{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:600}
+.specs .sv{font-family:var(--mono);font-size:12px;color:var(--fg);margin-top:2px;line-height:1.3}
+.specs .full{grid-column:1/-1}
+.inv{border-top:1px dashed var(--line);padding-top:11px}
+.inv-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;margin-bottom:9px}
+.inv-row .c{background:var(--surface-2);border-radius:5px;padding:7px 4px}
+.inv-row .n{font-family:var(--head);font-size:20px;font-weight:700;line-height:1}
+.inv-row .l{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:4px;font-weight:600}
+.inv-row .arr .n{color:var(--ok)} .inv-row .rem .n{color:var(--warn)}
+.ibar{height:9px;border-radius:5px;background:var(--surface-2);overflow:hidden;display:flex;border:1px solid var(--line-soft)}
+.ibar .f{background:linear-gradient(180deg,#6ec98a,var(--ok));height:100%}
+.ibar .r{background:repeating-linear-gradient(45deg,rgba(226,173,70,.3),rgba(226,173,70,.3) 5px,transparent 5px,transparent 10px);height:100%}
+.ibar-cap{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:6px}
+.assign{border-top:1px dashed var(--line);padding-top:11px}
+.assign .ah{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.assign .ah .t{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:7px}
+.assign .ah .t svg{width:14px;height:14px;color:var(--accent-2)}
+.assign .ah .ct{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.codes{display:flex;flex-wrap:wrap;gap:5px}
+.scode{font-family:var(--mono);font-size:11px;padding:3px 8px;border-radius:5px;background:var(--accent-soft);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);cursor:pointer;line-height:1.4}
+.scode:hover{background:var(--accent);color:#17120a}
+.scode.more{background:transparent;color:var(--muted);border-style:dashed}
+.assign .empty{font-family:var(--mono);font-size:11.5px;color:var(--faint)}
+.noresults{text-align:center;padding:50px 16px;color:var(--muted);font-family:var(--mono);font-size:14px}
+
+.roster-wrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.roster-top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line)}
+.roster-top .search{flex:0 1 280px}
+.roster-note{font-family:var(--mono);font-size:11.5px;color:var(--muted)} .roster-note b{color:var(--accent)}
+.rscroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:13px}
+thead th{text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:11px 16px;border-bottom:1px solid var(--line);background:var(--surface-2);position:sticky;top:0}
+tbody td{padding:10px 16px;border-bottom:1px solid var(--line-soft);vertical-align:middle}
+tbody tr:hover{background:var(--surface-2)}
+td.code{font-family:var(--mono);color:var(--accent);font-weight:500}
+td .wname{font-weight:600} td .wcat{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.tag-status{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 8px;border-radius:20px;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.tag-status i{width:6px;height:6px;border-radius:50%;background:currentColor}
+.tag-status.deployed{color:var(--ok);background:var(--ok-bg)} .tag-status.partial{color:var(--warn);background:var(--warn-bg)} .tag-status.production{color:var(--crit);background:var(--crit-bg)}
+.rclear{font-family:var(--mono);font-size:11px;color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:5px;padding:5px 9px;cursor:pointer}
+.rclear:hover{color:var(--fg);border-color:var(--accent)}
+
+footer{border-top:1px solid var(--line);margin-top:34px}
+footer .wrap{padding-block:22px 34px;display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:center}
+footer .src{font-size:12.5px;color:var(--muted);max-width:62ch} footer .src b{color:var(--fg)}
+footer .meta{font-family:var(--mono);font-size:11px;color:var(--faint);text-align:right;line-height:1.7}
+
+@media (max-width:860px){ .kpis{grid-template-columns:repeat(2,1fr)} .statusfilter{margin-left:0;width:100%} }
+@media (max-width:440px){ .kpi .val{font-size:26px} .grid{grid-template-columns:1fr} .cathead .cmini{width:100%;margin-left:0} }
+@media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+</style>
+
+<div class="hero">
+  <div class="tricolor"><span class="s"></span><span class="w"></span><span class="g"></span></div>
+  <div class="wrap">
+    <div class="brand">
+      <div class="crest" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="24" cy="24" r="17"/><circle cx="24" cy="24" r="3.2" fill="currentColor" stroke="none"/><g id="spokes"></g></svg></div>
+      <div>
+        <h1>BHARAT <b>ARMOURY</b> CONTROL</h1>
+        <div class="sub">Indian Armed Forces &middot; Small-Arms Inventory &amp; Deployment Register</div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="asof"><span class="dot"></span>Supply Status <b>LIVE</b><br>As of <b>__ASOF__</b> &middot; 0600 IST</div>
+      <button class="tbtn mono" id="theme" title="Toggle theme">◐ THEME</button>
+    </div>
+  </div>
+</div>
+
+<div class="toolbar"><div class="wrap">
+  <label class="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    <input id="q" type="search" placeholder="Search weapon, caliber, origin, soldier code…" autocomplete="off">
+  </label>
+  <div class="chips" id="chips"></div>
+  <button class="india-toggle" id="mii"><i></i>MADE IN INDIA</button>
+  <div class="statusfilter" id="statusf">
+    <button class="sbtn on" data-s="all">ALL</button>
+    <button class="sbtn" data-s="deployed"><i></i>DEPLOYED</button>
+    <button class="sbtn" data-s="partial"><i></i>PARTIAL</button>
+    <button class="sbtn" data-s="production"><i></i>IN PRODUCTION</button>
+  </div>
+</div></div>
+
+<div class="wrap">
+  <section>
+    <div class="eyebrow">Overview &middot; Supply Readiness</div>
+    <div class="kpis" id="kpis"></div>
+    <div class="pipe">
+      <div class="pipe-top"><span class="t">Manufacture &amp; Delivery Pipeline</span><span class="pct mono" id="pipepct"></span></div>
+      <div class="bar" id="pipebar"></div>
+      <div class="legend"><span><i class="sw-ok"></i> Arrived in armoury</span><span><i class="sw-rem"></i> Remaining — in manufacture</span></div>
+    </div>
+  </section>
+
+  <section id="inventory" style="padding-top:6px">
+    <div class="eyebrow">Inventory &middot; <span id="showing"></span></div>
+    <div id="cats"></div>
+    <div class="noresults" id="noresults" hidden>No weapons match the current filters.</div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Deployment Roster &middot; Weapon → Soldier Code</div>
+    <div class="roster-wrap">
+      <div class="roster-top">
+        <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input id="rq" type="search" placeholder="Filter by soldier code or weapon…" autocomplete="off"></label>
+        <div style="display:flex;align-items:center;gap:12px"><span class="roster-note" id="rnote"></span><button class="rclear" id="rclear" hidden>✕ Clear</button></div>
+      </div>
+      <div class="rscroll"><table>
+        <thead><tr><th>Soldier Code</th><th>Assigned Weapon</th><th>Category</th><th>Caliber</th><th>Status</th></tr></thead>
+        <tbody id="rbody"></tbody>
+      </table></div>
+    </div>
+  </section>
+</div>
+
+<footer><div class="wrap">
+  <div class="src">Weapon reference &amp; specifications sourced from <b><a href="https://www.globalmilitary.net/" target="_blank" rel="noopener">globalmilitary.net</a></b>. Weapon photographs are cut-out renders from Wikimedia Commons. Unit counts, deployment status and soldier codes are illustrative data for an in-game armoury — not real Indian Army procurement records.</div>
+  <div class="meta">BHARAT ARMOURY CONTROL v2.0<br>Generated __ASOF__ &middot; <span id="wcount"></span> weapon types</div>
+</div></footer>
+
+<script>
+// draw Ashoka-chakra spokes
+(function(){const g=document.getElementById("spokes");if(!g)return;let s="";for(let i=0;i<16;i++){const a=i*Math.PI/8;const x1=24+5*Math.cos(a),y1=24+5*Math.sin(a),x2=24+16*Math.cos(a),y2=24+16*Math.sin(a);s+=`<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`;}g.innerHTML=s;})();
+
+const DATA = /*__DATA__*/null;
+const STATUS_LABEL = {deployed:"Deployed", partial:"Partial", production:"In Production"};
+const state = {cat:"all", status:"all", india:false, q:"", rq:""};
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function renderTotals(){
+  const w = DATA.weapons;
+  const ordered=w.reduce((a,x)=>a+x.ordered,0), arrived=w.reduce((a,x)=>a+x.arrived,0);
+  const remaining=ordered-arrived, assigned=w.reduce((a,x)=>a+x.assigned,0);
+  const soldiers=new Set(); w.forEach(x=>x.codes.forEach(c=>soldiers.add(c)));
+  const rate=Math.round(arrived/ordered*100), cats=new Set(w.map(x=>x.cat)).size;
+  const mii=w.filter(x=>x.madeIn).length;
+  const kpis=[
+    {lab:"Units Ordered", val:ordered.toLocaleString(), note:w.length+" weapon types", cls:""},
+    {lab:"Arrived in Armoury", val:arrived.toLocaleString(), note:rate+"% of order delivered", cls:"k-ok"},
+    {lab:"In Manufacture", val:remaining.toLocaleString(), note:"awaiting delivery", cls:"k-warn"},
+    {lab:"Delivery Rate", val:rate+"%", note:"across all categories", cls:""},
+    {lab:"Weapons Assigned", val:assigned.toLocaleString(), note:"issued to personnel", cls:""},
+    {lab:"Soldiers Armed", val:soldiers.size.toLocaleString(), note:"unique soldier codes", cls:"k-ok"},
+    {lab:"Made in India", val:mii, note:"indigenous weapon types", cls:"k-blue"},
+    {lab:"Lines Pending", val:w.filter(x=>x.remaining>0).length, note:"types not fully delivered", cls:"k-crit"},
+  ];
+  $("#kpis").innerHTML=kpis.map(k=>`<div class="kpi ${k.cls}"><div class="lab">${k.lab}</div><div class="val tnum">${k.val}</div><div class="note">${k.note}</div></div>`).join("");
+  $("#pipebar").innerHTML=`<span class="b-ok" style="width:${arrived/ordered*100}%"></span><span class="b-rem" style="width:${remaining/ordered*100}%"></span>`;
+  $("#pipepct").textContent=`${arrived.toLocaleString()} arrived / ${remaining.toLocaleString()} pending of ${ordered.toLocaleString()}`;
+  $("#wcount").textContent=w.length;
+}
+
+function matches(w){
+  if(state.cat!=="all" && w.cat!==state.cat) return false;
+  if(state.status!=="all" && w.status!==state.status) return false;
+  if(state.india && !w.madeIn) return false;
+  if(state.q){const h=(w.name+" "+w.caliber+" "+w.origin+" "+w.catLabel+" "+w.codes.join(" ")).toLowerCase();if(!h.includes(state.q))return false;}
+  return true;
+}
+function noimgSVG(){return `<div class="noimg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 7h13l2 3h3v4h-2l-1 2h-4l-1-2H3z"/><path d="M8 10v4M3 14l-1 3"/></svg><span>CUTOUT PENDING</span></div>`;}
+
+function card(w){
+  const pct=Math.round(w.arrived/w.ordered*100);
+  const shown=w.codes.slice(0,8), extra=w.codes.length-shown.length;
+  const codesHtml = w.assigned>0
+    ? shown.map(c=>`<span class="scode" data-code="${c}">${c}</span>`).join("")+(extra>0?`<span class="scode more" data-code="${esc(w.name)}">+${extra} more</span>`:"")
+    : `<span class="empty">— none issued (awaiting stock)</span>`;
+  const img = w.img ? `<div class="groundshadow"></div><img src="${w.img}" alt="${esc(w.name)}" loading="lazy">` : noimgSVG();
+  const mii = w.madeIn ? `<span class="mii">★ MADE IN INDIA</span>` : "";
+  return `<article class="card" data-key="${w.key}">
+    <div class="ph">
+      <span class="origin-tag">${esc(w.origin)}</span>
+      <span class="pill ${w.status}"><i></i>${STATUS_LABEL[w.status]}</span>
+      ${img}${mii}
+    </div>
+    <div class="cbody">
+      <div class="ctitle"><h3>${esc(w.name)}</h3><span class="yr mono">svc. ${esc(w.year)}</span></div>
+      <div class="specs">
+        <div><div class="sl">Caliber</div><div class="sv">${esc(w.caliber)}</div></div>
+        <div><div class="sl">Rate of Fire</div><div class="sv">${esc(w.rof)}</div></div>
+        <div class="full"><div class="sl">Action</div><div class="sv">${esc(w.action)}</div></div>
+        <div><div class="sl">Eff. Range</div><div class="sv">${esc(w.range)}</div></div>
+        <div><div class="sl">Weight</div><div class="sv">${esc(w.weight)}</div></div>
+        <div><div class="sl">Feed</div><div class="sv">${esc(w.mag)}</div></div>
+      </div>
+      <div class="inv">
+        <div class="inv-row">
+          <div class="c"><div class="n tnum">${w.ordered}</div><div class="l">Ordered</div></div>
+          <div class="c arr"><div class="n tnum">${w.arrived}</div><div class="l">Arrived</div></div>
+          <div class="c rem"><div class="n tnum">${w.remaining}</div><div class="l">Pending</div></div>
+        </div>
+        <div class="ibar"><span class="f" style="width:${pct}%"></span><span class="r" style="width:${100-pct}%"></span></div>
+        <div class="ibar-cap"><span>${pct}% delivered</span><span>${w.remaining>0?w.remaining+" in manufacture":"order complete"}</span></div>
+      </div>
+      <div class="assign">
+        <div class="ah"><span class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>Assigned Soldiers</span><span class="ct">${w.assigned} / ${w.arrived} issued</span></div>
+        <div class="codes">${codesHtml}</div>
+      </div>
+    </div>
+  </article>`;
+}
+
+function renderCats(){
+  const list=DATA.weapons.filter(matches);
+  $("#showing").textContent=`showing ${list.length} of ${DATA.weapons.length} weapon types`;
+  const order=state.cat==="all"?DATA.catOrder:[state.cat];
+  let html="",idx=0;
+  for(const c of order){
+    const items=list.filter(w=>w.cat===c); if(!items.length) continue;
+    idx++;
+    const ord=items.reduce((a,x)=>a+x.ordered,0),arr=items.reduce((a,x)=>a+x.arrived,0);
+    const pct=ord?Math.round(arr/ord*100):0;
+    html+=`<div class="catsec"><div class="cathead">
+      <h2><span class="cidx mono">${String(idx).padStart(2,'0')}</span>${esc(DATA.catLabels[c])}</h2>
+      <span class="ccount">${items.length} ${items.length===1?'type':'types'}</span>
+      <div class="cmini"><span>${arr}/${ord} delivered</span><span class="cbar"><span style="width:${pct}%"></span></span><span>${pct}%</span></div>
+      </div><div class="grid">${items.map(card).join("")}</div></div>`;
+  }
+  $("#cats").innerHTML=html;
+  $("#noresults").hidden=list.length>0;
+}
+
+const ALLROWS=[];
+function renderRoster(){
+  if(!ALLROWS.length){DATA.weapons.forEach(w=>w.codes.forEach(c=>ALLROWS.push({code:c,name:w.name,cat:w.catLabel,cal:w.caliber,status:w.status})));ALLROWS.sort((a,b)=>a.code.localeCompare(b.code));}
+  const q=state.rq.toLowerCase();
+  const rows=q?ALLROWS.filter(r=>(r.code+" "+r.name+" "+r.cat+" "+r.cal).toLowerCase().includes(q)):ALLROWS;
+  $("#rbody").innerHTML=rows.slice(0,600).map(r=>`<tr><td class="code">${r.code}</td><td><span class="wname">${esc(r.name)}</span></td><td><span class="wcat">${esc(r.cat)}</span></td><td class="mono" style="font-size:12px">${esc(r.cal)}</td><td><span class="tag-status ${r.status}"><i></i>${STATUS_LABEL[r.status]}</span></td></tr>`).join("")
+    || `<tr><td colspan="5" style="padding:26px 16px;color:var(--muted);font-family:var(--mono)">No soldier codes match “${esc(state.rq)}”.</td></tr>`;
+  $("#rnote").innerHTML=`<b>${rows.length.toLocaleString()}</b> of ${ALLROWS.length.toLocaleString()} assignments`;
+  $("#rclear").hidden=!state.rq;
+}
+
+function buildChips(){
+  const chips=[["all","All Categories"]].concat(DATA.catOrder.map(c=>[c,DATA.catLabels[c]]));
+  $("#chips").innerHTML=chips.map(([v,l])=>`<button class="chip ${v==='all'?'on':''}" data-cat="${v}">${esc(l)}</button>`).join("");
+}
+function run(){
+  renderTotals(); buildChips(); renderCats(); renderRoster();
+  $("#chips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;state.cat=b.dataset.cat;document.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x===b));renderCats();});
+  $("#statusf").addEventListener("click",e=>{const b=e.target.closest(".sbtn");if(!b)return;state.status=b.dataset.s;document.querySelectorAll(".sbtn").forEach(x=>x.classList.toggle("on",x===b));renderCats();});
+  $("#mii").addEventListener("click",()=>{state.india=!state.india;$("#mii").classList.toggle("on",state.india);renderCats();});
+  $("#q").addEventListener("input",e=>{state.q=e.target.value.trim().toLowerCase();renderCats();});
+  $("#rq").addEventListener("input",e=>{state.rq=e.target.value.trim();renderRoster();});
+  $("#rclear").addEventListener("click",()=>{state.rq="";$("#rq").value="";renderRoster();});
+  $("#cats").addEventListener("click",e=>{const s=e.target.closest(".scode");if(!s)return;state.rq=s.dataset.code;$("#rq").value=s.dataset.code;renderRoster();$("#rbody").closest(".roster-wrap").scrollIntoView({behavior:"smooth",block:"start"});});
+  const root=document.documentElement;
+  try{const t=localStorage.getItem("armoury-theme");if(t)root.setAttribute("data-theme",t);}catch(e){}
+  $("#theme").addEventListener("click",()=>{const cur=root.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");const next=cur==="dark"?"light":"dark";root.setAttribute("data-theme",next);try{localStorage.setItem("armoury-theme",next);}catch(e){}});
+}
+run();
+</script>
