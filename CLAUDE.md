@@ -57,7 +57,9 @@ Indian Armed Forces–themed equipment inventory and custody dashboard. All data
   or `createSoldier` (which needs `regimentId` and creates the soldier and membership atomically).
   Changes need an Active officer who isn't the soldier, plus a reason. Inactive regiments take no soldiers
   and can only be deactivated when empty. Composite writes go through `atomic()` (snapshot rollback).
-  `Store.integrity()` lists any broken invariant; it should return `[]`.
+  `Store.integrity()` lists any broken invariant; it should return `[]`. It is run on load and after
+  every mutation by `checkIntegrity()` (in `wireCustody()`), which logs all problems to the console and
+  toasts on load or when a mutation introduces a new one — so corruption can never pass unnoticed.
 - **Teams** (`T.teams`, `TEM-001`): each belongs to one regiment, and its code is unique within that regiment. `soldier.teamId`
   is the open record in `T.teamMemberships`, and it must be a team of the soldier's current regiment. Change it only
   with `setSoldierTeam` (needs an officer and a reason). `transferSoldier` closes the team membership in the same
@@ -106,12 +108,38 @@ Indian Armed Forces–themed equipment inventory and custody dashboard. All data
   disabled and the reason shown.
 - Design notes: `docs/superpowers/specs/2026-11-26-custody-ux-design.md`.
 
+## Access control (biometric gate)
+
+- A sign-in gate (`#gate`) and an identity-verify overlay (`#biov`) wrap the app. A single provisioned
+  operator account is defined by `PROV` in `initAuth()` (service code + a salted SHA-256 password hash —
+  the plaintext password is never stored or committed). First sign-in links the device's **Windows Hello**
+  (WebAuthn platform authenticator); after that, password **plus** a Hello scan each time.
+- `requireBio(reason)` is the step-up: it is `await`-ed before every mutation commit — in `submitForm()`
+  (which covers every `FORMS` entry: issue/assign, return, status, correction, new soldier/asset,
+  create/edit team and regiment, membership, stock return) and in the reorder place/clear and reset
+  handlers. When Windows Hello is available it is **mandatory** (verify if linked, link-on-demand if not);
+  only a device with no usable authenticator is allowed through so it can't be bricked.
+- **Honest limits (client-only):** this is in-game/demo security, not server-verified auth. The WebAuthn
+  assertion is not checked server-side (there is no server); the password hash and the credential id live
+  in `localStorage`. Windows Hello only works over `http://localhost`/HTTPS in a real browser tab — not
+  `127.0.0.1` and not an embedded preview pane (both are detected and explained by `bioContextHint()`).
+  The native Windows Security prompt is drawn by the OS and cannot be hidden.
+
 ## Storage keys
 
-`armoury-theme`, `armoury-reorders`, `armoury-custody-v1`, `armoury-sidebar`. *Reset demo data* (Audit History) clears only the custody key.
+`armoury-theme`, `armoury-reorders`, `armoury-custody-v1`, `armoury-sidebar`, `armoury-auth-v1` (device
+biometric link: `{credId, linkedAt}`). *Reset demo data* (Audit History) clears only the custody key;
+the sign-in **Unlink** clears only the auth key.
 
 ## Verify after changes
 
-Serve with `python -m http.server 8787` and open `/out/index.html`. Check the console is clean, and run
-issue → return → history → audit → reload (persistence) → reset. Compare the KPI totals with the
-previous build: they should change only through custody transactions or catalogue edits.
+Serve with `python build/serve.py` (no-cache dev server on `localhost:8787`, serves repo root) — **use
+`localhost`, not `127.0.0.1`**, so Windows Hello works. Check the console is clean (including the
+`[integrity]` watchdog), and run issue → return → history → audit → reload (persistence) → reset.
+Compare the KPI totals with the previous build: they should change only through custody transactions or
+catalogue edits.
+
+## Audit
+
+A full system audit (2026-11-27) is in `docs/audit/2026-11-27-system-audit.md`: entity/relationship map,
+findings register, the executable invariant test results, and documented client-only limitations.

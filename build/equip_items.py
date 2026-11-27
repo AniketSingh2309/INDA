@@ -411,6 +411,23 @@ CM = [
 for (k,n,sub,origin,yr,mii,o,a,asg,pre,specs) in CM:
     ITEMS.append(item(k,n,"comms",sub,origin,yr,mii,o,a,asg,pre,specs))
 
+# ---------------- QUANTITY NORMALISATION ----------------
+# Keep demo quantities small and human-readable: no catalogue line exceeds _CAP units.
+# The ordered / arrived / assigned triplet is scaled together, so delivery % and issued ratios
+# are preserved, and the ordered >= arrived >= assigned invariant always holds. Illustrative data only.
+_CAP = 900
+def _cap_line(d):
+    o = d["ordered"]
+    if o > _CAP:
+        f = _CAP / o
+        d["ordered"] = _CAP
+        d["arrived"] = round(d["arrived"] * f)
+        d["assigned"] = round(d["assigned"] * f)
+    d["arrived"] = min(d["arrived"], d["ordered"])
+    d["assigned"] = min(d["assigned"], d["arrived"])
+for _d in ITEMS:
+    _cap_line(_d)
+
 if __name__ == "__main__":
     from collections import Counter
     c = Counter(i["type"] for i in ITEMS)

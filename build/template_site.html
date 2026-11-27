@@ -96,8 +96,8 @@ h1,h2,h3{font-family:var(--head);font-weight:600;margin:0;letter-spacing:.02em;t
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px;margin:6px 0 14px}
 .eyebrow::after{content:"";flex:1;height:1px;background:var(--line)}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 15px;position:relative;overflow:hidden}
-.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);opacity:.85}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 15px;position:relative}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);opacity:.85;border-radius:var(--radius) 0 0 var(--radius)}
 .kpi.k-ok::before{background:var(--ok)} .kpi.k-warn::before{background:var(--warn)} .kpi.k-crit::before{background:var(--crit)} .kpi.k-blue::before{background:var(--chakra)}
 .kpi .lab{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .kpi .val{font-family:var(--head);font-size:30px;font-weight:700;line-height:1.05;margin-top:6px}
@@ -523,7 +523,9 @@ th.ta-r,td.ta-r{text-align:right} .rowacts{display:inline-flex;gap:6px;justify-c
 .mx{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:14px;align-items:start}
 .mx-browse{border:1px solid var(--line);border-radius:8px;background:var(--surface-2);min-width:0}
 .mx-bar{display:flex;flex-direction:column;gap:8px;padding:10px;border-bottom:1px solid var(--line)}
+.mx-navrow{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .mx-crumbs{display:flex;flex-wrap:wrap;align-items:center;font-family:var(--mono);font-size:11.5px;min-height:22px}
+.mx-done{flex:none} .mx-done[hidden]{display:none}
 .mx-cr{background:none;border:0;color:var(--accent);cursor:pointer;padding:2px 4px;font:inherit;border-radius:4px}
 .mx-cr:hover{text-decoration:underline} .mx-cr.cur{color:var(--fg);cursor:default}
 .mx-crumbs>*+*::before{content:"›";color:var(--faint);margin-right:7px;display:inline-block;text-decoration:none}
@@ -583,8 +585,132 @@ th.ta-r,td.ta-r{text-align:right} .rowacts{display:inline-flex;gap:6px;justify-c
 .mx-nai{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;padding:5px 2px;font-size:12.5px}
 .mx-nai b{font-weight:600;color:var(--muted)} .mx-nai span{font-family:var(--mono);font-size:11px;color:var(--warn)}
 .wtools:has(+ .wtools2){border-bottom:0;padding-bottom:6px} .wtools2{padding-top:0}
+.sfchip{display:inline-flex;align-items:center;gap:7px;font-family:var(--body);font-size:12px;font-weight:600;color:var(--fg);
+  background:var(--accent-soft);border:1px solid var(--accent);border-radius:999px;padding:4px 10px;cursor:pointer}
+.sfchip:hover{filter:brightness(1.05)} .sfchip span{color:var(--accent);font-size:11px}
+.sfclear{font-family:var(--body);font-size:12px;font-weight:600;color:var(--muted);background:none;border:0;text-decoration:underline;cursor:pointer;padding:4px 6px}
+.sfclear:hover{color:var(--crit)}
+/* info tooltips (ⓘ) — explain a metric/field in plain language; hover, keyboard focus and tap */
+.tip{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;margin-left:5px;border-radius:50%;
+  border:1px solid var(--line);background:var(--surface);color:var(--muted);font-size:10px;font-weight:700;font-style:normal;
+  cursor:help;position:relative;vertical-align:middle;flex:none;font-family:var(--body)}
+.tip:hover,.tip:focus,.tip.on{border-color:var(--accent);color:var(--accent);outline:none}
+.tip::after{content:attr(data-tip);display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  width:max-content;max-width:230px;background:var(--raise);color:var(--fg);border:1px solid var(--line);border-radius:8px;
+  padding:8px 10px;font-size:11.5px;font-weight:500;line-height:1.45;text-align:left;white-space:normal;
+  box-shadow:0 12px 32px rgba(0,0,0,.45);z-index:200;pointer-events:none}
+.tip:hover::after,.tip:focus::after,.tip.on::after{display:block}
+/* keep the bubble inside the viewport on edge tiles (open leftward on the right half of a row) */
+.kpi:nth-child(4n) .tip::after,.kpi:nth-child(4n-1) .tip::after{left:auto;right:-4px;transform:none}
+@media (max-width:620px){.tip::after{left:auto;right:-4px;transform:none;max-width:76vw}}
 @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+/* ---------- access gate (Soldier ID + password + Windows Hello) ---------- */
+.gate{position:fixed;inset:0;z-index:4000;display:flex;align-items:center;justify-content:center;padding:24px;
+  background:radial-gradient(120% 120% at 50% 0%,var(--surface) 0%,var(--bg) 70%);overflow:auto}
+.gate[hidden]{display:none!important}
+.gate-card{width:100%;max-width:400px;background:var(--surface);border:1px solid var(--line);border-radius:16px;
+  padding:34px 30px 24px;box-shadow:0 24px 70px rgba(0,0,0,.5);text-align:center}
+.gate-crest{width:54px;height:66px;margin:0 auto 14px}
+.gate-crest .emblem{width:54px;height:66px}
+.gate-card h1{font-family:var(--body);font-size:24px;font-weight:700;letter-spacing:.2px;margin:0;color:var(--fg)}
+.gate-card h1 b{color:var(--accent);font-weight:700}
+.gate-sub{color:var(--muted);font-size:12.5px;margin:7px 0 0;text-transform:uppercase;letter-spacing:1.4px}
+.gate-form{margin-top:22px;text-align:left;display:grid;gap:13px}
+.gate-form label{display:block;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+.gate-form input{width:100%;margin-top:6px;box-sizing:border-box;font-family:var(--body);font-size:15px;color:var(--fg);
+  background:var(--rail);border:1px solid var(--line);border-radius:9px;padding:11px 13px;outline:none}
+.gate-form input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.gate-err{background:var(--crit-bg);border:1px solid var(--crit);color:var(--crit);font-size:12.5px;
+  border-radius:8px;padding:9px 12px;font-weight:600}
+.gate-err[hidden]{display:none}
+.gate-btn{margin-top:4px;width:100%;font-family:var(--body);font-weight:700;font-size:15px;letter-spacing:.3px;
+  padding:13px;border-radius:10px;border:1px solid var(--accent);background:var(--accent);color:#17120a;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:9px}
+.gate-btn:hover{filter:brightness(1.07)}
+.gate-btn:disabled{opacity:.55;cursor:progress}
+.gate-btn svg{width:18px;height:18px}
+.gate-bio{margin-top:16px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:12.5px;color:var(--muted);
+  padding:10px;border-radius:9px;background:var(--rail);border:1px dashed var(--line)}
+.gate-bio.ready{color:var(--accent-2);border-color:var(--accent-2);border-style:solid;background:transparent}
+.gate-bio svg{width:18px;height:18px;flex:none}
+.gate-note{margin:16px 0 0;font-size:11px;color:var(--faint);line-height:1.5}
+.gate-reset{margin-top:10px;background:none;border:0;color:var(--faint);font-size:11.5px;text-decoration:underline;cursor:pointer}
+.gate-reset[hidden]{display:none}
+.gate-skip{margin-top:11px;background:transparent;color:var(--fg);border:1px solid var(--line);font-weight:600}
+.gate-skip:hover{border-color:var(--accent);filter:none}
+.gate-skip[hidden]{display:none}
+.gate-hint{margin:11px 0 0;font-size:11.5px;color:var(--warn);line-height:1.55;background:var(--warn-bg);border:1px solid var(--warn);border-radius:8px;padding:9px 11px}
+.gate-hint[hidden]{display:none}
+.bio-spin{animation:biospin 1s linear infinite}
+@keyframes biospin{to{transform:rotate(360deg)}}
+/* identity-verification overlay (our UI framing the OS biometric prompt) */
+.biov{position:fixed;inset:0;z-index:5000;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(6,8,6,.74)}
+.biov[hidden]{display:none!important}
+.biov-card{width:100%;max-width:330px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:30px 26px 22px;text-align:center;box-shadow:0 26px 70px rgba(0,0,0,.6)}
+.biov-fp{width:116px;height:116px;margin:0 auto 18px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;
+  color:var(--accent);background:var(--accent-soft);border:2px solid currentColor;transition:color .3s,background .3s}
+.biov-fp>svg{width:62px;height:62px}
+.biov-fp .mk{position:absolute;right:2px;bottom:2px;width:36px;height:36px;border-radius:50%;display:none;align-items:center;justify-content:center;color:#fff;border:3px solid var(--surface)}
+.biov-fp .mk>svg{width:20px;height:20px}
+.biov-card[data-state="scan"] .biov-fp{animation:biopulse 1.4s ease-out infinite}
+.biov-card[data-state="ok"] .biov-fp{color:var(--ok);background:var(--ok-bg)}
+.biov-card[data-state="ok"] .mk-ok{display:flex;background:var(--ok)}
+.biov-card[data-state="err"] .biov-fp{color:var(--crit);background:var(--crit-bg)}
+.biov-card[data-state="err"] .mk-err{display:flex;background:var(--crit)}
+@keyframes biopulse{0%{box-shadow:0 0 0 0 rgba(226,146,47,.5)}70%{box-shadow:0 0 0 18px rgba(226,146,47,0)}100%{box-shadow:0 0 0 0 rgba(226,146,47,0)}}
+.biov-h{font-family:var(--body);font-size:18px;font-weight:700;margin:0;color:var(--fg)}
+.biov-card[data-state="ok"] .biov-h{color:var(--ok)}
+.biov-card[data-state="err"] .biov-h{color:var(--crit)}
+.biov-s{color:var(--muted);font-size:12.5px;margin:8px 0 0;line-height:1.5}
+.biov-x{margin-top:16px;background:none;border:0;color:var(--faint);font-size:12px;text-decoration:underline;cursor:pointer}
+.biov-x[hidden]{display:none!important}
 </style>
+
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gttl">
+  <div class="gate-card">
+    <div class="crest emblem-crest gate-crest" aria-hidden="true"><span class="emblem" role="img" aria-label="State Emblem of India"></span></div>
+    <h1 id="gttl">EkBharat <b>Armoury</b></h1>
+    <p class="gate-sub" id="gsub">Restricted — authorised personnel only</p>
+    <form class="gate-form" id="gform" autocomplete="off" novalidate>
+      <div><label for="gid">Soldier ID</label><input id="gid" name="gid" type="text" inputmode="text" placeholder="SC-101" autocomplete="username" required></div>
+      <div><label for="gpw">Password</label><input id="gpw" name="gpw" type="password" placeholder="••••••••" autocomplete="current-password" required></div>
+      <div id="gpw2row" hidden><label for="gpw2">Confirm password</label><input id="gpw2" name="gpw2" type="password" placeholder="••••••••" autocomplete="new-password"></div>
+      <div class="gate-err" id="gerr" role="alert" hidden></div>
+      <button type="submit" class="gate-btn" id="gbtn">Sign in</button>
+    </form>
+    <div class="gate-bio" id="gbio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11c0 4-1 6-1.5 7"/><path d="M8 7.5A6 6 0 0116 9c0 5-1 7-1.5 8"/><path d="M5.5 10A8 8 0 0112 5a8 8 0 018 5"/><path d="M8.5 13c0 3-.5 5-1 6.5"/><path d="M12 9a3 3 0 013 3c0 4-.5 5.5-1 7"/></svg>
+      <span id="gbiotxt">Checking for Windows Hello…</span>
+    </div>
+    <p class="gate-hint" id="ghint" hidden></p>
+    <button type="button" class="gate-btn gate-skip" id="gskip" hidden>Continue without biometric →</button>
+    <button type="button" class="gate-reset" id="greset" hidden>Reset credentials on this device</button>
+    <p class="gate-note">In-game demo security. Biometric verification uses your own device's <b>Windows Hello</b> (fingerprint, face or PIN) and never leaves this computer.</p>
+  </div>
+</div>
+
+<div class="biov" id="biov" hidden role="dialog" aria-modal="true" aria-live="assertive" aria-label="Identity verification">
+  <div class="biov-card" data-state="scan">
+    <div class="biov-fp">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M2 12C2 6.5 6.5 2 12 2a10 10 0 0 1 8 4"/>
+        <path d="M5 19.5C5.5 18 6 15 6 12c0-.7.12-1.37.34-2"/>
+        <path d="M17.29 21.02c.12-.6.43-2.3.5-3.02"/>
+        <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/>
+        <path d="M8.65 22c.21-.66.45-1.32.57-2"/>
+        <path d="M14 13.12c0 2.38 0 6.38-1 8.88"/>
+        <path d="M2 16h.01"/>
+        <path d="M21.8 16c.2-2 .131-5.354 0-6"/>
+        <path d="M9 6.8a6 6 0 0 1 9 5.2c0 .47 0 1.17-.02 2"/>
+      </svg>
+      <span class="mk mk-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+      <span class="mk mk-err"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+    </div>
+    <h3 class="biov-h" id="biovH">Verify your identity</h3>
+    <p class="biov-s" id="biovS">Scan your fingerprint to continue…</p>
+    <button type="button" class="biov-x" id="biovX" hidden>Dismiss</button>
+  </div>
+</div>
 
 <div class="app" id="app">
   <aside class="sidebar" id="sidebar" aria-label="Primary navigation">
@@ -726,8 +852,12 @@ th.ta-r,td.ta-r{text-align:right} .rowacts{display:inline-flex;gap:6px;justify-c
             <div class="vchips" id="sviews" role="group" aria-label="Personnel status"><button class="on" data-v="all">All</button><button data-v="Active">Active</button><button data-v="holding">Holding equipment</button><button data-v="On Leave">On leave</button><button data-v="Inactive">Inactive</button></div>
             <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="sq" type="search" placeholder="Service code, regiment, rank, unit…" autocomplete="off" aria-label="Search soldiers"></label>
             <select class="fin wsel" id="sreg" aria-label="Regiment"><option value="">All regiments</option></select>
+            <select class="fin wsel" id="steam" aria-label="Team"><option value="">All teams</option></select>
+            <select class="fin wsel" id="srank" aria-label="Rank"><option value="">All ranks</option></select>
+            <select class="fin wsel" id="sequip" aria-label="Equipment held"><option value="">Any equipment</option></select>
             <span class="roster-note" id="snote"></span>
           </div>
+          <div class="wtools wtools2" id="sfilters" hidden></div>
           <div class="rscroll"><table class="rtable"><thead><tr><th>Service Code</th><th>Rank</th><th>Regiment</th><th>Unit</th><th>Designation</th><th>Status</th><th>Equipment</th><th class="ta-r">Action</th></tr></thead><tbody id="sbody"></tbody></table></div>
         </div>
       </section>
@@ -753,7 +883,7 @@ th.ta-r,td.ta-r{text-align:right} .rowacts{display:inline-flex;gap:6px;justify-c
 
       <!-- CUSTODY -->
       <section class="view" data-view="custody" hidden>
-        <div class="phead"><div><h2 class="ptitle">Custody Records</h2><p class="psub">Every custody record — tracked assets held by soldiers or teams, and team stock allocations — and every return. Records are closed on return, never deleted.</p></div>
+        <div class="phead"><div><h2 class="ptitle">Custody Records <span class="tip" tabindex="0" role="note" aria-label="Who holds what. Two kinds: individual custody (one tracked item to one soldier) and team stock allocation (a quantity of bulk stock to a team). Records are closed on return, never deleted." data-tip="Who holds what. Two kinds: individual custody (one tracked item to one soldier) and team stock allocation (a quantity of bulk stock to a team). Records are closed on return, never deleted.">i</span></h2><p class="psub">Every custody record — tracked assets held by soldiers or teams, and team stock allocations — and every return. Records are closed on return, never deleted.</p></div>
           <div class="pacts"><button type="button" class="cbtn pri" data-act="issue">＋ New custody record</button></div></div>
         <div class="wpanel">
           <div class="wtools">
@@ -781,7 +911,7 @@ th.ta-r,td.ta-r{text-align:right} .rowacts{display:inline-flex;gap:6px;justify-c
 
       <!-- AUDIT -->
       <section class="view" data-view="audit" hidden>
-        <div class="phead"><div><h2 class="ptitle">Audit History</h2><p class="psub">Every custody, asset and personnel change, newest first.</p></div>
+        <div class="phead"><div><h2 class="ptitle">Audit History <span class="tip" tabindex="0" role="note" aria-label="A permanent log of every important change — who did it, when, what it was before and after, and the reason. Nothing is ever deleted, only added." data-tip="A permanent log of every important change — who did it, when, what it was before and after, and the reason. Nothing is ever deleted, only added.">i</span></h2><p class="psub">Every custody, asset and personnel change, newest first.</p></div>
           <div class="pacts"><button type="button" class="rclear" data-act="reset">↺ Reset custody demo data</button></div></div>
         <div class="wpanel">
           <div class="wtools">
@@ -794,7 +924,6 @@ th.ta-r,td.ta-r{text-align:right} .rowacts{display:inline-flex;gap:6px;justify-c
       </section>
 
       <footer>
-        <div class="src">Equipment reference &amp; specifications sourced from <b><a href="https://www.globalmilitary.net/" target="_blank" rel="noopener">globalmilitary.net</a></b>; photographs from Wikimedia Commons. Unit counts, deployment status and soldier codes are illustrative data for an in-game armoury — not real Indian Army procurement records.</div>
         <div class="meta">EKBHARAT ARMOURY CONTROL v4.0<br>Generated __ASOF__ · <span id="wcount"></span> equipment lines</div>
       </footer>
     </div>
@@ -835,26 +964,36 @@ let CUR=null;
 const ICONS={weapons:'<path d="M3 7h13l2 3h3v3h-2l-1 2h-5l-1-2H3z"/><path d="M8 10v3"/>',ammunition:'<rect x="9" y="3" width="6" height="9" rx="3"/><path d="M9 12h6v6a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>',nightvision:'<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="2.6"/>',drones:'<circle cx="12" cy="12" r="2"/><path d="M12 10V7M12 14v3M10 12H7M14 12h3"/><circle cx="5" cy="5" r="1.6"/><circle cx="19" cy="5" r="1.6"/><circle cx="5" cy="19" r="1.6"/><circle cx="19" cy="19" r="1.6"/>',armoured:'<path d="M3 13h14v4H3z"/><path d="M6 13v-2h6v2"/><path d="M12 11l7-2v2"/><circle cx="6.5" cy="18.5" r="1.2"/><circle cx="10.5" cy="18.5" r="1.2"/><circle cx="14" cy="18.5" r="1.2"/>',artillery:'<path d="M4 16l13-7"/><path d="M3 16h6l-2 3H3z"/><circle cx="5" cy="17.5" r="1.4"/><path d="M15 8l3 2"/>',attachments:'<circle cx="12" cy="12" r="7"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>',melee:'<path d="M14 3l7 7-9 9-3-3z"/><path d="M5 19l3-3"/>',explosives:'<circle cx="12" cy="14" r="6"/><path d="M12 8V5l3-2"/>',helmets:'<path d="M4 15a8 8 0 0116 0z"/><path d="M3 15h18"/>',armor:'<path d="M12 3l7 3v5c0 5-3 7-7 9-4-2-7-4-7-9V6z"/>',plates:'<rect x="6" y="4" width="12" height="16" rx="2"/>',comms:'<rect x="7" y="7" width="10" height="14" rx="2"/><path d="M10 7V3M10 11h4M10 14h4"/>'};
 const state={type:"all",status:"all",india:false,low:false,sort:"default",q:"",rq:""};
 const $=s=>document.querySelector(s);
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/* a small ⓘ that explains a metric/field in plain language (hover · keyboard focus · tap) */
+const tip=t=>`<span class="tip" tabindex="0" role="note" aria-label="${esc(t)}" data-tip="${esc(t)}">i</span>`;
 const yrTag=y=>/^\d/.test(y)?("svc. "+y):esc(y);
 
 function renderTotals(){
   const w=DATA.items;
   const ordered=w.reduce((a,x)=>a+x.ordered,0),arrived=w.reduce((a,x)=>a+x.arrived,0);
   const remaining=ordered-arrived,issued=w.reduce((a,x)=>a+x.assigned,0);
-  const soldiers=new Set(); w.forEach(x=>x.codes.forEach(c=>soldiers.add(c))); Store.custodians().forEach(id=>soldiers.add(id));
-  const rate=Math.round(arrived/ordered*100),mii=w.filter(x=>x.madeIn).length;
+  const holding=Store.custodians().size;      // unique soldiers with ≥1 active INDIVIDUAL custody (never codes/teams)
+  const rate=ordered?Math.round(arrived/ordered*100):0,mii=w.filter(x=>x.madeIn).length;
   const kpis=[
-   {lab:"Items Ordered",val:ordered.toLocaleString(),note:w.length+" equipment lines",cls:""},
-   {lab:"Arrived in Armoury",val:arrived.toLocaleString(),note:rate+"% delivered",cls:"k-ok"},
-   {lab:"In Manufacture",val:remaining.toLocaleString(),note:"awaiting delivery",cls:"k-warn"},
-   {lab:"Delivery Rate",val:rate+"%",note:"all equipment",cls:""},
-   {lab:"Items Issued",val:issued.toLocaleString(),note:"to troops & units",cls:""},
-   {lab:"Soldiers Equipped",val:soldiers.size.toLocaleString(),note:"issue codes + tracked custodians",cls:"k-ok"},
-   {lab:"Made in India",val:mii,note:"indigenous lines",cls:"k-blue"},
-   {lab:"Reorder Alerts",val:w.filter(x=>x.needsReorder).length,note:(w.filter(x=>x.onOrder>0).length)+" reordered · low / in production",cls:"k-crit"},
+   {lab:"Items Ordered",val:ordered.toLocaleString(),note:w.length+" equipment lines",cls:"",
+     tip:"Total units ordered across all "+w.length+" equipment lines (sum of each line's ordered quantity). Models/types, not individual pieces."},
+   {lab:"Arrived in Armoury",val:arrived.toLocaleString(),note:rate+"% delivered",cls:"k-ok",
+     tip:"Units already delivered into the armoury. "+rate+"% = arrived ÷ ordered."},
+   {lab:"Not Yet Delivered",val:remaining.toLocaleString(),note:"still in manufacture",cls:"k-warn",
+     tip:"Ordered − Arrived. Units still being manufactured / not delivered yet."},
+   {lab:"Delivery Rate",val:rate+"%",note:"arrived ÷ ordered",cls:"",
+     tip:"Arrived ÷ Ordered, across all lines. 100% means every ordered unit has reached the armoury."},
+   {lab:"Items Issued",val:issued.toLocaleString(),note:"units with troops & units",cls:"",
+     tip:"Total equipment units currently issued out = legacy bulk issues + individually-tracked assets in custody + team stock allocations. Counts items, not people."},
+   {lab:"Soldiers Holding Equipment",val:holding.toLocaleString(),note:"have ≥1 item issued",cls:"k-ok",
+     tip:"Unique soldiers who currently hold at least one item on an active individual custody record. A soldier with several items is counted once. Issue codes and team allocations are NOT counted."},
+   {lab:"Made in India",val:mii,note:"indigenous lines",cls:"k-blue",
+     tip:"Number of equipment lines marked as manufactured in India."},
+   {lab:"Items Running Low",val:w.filter(x=>x.needsReorder).length,note:(w.filter(x=>x.onOrder>0).length)+" reordered · low / in production",cls:"k-crit",
+     tip:"Lines low on unassigned stock or still in production — they need a reorder. The note shows how many already have a reorder placed."},
   ];
-  $("#kpis").innerHTML=kpis.map(k=>`<div class="kpi ${k.cls}"><div class="lab">${k.lab}</div><div class="val tnum">${k.val}</div><div class="note">${k.note}</div></div>`).join("");
+  $("#kpis").innerHTML=kpis.map(k=>`<div class="kpi ${k.cls}"><div class="lab">${k.lab}${k.tip?tip(k.tip):""}</div><div class="val tnum">${k.val}</div><div class="note">${k.note}</div></div>`).join("");
   $("#pipebar").innerHTML=`<span class="b-ok" style="width:${arrived/ordered*100}%"></span><span class="b-rem" style="width:${remaining/ordered*100}%"></span>`;
   $("#pipepct").textContent=`${arrived.toLocaleString()} arrived / ${remaining.toLocaleString()} pending of ${ordered.toLocaleString()}`;
   $("#wcount").textContent=w.length;
@@ -1617,6 +1756,9 @@ const Store=(()=>{
     searchBlob:key=>(I.byCat[key]||[]).map(a=>{const c=I.active[a.id];return a.tag+" "+a.serial+" "+(c?holderCode(c):"");}).join(" ")+" "+(I.allocByKey[key]||[]).filter(x=>x.status==="Active").map(x=>tcode(I.team[x.teamId])).join(" "),
     suggestTag:key=>{const l=I.byCat[key]||[];const p=l.length?l[0].tag.replace(/-\d{4}$/,""):"EKB-"+key.toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,6);
       let n=l.length+1;while(I.tag[(p+"-"+String(n).padStart(4,"0")).toUpperCase()])n++;return p+"-"+String(n).padStart(4,"0");},
+    // next free, guaranteed-unique SC-##### service code
+    suggestSoldierCode:()=>{const used=c=>!!I.code[c.toUpperCase()];let n=10000+T.soldiers.length,t=0,code;
+      do{code="SC-"+String(n%100000).padStart(5,"0");n++;t++;}while(used(code)&&t<100000);return code;},
     TYPES_FOR,REG_STATUS,MEM_KINDS,TEAM_STATUS,TARGETS,eligibility,holderCode,tcode,
     teams:()=>T.teams, team:id=>I.team[id], teamsOf:rid=>I.teamsByReg[rid]||[], teamMembersOf:id=>I.teamMembers[id]||[],
     teamMembershipsOfSoldier:id=>(I.tmBySol[id]||[]).slice().sort((a,b)=>b.startedAt.localeCompare(a.startedAt)||b.id.localeCompare(a.id)),
@@ -1891,7 +2033,7 @@ function viewNewSoldier(v){
   const body=`<div class="fgrid">
     ${regCtl}
     ${fstep(1,"Identity")}
-    ${fl("Service code",inp("serviceCode","",`placeholder="SC-12345" maxlength="8" autocapitalize="characters"`),"serviceCode",false,"Format SC- followed by 5 digits. Must be unique.")}
+    ${fl("Service code",inp("serviceCode",Store.suggestSoldierCode(),`maxlength="8" readonly aria-readonly="true" style="font-family:var(--mono,ui-monospace,monospace);letter-spacing:.6px"`),"serviceCode",false,"Auto-assigned — next free unique code.")}
     ${fl("Rank",sel0("rank",Store.RANKS,"Select rank…"),"rank")}
     ${fstep(2,"Posting")}
     ${fl("Arm / Department",inp("department","",`placeholder="e.g. Infantry" maxlength="40"`),"department")}
@@ -1942,7 +2084,7 @@ function mxDest(v){
   const ttDis={Soldier:!rg?"Choose a regiment first":!mem.some(s=>s.status==="Active")?"No Active soldiers in "+rg.code:null,
     Team:!rg?"Choose a regiment first":!teams.some(t=>t.status==="Active")?"No active teams in "+rg.code:null};
   const card=(k,sub)=>`<label class="mx-tt${ttDis[k]?" dis":""}${v.tt===k?" on":""}"><input type="radio" name="targetType" value="${k}"${v.tt===k?" checked":""}${ttDis[k]?" disabled":""}><b>${TT_LABEL[k]}</b><span>${ttDis[k]?esc(ttDis[k]):sub}</span></label>`;
-  const tOpt=t=>{const n=Store.teamMembersOf(t.id).length,why=t.status!=="Active"?"Inactive":"";return `<option value="${esc(t.id)}"${t.id===v.tid?" selected":""}${why?" disabled":""}>${esc(t.code)} · ${esc(t.name)} · ${n} soldier${n===1?"":"s"}${why?" — "+why:""}</option>`;};
+  const tOpt=t=>{const n=Store.teamMembersOf(t.id).length,rn=(Store.regiment(t.regimentId)||{}).name||"",why=t.status!=="Active"?"Inactive":"";return `<option value="${esc(t.id)}"${t.id===v.tid?" selected":""}${why?" disabled":""}>${esc(t.code)} · ${esc(t.name)} / ${esc(rn)} · ${n} soldier${n===1?"":"s"}${why?" — "+why:""}</option>`;};
   return `${v.note?`<div class="fmeta wide">${esc(v.note)}</div>`:""}${fl("Regiment",`<select class="fin mx-rg" name="regimentId"><option value="">Select regiment…</option>${regs.map(rOpt).join("")}</select>`,"regimentId",true)}
     <div class="fl wide"><span>Assign to</span><div class="mx-tts" role="radiogroup">${card("Soldier","Personal equipment — weapons, protection, night vision")}${card("Team","Shared equipment — ammunition, explosives, radios, vehicles")}</div>${ferr("targetType")}</div>
     ${v.tt==="Soldier"&&rg?fl("Soldier of "+esc(rg.code),lookup("soldierId",mem.map(solOpt),v.soldierId,"Service code or rank"),"soldierId",true,"Only soldiers of "+esc(rg.code)+" are listed."):""}
@@ -2041,14 +2183,15 @@ function viewMulti(v){
     ${fstep(2,"Equipment")}
     <div class="mx">
       <div class="mx-browse"><div class="mx-bar"><input class="fin mx-q" type="search" autocomplete="off" placeholder="Search models, categories or asset tags" value="${esc(v.q||"")}" aria-label="Search equipment">
-        <nav class="mx-crumbs" aria-label="Category path">${mxCrumb(v)}</nav></div><div class="mx-body">${mxBrowse(v)}</div></div>
+        <div class="mx-navrow"><nav class="mx-crumbs" aria-label="Category path">${mxCrumb(v)}</nav>
+          <button type="button" id="mxdone" class="cbtn pri mx-done" data-act="mx-nav" data-path="" title="Return to All Equipment Categories — your selection is kept"${mxCount(v)?"":" hidden"}>Done · all categories</button></div></div><div class="mx-body">${mxBrowse(v)}</div></div>
       <aside class="mx-sel" aria-label="Selected items"><div class="mx-selin" aria-live="polite">${mxSelPanel(v)}</div><div class="ferr" data-err="assetIds" role="alert"></div></aside>
     </div><input type="hidden" name="assetIds" value="${esc(v.sel.join(","))}"><input type="hidden" name="stock" value="${esc(JSON.stringify(v.stock))}">
     ${fstep(3,"Authorisation")}
     ${fl("Approving officer",lookup("authorizedById",officers.map(offOpt),f.authorizedById,"Officer code or rank"),"authorizedById",true)}
     ${fl("Custody type",sel("type",Store.TYPES_FOR[v.tt||"Soldier"],Store.TYPES_FOR[v.tt||"Soldier"].includes(f.type)?f.type:Store.TYPES_FOR[v.tt||"Soldier"][0]),"type",false,"Applies to every asset selected.")}
     ${fl("Issue date",inp("effectiveDate",f.effectiveDate||Store.today(),`type="date" max="${Store.today()}"`),"effectiveDate")}
-    ${fl("Authorisation reference <em>required for stock</em>",inp("authRef",f.authRef||"",`maxlength="40" placeholder="e.g. Allocation order 31/2026"`),"authRef",false,"Recorded on every stock allocation.")}
+    ${fl("Authorisation reference <em>required for stock</em>"+tip("The official approval/order number under which restricted team stock (ammo, explosives, radios) is allocated. It creates a paper trail — which order authorised this allocation."),inp("authRef",f.authRef||"",`maxlength="40" placeholder="e.g. Allocation order 31/2026"`),"authRef",false,"Recorded on every stock allocation.")}
     ${fl("Remarks <em>optional</em>",inp("remarks",f.remarks||"",`maxlength="160" placeholder="e.g. Annual issue, exercise"`),"remarks")}
     <div class="fmeta wide">Each asset gets its own custody record and each stock line its own allocation — all are created together, or none are. Ammunition, explosives and other unit stock go only to a team, as an authorised quantity allocation — never to an individual soldier. Recorded by <b>${esc(Store.operator)}</b>.</div></div>`;
   return formWrap("New custody record","Assign equipment","Regiment → Individual Soldier or Team → equipment.","multi",body,mxBtn(v));
@@ -2061,6 +2204,7 @@ function mxPaint(full){
   f.querySelector('input[name="assetIds"]').value=v.sel.join(",");
   f.querySelector('input[name="stock"]').value=JSON.stringify(v.stock);
   f.querySelector(":scope>.factions .ro-place").textContent=mxBtn(v);
+  const dn=f.querySelector("#mxdone"); if(dn)dn.hidden=!mxCount(v); // Done appears only once something is selected
   if(mxCount(v)&&!Object.keys(v.bad).length)f.querySelector('[data-err="assetIds"]').textContent="";
 }
 function mxPaintDest(){
@@ -2307,7 +2451,7 @@ const TEAMSET={confirmTitle:"Review team change",confirmBtn:"Confirm",
 const FORMS={
   multi:{confirmTitle:"Review assignment",confirmBtn:d=>{const n=mxIds(d).length+mxStock(d).length;return `Confirm & create ${n} record${n===1?"":"s"}`;},
     confirm:d=>{const tm=Store.team(d.teamId),rg=Store.regiment(d.regimentId),n=mxIds(d).length,m=mxStock(d).length;
-      return [["Regiment",esc(rg.code)+" · "+esc(rg.name)],["Assign to",d.targetType==="Team"?"Team — "+esc(Store.tcode(tm))+" · "+esc(tm.name):"Individual Soldier — "+codeOf(d.soldierId)],["Approved by",codeOf(d.authorizedById)]]
+      return [["Regiment",esc(rg.code)+" · "+esc(rg.name)],["Assign to",d.targetType==="Team"?"Team — "+esc(tm.name)+" / "+esc(rg.name)+" · "+esc(Store.tcode(tm)):"Individual Soldier — "+codeOf(d.soldierId)],["Approved by",codeOf(d.authorizedById)]]
         .concat(n?[["Custody type",esc(d.type)+" · from "+fmtD(d.effectiveDate)]]:[]).concat(m?[["Authorisation ref",esc(d.authRef)]]:[])
         .concat([[`Items (${n+m})`,mxReviewList(d)],["Result",[n?`${n} custody record${n===1?"":"s"} (one per asset)`:"",m?`${m} stock allocation${m===1?"":"s"} (one per line)`:""].filter(Boolean).join(" + ")]]);},
     run:d=>{const v=mxTop(), pre={};
@@ -2366,7 +2510,7 @@ function showErrs(f,errors){
   if(first)first.focus();
 }
 function unconfirm(f){f.classList.remove("confirming");const c=f.querySelector(".fconfirm");c.hidden=true;c.innerHTML="";}
-function submitForm(f){
+async function submitForm(f){
   const d=Object.fromEntries(new FormData(f)), F=FORMS[f.dataset.form]; if(!F)return;
   clearErrs(f);
   if(F.confirm&&!f.classList.contains("confirming")&&(!F.when||F.when(d))){
@@ -2376,6 +2520,7 @@ function submitForm(f){
     box.innerHTML=`<h4>${esc(F.confirmTitle)}</h4><dl>${F.confirm(d).map(([k,v])=>`<dt>${esc(k)}</dt><dd>${v}</dd>`).join("")}</dl><div class="factions"><button type="submit" class="ro-place">${esc(typeof F.confirmBtn==="function"?F.confirmBtn(d):F.confirmBtn)}</button><button type="button" class="cbtn" data-act="unconfirm">◂ Edit details</button></div>`;
     box.hidden=false; f.classList.add("confirming"); box.querySelector(".ro-place").focus(); box.scrollIntoView({block:"nearest"}); return;
   }
+  if(!(await requireBio(F.confirmTitle||"this change")))return;
   const r=F.run(d);
   if(!r.ok){unconfirm(f);showErrs(f,r.errors);toast("Not saved — check the highlighted fields","err");return;}
   toast(r.msg,"ok"); VIEWS.pop(); if(r.next)VIEWS.push(r.next);
@@ -2383,7 +2528,7 @@ function submitForm(f){
 }
 
 /* ---- workspaces: Asset Register · Soldiers · Custody Records · Audit ---- */
-const CT={rstat:"all",rq:"",sreg:"",treg:"",chold:"all",ckind:"all",creg:"",cteam:"",cview:"active",cq:"",sstat:"all",sq:"",aent:"all",aq:"",astat:"all",acat:"",asq:""};
+const CT={rstat:"all",rq:"",sreg:"",steam:"",srank:"",sequip:"",treg:"",chold:"all",ckind:"all",creg:"",cteam:"",cview:"active",cq:"",sstat:"all",sq:"",aent:"all",aq:"",astat:"all",acat:"",asq:""};
 const hit=(q,s)=>!q||s.toLowerCase().includes(q.toLowerCase());
 function labelTables(root){
   if(!root)return;
@@ -2395,10 +2540,15 @@ function labelTables(root){
 function renderCStats(){
   const as=Store.assets(), cu=Store.custodians(), lines=new Set(as.map(a=>a.catalogueKey)).size;
   const n=st=>as.filter(a=>a.status===st).length;
-  const tiles=[["Tracked assets",as.length,lines+" equipment lines"],["In custody",n("In Custody"),"with soldiers & teams"],["Available",n("Available"),"ready to issue"],
-    ["Inspection / maint.",n("Inspection Pending")+n("Under Maintenance"),"not issuable"],["Retired",n("Retired"),"written off"],["Soldiers holding",cu.size,"of "+Store.activeSoldiers().length+" active"],
-    ["Team stock allocations",Store.allocations().filter(x=>x.status==="Active").length,Store.allocations().filter(x=>x.status==="Active").reduce((t,x)=>t+x.qty-x.returnedQty,0).toLocaleString()+" units outstanding"]];
-  $("#cstats").innerHTML=tiles.map(([l,v,s])=>`<div class="qt"><div class="ql">${l}</div><div class="qv tnum">${v}</div><div class="qn">${esc(s)}</div></div>`).join("");
+  const tiles=[
+    ["Registered Equipment",as.length,lines+" equipment lines","Individual physical pieces registered with their own unique ID/tag + serial (not models). Each can be tracked and issued separately."],
+    ["Currently Assigned",n("In Custody"),"with soldiers & teams","Registered pieces that are right now on an active custody record (held by a soldier or a team)."],
+    ["Ready to Issue",n("Available"),"available now","Registered pieces in the armoury, serviceable and free to issue right now."],
+    ["Under Inspection / Repair",n("Inspection Pending")+n("Under Maintenance"),"not issuable","Pieces being checked or repaired — cannot be issued until they pass back to Ready."],
+    ["Removed from Use",n("Retired"),"written off","Pieces permanently retired / written off. They can never be issued again."],
+    ["Soldiers Holding Equipment",cu.size,"of "+Store.activeSoldiers().length+" active","Unique soldiers holding at least one item right now (counted once each). Of the total active soldiers."],
+    ["Team Stock Allocations",Store.allocations().filter(x=>x.status==="Active").length,Store.allocations().filter(x=>x.status==="Active").reduce((t,x)=>t+x.qty-x.returnedQty,0).toLocaleString()+" units outstanding","Active bulk-stock allocations to teams (ammo, explosives, radios…) — given as a quantity, not individual pieces. The note is total units still out."]];
+  $("#cstats").innerHTML=tiles.map(([l,v,s,tp])=>`<div class="qt"><div class="ql">${l}${tp?tip(tp):""}</div><div class="qv tnum">${v}</div><div class="qn">${esc(s)}</div></div>`).join("");
   $("#nc-catalogue").textContent=DATA.items.length; $("#nc-assets").textContent=as.length;
   $("#nc-soldiers").textContent=Store.soldiers().length; $("#nc-custody").textContent=(n("In Custody")+Store.allocations().filter(x=>x.status==="Active").length)||"";
   const sel=$("#ascat"), keys=[...new Set(as.map(a=>a.catalogueKey))];
@@ -2447,11 +2597,60 @@ function renderCustodyTab(){
   $("#creg").innerHTML=`<option value="">All regiments</option>`+regs.map(r=>`<option value="${r.id}"${r.id===CT.creg?" selected":""}>${esc(r.code)}</option>`).join("");
   $("#cteam").innerHTML=`<option value="">All teams</option>`+teams.map(t=>`<option value="${t.id}"${t.id===CT.cteam?" selected":""}>${esc(Store.tcode(t))}</option>`).join("");
 }
-function renderSoldiersTab(){
-  const rows=Store.soldiers().filter(s=>(CT.sstat==="all"||(CT.sstat==="holding"?nActive(s.id)>0:s.status===CT.sstat))
+/* catalogue keys a soldier ACTIVELY holds — from their own custody records only (individual custody;
+   team allocations are never counted as a soldier's assignment). One Set per soldier → no duplicates. */
+const heldKeys=sid=>{const set=new Set();Store.custodyOfSoldier(sid).forEach(c=>{if(c.status==="Active"){const a=Store.asset(c.assetId);if(a)set.add(a.catalogueKey);}});return set;};
+/* categories a soldier can individually hold (tracked + individual-eligible) — for the equipment filter */
+function soldierHoldableTypes(){const t=new Set();DATA.items.forEach(w=>{if(Store.eligibility(w,"Soldier").mode==="asset")t.add(w.type);});return t;}
+function soldierHoldableLines(){return DATA.items.filter(w=>Store.eligibility(w,"Soldier").mode==="asset"&&Store.assetsOf(w.key).length);}
+function matchEquip(s){
+  const f=CT.sequip; if(!f)return true;
+  const held=heldKeys(s.id);
+  if(f==="has")return held.size>0;
+  if(f==="none")return held.size===0;
+  if(f.startsWith("cat:")){const ty=f.slice(4);for(const k of held)if((BYKEY[k]||{}).type===ty)return true;return false;}
+  if(f.startsWith("line:"))return held.has(f.slice(5));
+  return true;
+}
+function soldierFilterPred(s){
+  return (CT.sstat==="all"||(CT.sstat==="holding"?nActive(s.id)>0:s.status===CT.sstat))
     &&(!CT.sreg||(CT.sreg==="none"?!s.regimentId:s.regimentId===CT.sreg))
-    &&hit(CT.sq,[s.serviceCode,s.rank,s.department,s.unit,s.designation,s.id,(Store.regiment(s.regimentId)||{}).code||"Unassigned",(Store.regiment(s.regimentId)||{}).name||"",(Store.team(s.teamId)||{}).code||""].join(" ")));
-  $("#sbody").innerHTML=rows.map(s=>{const n=nActive(s.id);return `<tr><td>${goBtn("soldier",s.id,s.serviceCode)}</td><td>${esc(s.rank)}</td><td>${regOf(s)}${s.teamId&&Store.team(s.teamId)?`<div class="faintx">${esc(Store.team(s.teamId).code)}</div>`:""}</td><td>${esc(s.unit)}</td><td>${esc(s.designation)}</td><td>${solBadge(s)}</td><td>${n?`<span class="cbadge cu"><i></i>${n} item${n===1?"":"s"}</span>`:`<span class="cbadge none">None held</span>`}</td><td class="ta-r"><span class="rowacts">${s.status==="Active"?`<button type="button" class="cbtn" data-act="issue" data-soldier="${s.id}">Assign</button>`:""}<button type="button" class="cbtn" data-act="soldier" data-id="${s.id}" title="View equipment and history">View</button></span></td></tr>`;}).join("")||emptyRow(8,"No soldier records match.");
+    &&(!CT.steam||(CT.steam==="none"?!s.teamId:s.teamId===CT.steam))
+    &&(!CT.srank||s.rank===CT.srank)
+    &&matchEquip(s)
+    &&hit(CT.sq,[s.serviceCode,s.rank,s.department,s.unit,s.designation,s.id,(Store.regiment(s.regimentId)||{}).code||"Unassigned",(Store.regiment(s.regimentId)||{}).name||"",(Store.team(s.teamId)||{}).code||""].join(" "));
+}
+/* keep the Team / Rank / Equipment selects in sync (Team cascades from the chosen Regiment) */
+function fillSoldierFilters(){
+  const teams=(!CT.sreg?Store.teams().slice():CT.sreg==="none"?[]:Store.teamsOf(CT.sreg).slice())
+    .sort((a,b)=>Store.tcode(a).localeCompare(Store.tcode(b)));
+  if(CT.steam&&CT.steam!=="none"&&!teams.some(t=>t.id===CT.steam))CT.steam="";
+  const tsel=$("#steam"); if(tsel)tsel.innerHTML=`<option value="">All teams</option><option value="none"${CT.steam==="none"?" selected":""}>No team</option>`+
+    teams.map(t=>`<option value="${t.id}"${t.id===CT.steam?" selected":""}>${esc(Store.tcode(t))} · ${esc(t.name)}</option>`).join("");
+  const rsel=$("#srank"); if(rsel)rsel.innerHTML=`<option value="">All ranks</option>`+Store.RANKS.map(r=>`<option value="${esc(r)}"${r===CT.srank?" selected":""}>${esc(r)}</option>`).join("");
+  const esel=$("#sequip"); if(esel){const tl=DATA.types.filter(([k])=>soldierHoldableTypes().has(k));
+    esel.innerHTML=`<option value="">Any equipment</option><option value="has"${CT.sequip==="has"?" selected":""}>Holding equipment</option><option value="none"${CT.sequip==="none"?" selected":""}>No equipment</option>`
+      +`<optgroup label="By category">`+tl.map(([k,l])=>`<option value="cat:${k}"${CT.sequip==="cat:"+k?" selected":""}>Holds ${esc(l)}</option>`).join("")+`</optgroup>`
+      +`<optgroup label="By model">`+soldierHoldableLines().map(w=>`<option value="line:${esc(w.key)}"${CT.sequip==="line:"+w.key?" selected":""}>Holds ${esc(w.name)}</option>`).join("")+`</optgroup>`;}
+}
+function soldierChips(){
+  const chips=[]; const reg=Store.regiment(CT.sreg), tm=Store.team(CT.steam);
+  if(CT.sstat!=="all")chips.push(["sstat",CT.sstat==="holding"?"Holding equipment":"Status: "+CT.sstat]);
+  if(CT.sreg)chips.push(["sreg","Regiment: "+(CT.sreg==="none"?"Unassigned":(reg?reg.code:CT.sreg))]);
+  if(CT.steam)chips.push(["steam","Team: "+(CT.steam==="none"?"No team":(tm?Store.tcode(tm):CT.steam))]);
+  if(CT.srank)chips.push(["srank","Rank: "+CT.srank]);
+  if(CT.sequip){const w=CT.sequip.startsWith("line:")&&BYKEY[CT.sequip.slice(5)];const ty=CT.sequip.startsWith("cat:")&&(DATA.types.find(([k])=>k===CT.sequip.slice(4))||[])[1];
+    chips.push(["sequip","Equipment: "+(CT.sequip==="has"?"Holding":CT.sequip==="none"?"None held":w?"Holds "+w.name:ty?"Holds "+ty:CT.sequip)]);}
+  if(CT.sq)chips.push(["sq","Search: “"+CT.sq+"”"]);
+  const box=$("#sfilters"); if(!box)return; box.hidden=!chips.length;
+  box.innerHTML=chips.length?chips.map(([k,l])=>`<button type="button" class="sfchip" data-clr="${k}">${esc(l)}<span aria-hidden="true">✕</span></button>`).join("")
+    +`<button type="button" class="sfclear" data-clr="__all">Clear all</button>`:"";
+}
+function renderSoldiersTab(){
+  fillSoldierFilters();
+  const rows=Store.soldiers().filter(soldierFilterPred);
+  $("#sbody").innerHTML=rows.map(s=>{const n=nActive(s.id);return `<tr><td>${goBtn("soldier",s.id,s.serviceCode)}</td><td>${esc(s.rank)}</td><td>${regOf(s)}${s.teamId&&Store.team(s.teamId)?`<div class="faintx">${esc(Store.team(s.teamId).code)}</div>`:""}</td><td>${esc(s.unit)}</td><td>${esc(s.designation)}</td><td>${solBadge(s)}</td><td>${n?`<span class="cbadge cu"><i></i>${n} item${n===1?"":"s"}</span>`:`<span class="cbadge none">None held</span>`}</td><td class="ta-r"><span class="rowacts">${s.status==="Active"?`<button type="button" class="cbtn" data-act="issue" data-soldier="${s.id}">Assign</button>`:""}<button type="button" class="cbtn" data-act="soldier" data-id="${s.id}" title="View equipment and history">View</button></span></td></tr>`;}).join("")||emptyRow(8,"No soldier records match these filters.");
+  soldierChips();
   $("#snote").innerHTML=`<b>${rows.length}</b> of ${Store.soldiers().length} soldiers`; labelTables($("#sbody").closest("table"));
 }
 function renderAuditTab(){
@@ -2471,7 +2670,16 @@ function wireCustody(){
   $("#creg").addEventListener("change",e=>{CT.creg=e.target.value;renderCustodyTab();});
   $("#cteam").addEventListener("change",e=>{CT.cteam=e.target.value;renderCustodyTab();});
   $("#sq").addEventListener("input",e=>{CT.sq=e.target.value.trim();renderSoldiersTab();});
-  $("#sreg").addEventListener("change",e=>{CT.sreg=e.target.value;renderSoldiersTab();});
+  $("#sreg").addEventListener("change",e=>{CT.sreg=e.target.value;CT.steam="";renderSoldiersTab();}); // regiment change resets team (cascade)
+  $("#steam").addEventListener("change",e=>{CT.steam=e.target.value;renderSoldiersTab();});
+  $("#srank").addEventListener("change",e=>{CT.srank=e.target.value;renderSoldiersTab();});
+  $("#sequip").addEventListener("change",e=>{CT.sequip=e.target.value;renderSoldiersTab();});
+  $("#sfilters").addEventListener("click",e=>{const b=e.target.closest("[data-clr]");if(!b)return;const k=b.dataset.clr;
+    if(k==="__all"){CT.sstat="all";setChip("#sviews","all");CT.sreg=CT.steam=CT.srank=CT.sequip="";CT.sq="";$("#sq").value="";}
+    else if(k==="sstat"){CT.sstat="all";setChip("#sviews","all");}
+    else if(k==="sq"){CT.sq="";$("#sq").value="";}
+    else CT[k]="";
+    renderSoldiersTab();});
   $("#rgq").addEventListener("input",e=>{CT.rq=e.target.value.trim();renderRegimentsTab();});
   chipGroup("#rgviews","rstat",renderRegimentsTab);
   $("#tmreg").addEventListener("change",e=>{CT.treg=e.target.value;renderTeamsPanel();});
@@ -2520,7 +2728,7 @@ function wireCustody(){
     else if(a==="assets")sheetOpen({kind:"item",key:b.dataset.key,focus:"trk"},true);
     else if(a==="soldier")open({kind:"soldier",id:b.dataset.id,focus:"soleq"});
     else if(a==="reset")open({kind:"confirm"});
-    else if(a==="do-reset"){Store.reset();closeDetail();toast("✓ Custody demo data reset to seed","ok");}
+    else if(a==="do-reset"){requireBio("reset demo data").then(ok=>{if(ok){Store.reset();closeDetail();toast("✓ Custody demo data reset to seed","ok");}});}
   });
   const sh=$("#sheet");
   sh.addEventListener("submit",e=>{const f=e.target.closest(".cform");if(!f)return;e.preventDefault();submitForm(f);});
@@ -2547,8 +2755,21 @@ function wireCustody(){
     else if(e.key==="Enter"&&!list.hidden){e.preventDefault();if(opts.length)lkPick(box,opts[Math.max(0,cur)].dataset.id);}});
   // one subscriber: every Store change re-derives every view
   Store.subscribe(()=>{DATA.items.forEach(recompute);refreshAll();renderCustodyTabs();
-    if(!$("#modal").hidden&&VIEWS.length){const t=VIEWS[VIEWS.length-1];if(!t.form)renderSheet(true);else if(t.kind==="multi")mxPaint();}});
+    if(!$("#modal").hidden&&VIEWS.length){const t=VIEWS[VIEWS.length-1];if(!t.form)renderSheet(true);else if(t.kind==="multi")mxPaint();}
+    checkIntegrity(false);});
   if(Store.stale)toast("Saved custody state was from an older build — seed data reloaded");
+  checkIntegrity(true); // run the data-integrity self-check on load and surface any problem
+}
+/* Data-integrity watchdog: runs Store.integrity() (orphans, duplicate IDs/codes, broken references,
+   double-active-custody, over-assignment). Logs every problem; toasts on load, or whenever a mutation
+   introduces a NEW problem (so a clean app stays quiet but corruption can never pass unnoticed). */
+let _integLast=0;
+function checkIntegrity(onLoad){
+  let problems=[]; try{problems=Store.integrity();}catch(e){console.error("integrity() threw",e);return;}
+  if(problems.length)console.warn("[integrity] "+problems.length+" issue(s):\n  "+problems.join("\n  "));
+  if(problems.length&&(onLoad||problems.length>_integLast))
+    toast("⚠ Data integrity: "+problems.length+" issue"+(problems.length===1?"":"s")+" detected — see console","err");
+  _integLast=problems.length; return problems;
 }
 
 /* ---- app shell: hash navigation, collapsible sidebar, mobile drawer ---- */
@@ -2691,6 +2912,157 @@ function buildMap(){
   ml.addEventListener("click",e=>{const r=e.target.closest(".brow");if(!r)return;document.querySelectorAll(".brow.hot").forEach(x=>x.classList.remove("hot"));r.classList.add("hot");mapShow(BYBASE[r.dataset.id]);});
 }
 
+/* ===================== ACCESS CONTROL: Soldier ID + password + Windows Hello =====================
+   Biometric uses the device's platform authenticator (Windows Hello) via WebAuthn. On a static page
+   there is no server to verify the assertion cryptographically, so this gates the UI: a successful
+   Hello prompt is required to sign in and before every add / delete. Credentials live only in this
+   browser (localStorage). This is in-game demo security, not real authentication. */
+const AUTHKEY="armoury-auth-v1";
+const _te=new TextEncoder();
+function _b64u(buf){let s="";const u=new Uint8Array(buf);for(let i=0;i<u.length;i++)s+=String.fromCharCode(u[i]);return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");}
+function _unb64u(s){s=s.replace(/-/g,"+").replace(/_/g,"/");while(s.length%4)s+="=";const b=atob(s),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u.buffer;}
+function _rnd(n){const u=new Uint8Array(n);crypto.getRandomValues(u);return u;}
+async function _sha(str){const salt="EkBharatArmoury::";const d=await crypto.subtle.digest("SHA-256",_te.encode(salt+str));return [...new Uint8Array(d)].map(b=>b.toString(16).padStart(2,"0")).join("");}
+function loadAuth(){try{return JSON.parse(localStorage.getItem(AUTHKEY)||"null");}catch(e){return null;}}
+function saveAuth(a){try{localStorage.setItem(AUTHKEY,JSON.stringify(a));}catch(e){}}
+/* Why Windows Hello can't run here (empty string = environment is fine). */
+function bioContextHint(){
+  if(!window.isSecureContext)return "This page isn't a secure context. Open it at http://localhost:8787/ (not a file:// path).";
+  const h=location.hostname;
+  if(/^\d+\.\d+\.\d+\.\d+$/.test(h))return "Windows Hello needs the address bar to read http://localhost:8787/ — not "+h+". Open localhost in a browser tab.";
+  if(window.top!==window.self)return "Open http://localhost:8787/ in a real browser tab — Windows Hello is blocked inside embedded/preview panes.";
+  if(!window.PublicKeyCredential||!navigator.credentials)return "This browser doesn't expose Windows Hello (WebAuthn). Try Edge or Chrome.";
+  return "";
+}
+async function bioAvailable(){
+  if(bioContextHint())return false;
+  try{return await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();}catch(e){return false;}
+}
+async function bioEnroll(soldierId){
+  const cred=await navigator.credentials.create({publicKey:{
+    challenge:_rnd(32),
+    rp:{name:"EkBharat Armoury"},
+    user:{id:_te.encode(soldierId).slice(0,64),name:soldierId,displayName:soldierId},
+    pubKeyCredParams:[{type:"public-key",alg:-7},{type:"public-key",alg:-257}],
+    authenticatorSelection:{authenticatorAttachment:"platform",userVerification:"required",residentKey:"discouraged"},
+    timeout:60000,attestation:"none"
+  }});
+  if(!cred)throw new Error("enroll-cancelled");
+  return _b64u(cred.rawId);
+}
+async function bioVerify(credId){
+  const pub={challenge:_rnd(32),timeout:60000,userVerification:"required"};
+  if(credId)pub.allowCredentials=[{type:"public-key",id:_unb64u(credId),transports:["internal"]}];
+  const a=await navigator.credentials.get({publicKey:pub});
+  return !!a;
+}
+/* ---- our in-app "Verify your identity" overlay (frames the unavoidable OS prompt) ---- */
+function bioUIShow(action){
+  const v=$("#biov");if(!v)return;const c=v.querySelector(".biov-card");
+  c.dataset.state="scan";$("#biovH").textContent="Verify your identity";
+  $("#biovS").textContent="Confirm with Windows Hello to "+(action||"continue")+".";
+  $("#biovX").hidden=true;v.hidden=false;
+}
+function bioUIDone(ok,action,detail){
+  const v=$("#biov");if(!v)return;const c=v.querySelector(".biov-card");
+  c.dataset.state=ok?"ok":"err";
+  $("#biovH").textContent=ok?"Identity verified":"Verification failed";
+  $("#biovS").textContent=detail||(ok?"Access confirmed.":"Biometric was not recognised.");
+  if(ok){setTimeout(()=>{v.hidden=true;},950);}
+  else{$("#biovX").hidden=false;setTimeout(()=>{if(c.dataset.state==="err")v.hidden=true;},3000);}
+}
+/* step-up re-auth before any add / delete. Whenever Windows Hello is available on this device it is
+   MANDATORY: a linked device must pass a fresh scan; an unlinked one is linked on demand (first scan).
+   Only a device with no usable Windows Hello at all is allowed through (so it can't be bricked). */
+let _bioBusy=false, BIO_AVAIL=false;
+async function requireBio(reason){
+  const auth=loadAuth();
+  const hasCred=!!(auth&&auth.credId);
+  if(!hasCred&&!BIO_AVAIL)return true;           // no biometric hardware/origin here → cannot verify
+  if(_bioBusy){toast("A biometric check is already in progress","err");return false;}
+  _bioBusy=true; bioUIShow(reason||"authorise this action");
+  try{
+    if(hasCred){ await bioVerify(auth.credId); }
+    else { const credId=await bioEnroll(PROV.id); saveAuth({credId:credId,linkedAt:Date.now()}); } // link on demand, still a scan
+    bioUIDone(true,reason,"Authorised — "+(reason||"continuing")+".");
+    return true;
+  }catch(e){
+    bioUIDone(false,reason,_bioErr(e));
+    toast("Biometric check failed — "+(reason||"action")+" blocked","err");
+    return false;
+  }finally{_bioBusy=false;}
+}
+/* Provisioned operator account. Password is stored only as a salted SHA-256 hash. */
+const PROV={id:"SC-101",hash:"8fdac978e35cc4e8d36dcca42784291867f27ccda10b45d077bcb9b0aac8d108"};
+function _bioErr(e){
+  const n=e&&e.name||"";
+  if(n==="NotAllowedError")return "Windows Hello was cancelled or timed out.";
+  if(n==="SecurityError")return "Windows Hello was blocked by the page origin — open http://localhost:8787/ in a browser tab.";
+  if(n==="InvalidStateError")return "A credential already exists — try signing in, or use Unlink to reset.";
+  if(n==="NotSupportedError")return "This device has no usable Windows Hello authenticator.";
+  return "Windows Hello couldn't complete"+(n?" ("+n+")":"")+".";
+}
+async function initAuth(){
+  const gate=$("#gate"),form=$("#gform"),gid=$("#gid"),gpw=$("#gpw"),pw2row=$("#gpw2row"),
+        btn=$("#gbtn"),err=$("#gerr"),bio=$("#gbio"),biotxt=$("#gbiotxt"),sub=$("#gsub"),
+        reset=$("#greset"),hint=$("#ghint"),skip=$("#gskip");
+  if(!gate)return;
+  let dev=loadAuth(), BIO=false, pwOK=false;   // dev = per-device biometric link {credId,linkedAt}
+  const linked=()=>!!(dev&&dev.credId);
+  const showErr=m=>{err.textContent=m;err.hidden=!m;};
+  const showHint=m=>{hint.textContent=m||"";hint.hidden=!m;};
+  const showSkip=on=>{skip.hidden=!on;};
+  const lock=on=>{btn.disabled=on;};
+  pw2row.hidden=true;                          // provisioned account: no password creation
+  gid.value="";gid.setAttribute("placeholder","SC-101");
+  btn.textContent="Sign in";reset.hidden=false;
+  const ctx=bioContextHint();
+  BIO=await bioAvailable(); BIO_AVAIL=BIO;   // shared with requireBio for mandatory step-up
+  function paintBio(){
+    if(!BIO){bio.classList.remove("ready");biotxt.textContent=ctx?"Windows Hello unavailable here":"No biometric sensor detected — password only";sub.textContent="Restricted — authorised personnel only";showHint(ctx);return;}
+    bio.classList.add("ready");showHint("");
+    if(linked()){biotxt.textContent="Windows Hello biometric required";sub.textContent="Restricted — authorised personnel only";}
+    else{biotxt.textContent="Windows Hello will be linked on first sign-in";sub.textContent="First sign-in links this device's Windows Hello";}
+  }
+  paintBio();
+  const fp=t=>'<svg class="bio-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M21 12a9 9 0 10-9 9"/></svg>'+t;
+  function unlock(){
+    gate.hidden=true;
+    try{sessionStorage.setItem("armoury-session","1");}catch(e){}
+    toast("Access granted — welcome, "+PROV.id,"ok");
+  }
+  reset.addEventListener("click",()=>{
+    if(!confirm("Unlink this device's Windows Hello? You will link it again on the next sign-in. (The Soldier ID and password are not affected.)"))return;
+    try{localStorage.removeItem(AUTHKEY);}catch(e){}
+    dev=null;pwOK=false;showErr("");showSkip(false);paintBio();gid.focus();
+  });
+  // never trap the user: once the password is correct, allow password-only entry
+  skip.addEventListener("click",()=>{ if(pwOK)unlock(); });
+  $("#biovX").addEventListener("click",()=>{ $("#biov").hidden=true; });
+  form.addEventListener("submit",async e=>{
+    e.preventDefault();showErr("");
+    const id=gid.value.trim(),pw=gpw.value;
+    if(!id||!pw){showErr("Enter your Soldier ID and password.");(id?gpw:gid).focus();return;}
+    lock(true);
+    try{
+      if(id!==PROV.id||await _sha(pw)!==PROV.hash){showErr("Soldier ID or password is incorrect.");gpw.select();return;}
+      pwOK=true;
+      if(!BIO){ unlock(); return; }             // no Hello here → password-only (hint already explains)
+      if(linked()){                             // biometric linked → require a Hello scan
+        btn.innerHTML=fp("Verifying…"); bioUIShow("sign in");
+        try{ await bioVerify(dev.credId); bioUIDone(true,"sign in","Welcome back, "+PROV.id+"."); unlock(); return; }
+        catch(e3){ bioUIDone(false,"sign in",_bioErr(e3)); showErr(_bioErr(e3)); }
+      }else{                                    // first sign-in on this device → link Hello now
+        btn.innerHTML=fp("Linking…"); bioUIShow("link Windows Hello");
+        try{ const credId=await bioEnroll(PROV.id); dev={credId:credId,linkedAt:Date.now()}; saveAuth(dev); bioUIDone(true,"setup","Windows Hello linked to this device."); unlock(); return; }
+        catch(e2){ bioUIDone(false,"setup",_bioErr(e2)); showErr(_bioErr(e2)); }
+      }
+      showSkip(true);                           // Hello didn't complete → offer password-only fallback
+    }finally{lock(false);btn.textContent="Sign in";}
+  });
+  gid.focus();
+}
+
 function run(){
   initItems();
   renderTotals(); renderChart(); buildNav(); renderCats(); renderRoster(); renderCustodyTabs(); wireCustody(); wireShell(); buildMap();
@@ -2711,8 +3083,8 @@ function run(){
     const st=e.target.closest(".ro-step");if(st){const q=$("#roqty");q.value=Math.max(0,(+q.value||0)+(+st.dataset.d));return;}
     const pr=e.target.closest(".ro-preset");if(pr){$("#roqty").value=pr.dataset.q;return;}
     const fl=e.target.closest(".ro-fill");if(fl&&CUR){$("#roqty").value=fillTarget(CUR);return;}
-    const pl=e.target.closest(".ro-place");if(pl&&CUR){const q=Math.round(+$("#roqty").value||0);if(q>0){addReorder(CUR.key,q);toast("Reorder placed · +"+q.toLocaleString()+" "+(CUR.unit||"units")+" · "+CUR.name);renderSheet(true);}else{toast("Enter a quantity above 0");}return;}
-    const cl=e.target.closest("#roclear");if(cl&&CUR){clearReorder(CUR.key);toast("Reorder cleared · "+CUR.name);renderSheet(true);return;}
+    const pl=e.target.closest(".ro-place");if(pl&&CUR){const q=Math.round(+$("#roqty").value||0);if(q<=0){toast("Enter a quantity above 0");return;}const k=CUR.key,nm=CUR.name,uu=CUR.unit||"units";requireBio("place reorder").then(ok=>{if(ok){addReorder(k,q);toast("Reorder placed · +"+q.toLocaleString()+" "+uu+" · "+nm);renderSheet(true);}});return;}
+    const cl=e.target.closest("#roclear");if(cl&&CUR){const k=CUR.key,nm=CUR.name;requireBio("clear reorder").then(ok=>{if(ok){clearReorder(k);toast("Reorder cleared · "+nm);renderSheet(true);}});return;}
   });
   $("#lowtoggle").addEventListener("click",()=>{state.low=!state.low;$("#lowtoggle").classList.toggle("on",state.low);renderCats();});
   $("#sort").addEventListener("change",e=>{state.sort=e.target.value;renderCats();});
@@ -2720,6 +3092,12 @@ function run(){
   const root=document.documentElement;
   try{const t=localStorage.getItem("armoury-theme");if(t)root.setAttribute("data-theme",t);}catch(e){}
   $("#theme").addEventListener("click",()=>{const cur=root.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");const next=cur==="dark"?"light":"dark";root.setAttribute("data-theme",next);try{localStorage.setItem("armoury-theme",next);}catch(e){}});
+  // ⓘ tooltips: tap toggles on touch devices; also opens on hover/keyboard focus via CSS
+  document.addEventListener("click",e=>{const t=e.target.closest(".tip");
+    document.querySelectorAll(".tip.on").forEach(x=>{if(x!==t)x.classList.remove("on");});
+    if(t){e.preventDefault();e.stopPropagation();t.classList.toggle("on");}});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")document.querySelectorAll(".tip.on").forEach(x=>x.classList.remove("on"));});
 }
 run();
+initAuth();
 </script>
